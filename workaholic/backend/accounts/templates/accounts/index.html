@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Index
+    </title>
+</head>
+<body>
+    Welcome back, {{ request.user }}
+    <div>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</body>
+</html>
