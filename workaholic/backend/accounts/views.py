@@ -27,13 +27,12 @@ def registerPage(request):
     return render(request, 'accounts/register.html', context)
 
 def loginPage(request):
-
+    
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        email = request.POST.get('email')
 
-        user = authenticate(username=username,password=password,email=email)
+        user = authenticate(username=username,password=password)
 
         if user is not None:
             login(request, user)
