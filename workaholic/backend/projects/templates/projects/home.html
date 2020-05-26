@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Index
+    </title>
+</head>
+<body>
+    <h3>{{project.name}}</h3>
+    <div>
+        Project Members:
+        <ol>
+            {% for i in members %}
+                <li>{{i}}</li>
+            {% endfor %}
+        </ol>
+    </div>
+    <a href='/'>Back</a>
+</body>
+</html>
