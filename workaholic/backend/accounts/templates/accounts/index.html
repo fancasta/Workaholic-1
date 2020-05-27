@@ -6,7 +6,21 @@
     </title>
 </head>
 <body>
-    Welcome back, {{ request.user }}
+    <h3>Welcome back, {{ request.user }}</h3>
+
+    <p> Projects: </p>
+    <ol>
+        {% for i in projects %}
+            <li>{{i.name}} <a href='project/home/{{i.pk}}/'>View Project</a></li>
+        {% endfor %}
+    </ol>
+    
+    <div>
+        <p>
+            Create Project <a href="{% url 'createProject' %}">New Project</a>
+        </p>
+    </div>
+
     <div>
         <a href="{% url 'logout' %}">Logout</a>
     </div>

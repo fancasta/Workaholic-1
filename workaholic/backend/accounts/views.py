@@ -13,13 +13,19 @@ def registerPage(request):
     if request.method == 'POST':
         form = UserCreationForm_Edited(request.POST)        
         if form.is_valid():
-            form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password2']
             email = form.cleaned_data['email']
-            user = authenticate(username=username,password=password, email=email)
-            messages.success(request, 'Account was created successfully!')
-            return redirect("login")
+            if User.objects.filter(email=email).exists():
+                messages.info(request, 'Email address taken!')
+                form = UserCreationForm_Edited()
+            else:
+                form.save()
+                user = authenticate(username=username,password=password, email=email)                        
+                project_member = Project_Member(user=user)
+                project_member.save()
+                messages.success(request, 'Account was created successfully!')
+                return redirect("login")
     else:        
         form = UserCreationForm_Edited()
 
@@ -27,13 +33,10 @@ def registerPage(request):
     return render(request, 'accounts/register.html', context)
 
 def loginPage(request):
-    
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         user = authenticate(username=username,password=password)
-
         if user is not None:
             login(request, user)
             return redirect('index')
@@ -46,8 +49,24 @@ def loginPage(request):
 def logoutPage(request):
     logout(request)
     return redirect('login')
+    
 
 @login_required(login_url='login')
 def index(request):
-    return render(request, 'accounts/index.html')
+    member = Project_Member.objects.get(user= request.user)
+    projects = Project.objects.filter(project_members= member)
+    context = {'projects':projects}
+    return render(request, 'accounts/index.html', context)
+
+@login_required(login_url='login')
+def createProject(request):
+    form = ProjectForm(request.POST)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, 'Project was created successfully!')            
+        return redirect('/')
+
+    context = {'form':form}
+    return render(request, 'accounts/createProject.html', context)
+
 
