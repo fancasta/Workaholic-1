@@ -62,7 +62,11 @@ def index(request):
 def createProject(request):
     form = ProjectForm(request.POST)
     if request.method == "POST" and form.is_valid():
-        form.save()
+        project_name = form.cleaned_data['name']
+        member = Project_Member.objects.filter(user= request.user)
+        project = Project(name=project_name)
+        project.save()
+        project.project_members.set(member)
         messages.success(request, 'Project was created successfully!')            
         return redirect('/')
 
