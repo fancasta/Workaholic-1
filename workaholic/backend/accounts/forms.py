@@ -13,4 +13,4 @@ class UserCreationForm_Edited(UserCreationForm):
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        fields = '__all__'
+        fields = ['name']
