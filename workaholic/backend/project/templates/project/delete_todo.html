@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Index
+    </title>
+</head>
+<body>
+    <h3>{{project.name}}</h3>
+    <div>
+        {{ todo.todo}} created by {{ todo.added_by }}
+        <div>
+            <form method="POST">
+                {% csrf_token %}
+
+                {{deleteform}}
+                <input type="submit" name="Delete">
+            </form>
+        </div>
+    </div>
+
+    <a href="/project/{{project.pk}}/">Back</a>
+</body>
+</html>
