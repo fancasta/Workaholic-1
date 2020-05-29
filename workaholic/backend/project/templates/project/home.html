@@ -16,8 +16,29 @@
         </ol>
     </div>
 
+        <form method="POST" action="{% url 'projectPage' project.pk %}">
+            {% csrf_token %}
+            
+            <input type="text" name="todo"> 
+            <input type="submit" value="Submit">
+
+        </form>
+
+    <div>
+
+        <strong>Todo:</strong>
+        <ol>
+            {% for i in todo %}
+                <li>{{i.todo}} added by <strong>{{i.added_by}}</strong></li>
+
+                <a href="{% url 'deleteTodo' project.pk i.pk %}">Delete Todo</a>
+            {% endfor %}
+        </ol>
+    </div>
+
     <a href="add_members/">Add Members</a>
 
     <a href='/'>Back</a>
+
 </body>
 </html>
