@@ -14,7 +14,7 @@ from django.contrib.auth.models import Group
 # Create your views here.
 from accounts.models import *
 
-from .decorators import user_is_project_member
+from .decorators import user_is_project_member, user_is_project_admin
 from .forms import *
 from .models import Todo
 
@@ -37,21 +37,23 @@ def projectPage(request,pk):
         todoform = TodoForm()
 
     todo = Todo.objects.filter(project=project)
+    admin_member = members.get(user=project.project_admin)
 
-    context = {'project':project, 'members':members, 'todoform':todoform, 'todo':todo}
+    context = {'project':project, 'members':members, 'todoform':todoform, 'todo':todo, 'admin_member':admin_member}
     return render(request, 'project/home.html', context)
 
 @login_required
 @user_is_project_member
+@user_is_project_admin
 def deleteTodo(request, pk, todo_pk):
     project = Project.objects.get(id=pk)
     todo = project.todo_set.get(id=todo_pk)
-    deleteform = DeleteTodoForm(request.POST)
+    deleteform = DeleteForm(request.POST)
     if request.method == 'POST' and deleteform.data:
         todo.delete()
         return redirect('/project/' + str(pk) + '/')
     else:
-        deleteform = DeleteTodoForm()
+        deleteform = DeleteForm()
 
     context = {'project':project, 'todo':todo, 'deleteform': deleteform}
     return render(request, 'project/delete_todo.html', context)
@@ -76,3 +78,19 @@ def addMembers(request,pk):
     
     context = {'form':form, 'project':project}
     return render(request, 'project/add_members.html', context)
+
+@login_required
+@user_is_project_member
+@user_is_project_admin
+def deleteMember(request, pk, member_pk):
+    project = Project.objects.get(id=pk)
+    member = project.project_members.get(id=member_pk)
+    deleteform = DeleteForm(request.POST)
+    if request.method == 'POST' and deleteform.data:
+        project.project_members.remove(member)
+        return redirect('/project/' + str(pk) + '/')
+    else:
+        deleteform = DeleteForm()
+
+    context = {'project':project, 'member':member, 'deleteform': deleteform}
+    return render(request, 'project/delete_member.html', context)

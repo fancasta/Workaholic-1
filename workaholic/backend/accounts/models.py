@@ -11,6 +11,7 @@ class Project_Member(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=20)
+    project_admin = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
     project_members = models.ManyToManyField(Project_Member)
 
     def __str__(self):

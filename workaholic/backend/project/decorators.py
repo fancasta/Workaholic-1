@@ -14,3 +14,12 @@ def user_is_project_member(function):
         else:
             return redirect('/')
     return wrap
+
+def user_is_project_admin(function):
+    def wrap(request, *args, **kwargs):
+        project = Project.objects.get(pk=kwargs['pk'])
+        if request.user == project.project_admin:
+            return function(request,  *args, **kwargs)
+        else:
+            return redirect('/project/' + str(kwargs['pk']) + '/')
+    return wrap

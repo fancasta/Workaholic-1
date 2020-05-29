@@ -12,5 +12,5 @@ class TodoForm(forms.ModelForm):
         model = Todo
         fields = ['todo']
 
-class DeleteTodoForm(forms.Form):
+class DeleteForm(forms.Form):
     delete = forms.BooleanField()

@@ -7,36 +7,50 @@
 </head>
 <body>
     <h3>{{project.name}}</h3>
+    <h4>created by {{project.project_admin.username}}</h4>
     <div>
         Project Members:
-        <ol>
+        <ul>
             {% for i in members %}
-                <li>{{i}}</li>
+                {% if i != admin_member %}
+                    <li>{{i}}</li> 
+                    {% if request.user == project.project_admin %}
+                        <a href="{% url 'deleteMember' project.pk i.pk %}">Delete Member</a>
+                    {% endif %}
+                {% else %}
+                    <li>{{i}} (admin)</li>
+                {% endif %}
             {% endfor %}
-        </ol>
+        </ul>
     </div>
 
+    <div>
         <form method="POST" action="{% url 'projectPage' project.pk %}">
             {% csrf_token %}
-            
+            Add Todo:
             <input type="text" name="todo"> 
             <input type="submit" value="Submit">
 
         </form>
+    </div>
 
     <div>
 
-        <strong>Todo:</strong>
+        <p>Todo:</p>
         <ol>
             {% for i in todo %}
                 <li>{{i.todo}} added by <strong>{{i.added_by}}</strong></li>
 
-                <a href="{% url 'deleteTodo' project.pk i.pk %}">Delete Todo</a>
+                {% if request.user == project.project_admin %}
+                    <a href="{% url 'deleteTodo' project.pk i.pk %}">Delete Todo</a>
+                {% endif %}
             {% endfor %}
         </ol>
     </div>
 
-    <a href="add_members/">Add Members</a>
+    {% if request.user == project.project_admin %}
+        <a href="add_members/">Add Members</a>
+    {% endif %}
 
     <a href='/'>Back</a>
 

@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import * 
 
+
 # Create your views here.
 
 def registerPage(request):
@@ -64,7 +65,7 @@ def createProject(request):
     if request.method == "POST" and form.is_valid():
         project_name = form.cleaned_data['name']
         member = Project_Member.objects.filter(user= request.user)
-        project = Project(name=project_name)
+        project = Project(name=project_name, project_admin=request.user)
         project.save()
         project.project_members.set(member)
         messages.success(request, 'Project was created successfully!')            
@@ -72,5 +73,4 @@ def createProject(request):
 
     context = {'form':form}
     return render(request, 'accounts/createProject.html', context)
-
 
