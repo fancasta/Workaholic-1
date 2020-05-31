@@ -72,5 +72,5 @@ def createProject(request):
         return redirect('/')
 
     context = {'form':form}
-    return render(request, 'accounts/createProject.html', context)
+    return render(request, 'accounts/create_project.html', context)
 
