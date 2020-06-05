@@ -5,34 +5,37 @@
     <title>
         Login
     </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
 </head>
 
 <body>
-    <h1>Login Page</h1>
-    <div>
-        <form method="POST" action="{% url 'login' %}">
+    <div class="container p-5">    
+        <h1>Login Page</h1>
+        <form  method="POST" action="{% url 'login' %}">
             {% csrf_token %}
             <p>
+                <label for="username">Username</label>
                 <input type="text" name="username" placeholder="Username..." class="form-control">   
             </p>
             <p>
+                <label for="password">Password</label>
                 <input type="password" name="password" placeholder="Password..." class="form-control" >
             </p>
             <div>
-                <input type="submit" value="Login">
-            </div>
+                <input type="submit" value="Login" class="btn btn-primary">
+            </div></form></br>
+
             {% if messages %}
                 {% for message in messages %}
-                    <p>{{message}}</p>
+                    <div class="alert alert-warning">{{message}}</div>
                 {% endfor %}
             {% endif %}
         </form>
+
+        No account yet? <a class="btn btn-outline-success" href="{% url 'register' %}" role="button">Sign up now!</a>
     </div>
 
-    <div>
-        <p>
-            Sign up here! <a href="{% url 'register' %}">Sign Up</a>
-        </p>
-    </div>
 </body>
 </html>
+
