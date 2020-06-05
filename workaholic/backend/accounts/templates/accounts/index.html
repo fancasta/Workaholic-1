@@ -1,28 +1,52 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>
-        View Projects
-    </title>
-</head>
-<body>
-    <h3>Welcome back, {{ request.user }}</h3>
+    <head>
+        <title>
+            Projects
+        </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <p> Projects: </p>
-    <ol>
-        {% for i in projects %}
-            <li>{{i.name}} <a href='project/{{i.pk}}/'>View Project</a></li>
-        {% endfor %}
-    </ol>
-    
-    <div>
-        <p>
-            Create Project <a href="{% url 'createProject' %}">New Project</a>
-        </p>
-    </div>
+        <link rel="stylesheet" type="text/css" href="static/index.css">
+    </head>
 
-    <div>
-        <a href="{% url 'logout' %}">Logout</a>
-    </div>
-</body>
+    <body>
+        {% include 'accounts/navbar.html' %} </br>
+
+        <div class="container-fluid">
+            <h2>Welcome back, @{{ request.user }}</h3>
+        </div></br>
+
+        <div class="container-fluid">
+            <h3> My Projects
+            <a class="btn btn-success" href="{% url 'createProject' %}" id="create-project-button" role="button">New Project</a>
+            </h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                {% for i in projects %}
+                <tr>
+                    <td>{{i.name}} 
+                        {% if i.project_admin == request.user %}
+                            <span class="badge badge-secondary">Admin</span>
+                        {% endif %}
+                    </td>
+                    
+
+                    <td>
+                        <a href='project/{{i.pk}}/' id="project-button">
+                        View Project</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    </body>
 </html>
