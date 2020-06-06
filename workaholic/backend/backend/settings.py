@@ -42,7 +42,12 @@ INSTALLED_APPS = [
     'project',
     'chat',
     'todo',
+    'ckeditor',
+    'ckeditor_uploader',
+    'board'
 ]
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -139,6 +144,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, '/')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media/'
 
 SITE_ID = 1
 
