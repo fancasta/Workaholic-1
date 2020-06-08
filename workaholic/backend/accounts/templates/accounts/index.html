@@ -31,15 +31,20 @@
                 {% for i in projects %}
                 <tr>
                     <td>{{i.name}} 
-                        {% if i.project_admin == request.user %}
+                        {% if request.user in i.project_admin.all %}
                             <span class="badge badge-secondary">Admin</span>
                         {% endif %}
                     </td>
                     
 
                     <td>
-                        <a href='project/{{i.pk}}/' id="project-button">
+                        <a type="button" class="btn btn-warning" href='project/{{i.pk}}/'>
                         View Project</a>
+                        {% if request.user in i.project_admin.all %}
+
+                            <a type="button" class="btn btn-danger" href="project/{{i.pk}}/delete_project/">Delete Project</a>
+
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

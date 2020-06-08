@@ -26,7 +26,10 @@ from todo.models import Todo
 def projectPage(request,pk):
     project = Project.objects.get(id=pk)
     members = project.project_members.all()
-    admin_member = members.get(user=project.project_admin)
+    admin_users = project.project_admin.all()
+    admin_members = []
+    for i in admin_users:
+        admin_members.append(members.get(user=i))
 
     addMemberform = AddMemberForm(request.POST)
     
@@ -43,7 +46,7 @@ def projectPage(request,pk):
     else:
         addMemberform = AddMemberForm()
 
-    context = {'project':project, 'members':members, 'admin_member':admin_member, 'addMemberform':addMemberform}
+    context = {'project':project, 'members':members, 'admin_members':admin_members, 'addMemberform':addMemberform, 'admin_users':admin_users}
     return render(request, 'project/home.html', context)
 
 
@@ -84,3 +87,19 @@ def deleteMember(request, pk, member_pk):
 
     context = {'project':project, 'member':member, 'deleteform': deleteform}
     return render(request, 'project/delete_member.html', context)
+
+
+@login_required
+@user_is_project_member
+@user_is_project_admin
+def deleteProject(request, pk):
+    project = Project.objects.get(id=pk)
+    deleteform = DeleteForm(request.POST)
+    if request.method == 'POST' and deleteform.data:
+        project.delete()
+        return redirect('/')
+    else:
+        deleteform = DeleteForm()
+
+    context = {'project':project, 'deleteform': deleteform}
+    return render(request, 'project/delete_project.html', context)

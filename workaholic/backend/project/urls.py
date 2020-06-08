@@ -10,6 +10,6 @@ urlpatterns = [
     path('<str:pk>/chat/', include('chat.urls')),
 
     path('<str:pk>/todo/', include('todo.urls')),
-    path('<str:pk>/board/', include('board.urls'))
-
+    path('<str:pk>/board/', include('board.urls')),
+    path('<str:pk>/delete_project/', views.deleteProject, name="deleteProject")
 ]
