@@ -5,6 +5,8 @@ from accounts.models import *
 # Create your models here.
 
 class Todo(models.Model):
-    todo = models.CharField(max_length=50, null=True)
-    added_by = models.ForeignKey(Project_Member, on_delete=models.CASCADE, null=True)
+    todo = models.TextField(null=True)
+    rank = models.PositiveSmallIntegerField(null=True)
+    last_modified_by = models.ForeignKey(Project_Member, on_delete=models.CASCADE, null=True)
+    last_modified = models.DateTimeField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE)

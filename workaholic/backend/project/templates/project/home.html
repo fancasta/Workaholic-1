@@ -26,7 +26,7 @@
                 <tr>
                     <th>Project Members</th>
                     <th>
-                        {% if request.user == project.project_admin %}
+                        {% if request.user in admin_users %}
                             <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#addMembers">Add Member</button>
                         {% endif %}
                     </th>
@@ -34,17 +34,15 @@
             </thead>
             <tbody>
             {% for i in members %}
-                {% if i != admin_member %}
+                {% if i in admin_members %}
                 <tr>
-                    <td>{{i}}</td>    
-                    {% if request.user == project.project_admin %}
-                        <td><a href="{% url 'deleteMember' project.pk i.pk %}">Delete Member</a></td>
-                    {% endif %}
+                    <td>{{i}} <span class="badge badge-secondary">Admin</span></td>    
+                    <td></td>
                 </tr>
                 {% else %}
                 <tr>
-                    <td>{{i}} <span class="badge badge-secondary">Admin</span></td>
-                    <td></td>
+                    <td>{{i}}</td> 
+                    <td><a href="{% url 'deleteMember' project.pk i.pk %}">Delete Member</a></td>
                 </tr>
                 {% endif %}
             {% endfor %}

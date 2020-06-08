@@ -65,12 +65,14 @@ def createProject(request):
     if request.method == "POST" and form.is_valid():
         project_name = form.cleaned_data['name']
         member = Project_Member.objects.filter(user= request.user)
-        project = Project(name=project_name, project_admin=request.user)
+        project = Project(name=project_name)
         project.save()
+        project.project_admin.add(request.user)
         project.project_members.set(member)
         messages.success(request, 'Project was created successfully!')            
         return redirect('/')
 
     context = {'form':form}
     return render(request, 'accounts/create_project.html', context)
+
 

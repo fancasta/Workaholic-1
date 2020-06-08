@@ -18,7 +18,7 @@ def user_is_project_member(function):
 def user_is_project_admin(function):
     def wrap(request, *args, **kwargs):
         project = Project.objects.get(pk=kwargs['pk'])
-        if request.user == project.project_admin:
+        if request.user in project.project_admin.all():
             return function(request,  *args, **kwargs)
         else:
             return redirect('/project/' + str(kwargs['pk']) + '/')
