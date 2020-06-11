@@ -23,7 +23,7 @@
                 <input type="password" name="password" placeholder="Password..." class="form-control" >
             </p>
             <div>
-                <input type="submit" value="Login" class="btn btn-primary">
+                <input type="submit" value="Login" class="btn btn-primary"> <a href="{% url 'password_reset' %}">Forgot Password</a>
             </div></form></br>
 
             {% if messages %}
@@ -31,6 +31,7 @@
                     <div class="alert alert-warning">{{message}}</div>
                 {% endfor %}
             {% endif %}
+
         </form>
 
         No account yet? <a class="btn btn-outline-success" href="{% url 'register' %}" role="button">Sign up now!</a>
