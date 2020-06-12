@@ -16,7 +16,8 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
           <h1 class="display-4">{{project.name}}</h1></br>
-          <p class="lead"><a href="chat/" class="btn btn-info" role="button">Discussion Space</a></p>
+          <a href="chat/" class="btn btn-info" role="button">Discussion Space</a>
+          <a href="{% url 'calendarPage' project.pk 'current_month' %}" class="btn btn-warning" role="button">Calendar</a>
         </div>
     </div>
     

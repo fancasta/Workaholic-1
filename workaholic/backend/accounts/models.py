@@ -13,6 +13,8 @@ class Project(models.Model):
     name = models.CharField(max_length=20)
     project_admin = models.ManyToManyField(User)
     project_members = models.ManyToManyField(Project_Member)
+    
+    calendar_month = models.DateTimeField()
 
     def __str__(self):
         return self.name

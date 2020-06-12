@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'todo',
     'ckeditor',
     'ckeditor_uploader',
-    'board'
+    'board',
+    'cal',
 ]
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
