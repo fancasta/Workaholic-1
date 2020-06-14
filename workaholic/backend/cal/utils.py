@@ -10,10 +10,15 @@ class Calendar(HTMLCalendar):
         super().__init__()
     
     def formatday(self, pk, day, events):
-        events_per_day = events.filter(start_time__day=day)
+        events_start_per_day = events.filter(start_time__day=day)
+        events_start_per_day = events.filter(start_time__day=day)
+        events_end_per_day = events.filter(end_time__day=day)
+        events_end_per_day = events.filter(end_time__day=day)
         d = ''
-        for event in events_per_day:
-            d += f'<li> {event.get_html_url} </li>'
+        for event in events_start_per_day:
+            d += f'<li> Start day: {event.get_html_url} </li>'
+        for event in events_end_per_day:
+            d += f'<li> End day: {event.get_html_url} </li>'
         if day != 0:
             return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
         return f'<td></td>'
