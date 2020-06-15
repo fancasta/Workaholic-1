@@ -71,8 +71,7 @@
                 <div class="modal-body">
                     <form method="POST">
                         {% csrf_token %}
-                        Add Todo:
-                        <input type="text" name="todo"> 
+                        {{todoform}}
                         <input type="submit" value="Submit">
                     </form>
                 </div>

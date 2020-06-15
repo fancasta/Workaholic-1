@@ -2,6 +2,8 @@ from django.db import models
 from accounts.models import Project
 from django.urls import reverse
 
+from todo.models import Todo
+
 # Create your models here.
 
 class Event(models.Model):
@@ -11,6 +13,8 @@ class Event(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
 
+    todo = models.ForeignKey(Todo, on_delete=models.CASCADE, null=True)
+    
     @property
     def get_html_url(self):
         url = 'event/' + str(self.id) + '/'

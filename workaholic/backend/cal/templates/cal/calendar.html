@@ -20,6 +20,7 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
           <h1 class="display-4">{{project.name}} <strong>- Calendar</strong></h1></br>
+          <strong>Last modified:</strong> <p>{{project.cal_last_modified}} <small>by</small> {{project.cal_last_modified_by}}</p>
           <a href="{% url 'addEvent' project.pk %}" class="btn btn-info" role="button">Add Event</a>
         </div>
     </div>

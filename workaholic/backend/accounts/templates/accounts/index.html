@@ -24,6 +24,7 @@
                 <thead>
                     <tr>
                         <th>Project Name</th>
+                        <th>Last Modified</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -36,6 +37,9 @@
                         {% endif %}
                     </td>
                     
+                    <td>
+                        {{i.last_modified}} <small>by</small> {{i.last_modified_by}}
+                    </td>
 
                     <td>
                         <a type="button" class="btn btn-warning" href='project/{{i.pk}}/'>
