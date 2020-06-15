@@ -95,7 +95,7 @@ def logoutPage(request):
 @login_required(login_url='login')
 def index(request):
     member = Project_Member.objects.get(user= request.user)
-    projects = Project.objects.filter(project_members= member)
+    projects = Project.objects.filter(project_members= member).order_by('-last_modified')
     context = {'projects':projects}
     return render(request, 'accounts/index.html', context)
 
@@ -104,11 +104,11 @@ def createProject(request):
     form = ProjectForm(request.POST)
     if request.method == "POST" and form.is_valid():
         project_name = form.cleaned_data['name']
-        member = Project_Member.objects.filter(user= request.user)
-        project = Project(name=project_name, calendar_month=datetime.now())
+        member = Project_Member.objects.get(user= request.user)
+        project = Project(name=project_name, calendar_month=datetime.now(), last_modified=datetime.now(), last_modified_by=member)
         project.save()
         project.project_admin.add(request.user)
-        project.project_members.set(member)
+        project.project_members.add(member)
         messages.success(request, 'Project was created successfully!')            
         return redirect('/')
 

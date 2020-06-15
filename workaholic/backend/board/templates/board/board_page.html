@@ -18,6 +18,7 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
           <h1 class="display-4">{{project.name}} <strong>- Board</strong></h1></br>
+          <strong>Last modified:</strong> <p>{{project.board_last_modified}} <small>by</small> {{project.board_last_modified_by}}</p>
             <div class="container-fluid bg-light border border-dark">
                 <p>{{board.body | safe}}</p>
             </div>

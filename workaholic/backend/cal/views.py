@@ -68,18 +68,28 @@ def next_month(d):
 @user_is_project_member
 def event(request, pk, event_id=None):
     project = Project.objects.get(id=pk)
+    members = project.project_members.all()
     if event_id:
         event = Event.objects.filter(project=project).get(id=event_id)
     else:
         event = Event(project=project, start_time=datetime.now(), end_time=(datetime.now() + timedelta(weeks=1)))
     
-    if request.POST:
+    if request.method == 'POST':
         form = EventForm(request.POST)
         event.title = form.data['title']
         event.description = form.data['description']
         event.start_time = form.data['start_time']
         event.end_time = form.data['end_time']
         event.save()
+
+        modified_by = members.get(user=request.user)
+        
+        project.cal_last_modified = datetime.now()
+        project.cal_last_modified_by = modified_by
+        project.last_modified = datetime.now()
+        project.last_modified_by = modified_by
+        project.save()
+        
         return redirect('/project/' + str(pk) + '/calendar/')
     else:
         form = EventForm(instance=event)

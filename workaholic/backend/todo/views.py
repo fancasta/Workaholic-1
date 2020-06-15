@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
 from accounts.models import *
+from cal.models import Event
 from .forms import *
 from project.decorators import user_is_project_member, user_is_project_admin
 
@@ -26,15 +27,28 @@ def todoPage(request,pk):
         last_rank = 0
 
     if request.method == "POST":
-        todoform = TodoForm(request.POST)
+        todoform = TodoForm(pk, request.POST)
         added_by = members.get(user=request.user)
         new_todo_text = todoform.data['todo']
-        new_todo = Todo(todo=new_todo_text, last_modified_by=added_by ,project=project, rank=last_rank+1, last_modified=datetime.now())
+        deadline = todoform.data['deadline']
+        assigned_to = members.get(pk=todoform.data['assigned_to'])
+        new_todo = Todo(todo=new_todo_text, last_modified_by=added_by ,project=project, rank=last_rank+1, last_modified=datetime.now(), deadline=deadline, assigned_to=assigned_to)
         new_todo.save()
+
+        new_event = Event(project=project, todo=new_todo, title=new_todo_text, description=new_todo_text, start_time = datetime.now(),end_time=deadline)
+        new_event.save()
         project.todo_set.add(new_todo)
+
+        modified_by = members.get(user=request.user)
+        project.cal_last_modified = datetime.now()
+        project.cal_last_modified_by = modified_by
+        project.last_modified = datetime.now()
+        project.last_modified_by = modified_by
+        project.save()
+
         return redirect('/project/' + str(pk) + '/todo')
     else:
-        todoform = TodoForm()
+        todoform = TodoForm(pk)
 
     context = {'project':project, 'members':members, 'todoform':todoform, 'todo':todo}
     return render(request, 'todo/todo_page.html', context)
@@ -44,6 +58,8 @@ def todoPage(request,pk):
 @user_is_project_admin
 def deleteTodo(request, pk, todo_pk):
     project = Project.objects.get(id=pk)
+    members = project.project_members.all()
+
     todo = project.todo_set.get(id=todo_pk)
     remaining_todo_set = Todo.objects.filter(project=project)
     deleteform = DeleteForm(request.POST)
@@ -53,6 +69,14 @@ def deleteTodo(request, pk, todo_pk):
                 i.rank -=1
                 i.save()
         todo.delete()
+
+        modified_by = members.get(user=request.user)
+        project.cal_last_modified = datetime.now()
+        project.cal_last_modified_by = modified_by
+        project.last_modified = datetime.now()
+        project.last_modified_by = modified_by
+        project.save()
+
         return redirect('/project/' + str(pk) + '/todo/')
     else:
         deleteform = DeleteForm()
@@ -103,15 +127,28 @@ def editTodo(request, pk, todo_pk):
     project = Project.objects.get(id=pk)
     todo = project.todo_set.get(id=todo_pk)
     members = project.project_members.all()
-    editForm = EditTodoForm(request.POST)
-    if request.method == 'POST' and todo.todo != editForm.data:
+
+    if request.method == 'POST':
+        editForm = TodoForm(pk, request.POST)
         modified_by = members.get(user=request.user)
         todo.todo = editForm.data['todo']
+        
+        todo.deadline = editForm.data['deadline']
+        
+        todo.assigned_to = members.get(pk=editForm.data['assigned_to'])
+
         todo.last_modified_by = modified_by
         todo.last_modified = datetime.now()
         todo.save()
-    else:
-        editForm = EditTodoForm()
 
-    context = {'project':project, 'todo':todo, 'editForm': editForm}
+        project.cal_last_modified = datetime.now()
+        project.cal_last_modified_by = modified_by
+        project.last_modified = datetime.now()
+        project.last_modified_by = modified_by
+        project.save()
+        return redirect('/project/' + str(pk) + '/todo/')
+    else:
+        editForm = TodoForm(pk, instance=todo)
+
+    context = {'project':project, 'todo':todo, 'editform': editForm}
     return render(request, 'todo/edit_todo.html', context)

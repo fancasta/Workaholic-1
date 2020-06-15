@@ -15,6 +15,14 @@ class Project(models.Model):
     project_members = models.ManyToManyField(Project_Member)
     
     calendar_month = models.DateTimeField()
+    cal_last_modified_by = models.ForeignKey(Project_Member, on_delete=models.CASCADE, related_name='cal_last_modified',null=True)
+    cal_last_modified = models.DateTimeField(null=True)
+
+    board_last_modified_by =  models.ForeignKey(Project_Member, on_delete=models.CASCADE, related_name='board_last_modified',null=True)
+    board_last_modified = models.DateTimeField(null=True)
+
+    last_modified_by = models.ForeignKey(Project_Member, on_delete=models.CASCADE, related_name='project_last_modified', null=True)
+    last_modified = models.DateTimeField(null=True)
 
     def __str__(self):
         return self.name

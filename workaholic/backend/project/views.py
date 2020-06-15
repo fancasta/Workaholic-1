@@ -65,7 +65,6 @@ def deleteMember(request, pk, member_pk):
     context = {'project':project, 'member':member, 'deleteform': deleteform}
     return render(request, 'project/delete_member.html', context)
 
-
 @login_required
 @user_is_project_member
 @user_is_project_admin
