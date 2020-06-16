@@ -11,6 +11,8 @@ import calendar
 
 from accounts.models import *
 from project.decorators import *
+from todo.forms import DeleteForm
+from todo.models import Todo
 
 from .forms import *
 from .models import *
@@ -97,3 +99,30 @@ def event(request, pk, event_id=None):
     context = {'project':project,'form': form, 'event':event}
     return render(request, 'cal/event.html', context)
 
+@login_required
+@user_is_project_member
+def deleteEvent(request, pk, event_id):
+    project = Project.objects.get(id=pk)
+    members = project.project_members.all()
+    event = project.event_set.get(id=event_id)
+    deleteform = DeleteForm(request.POST)
+
+    if request.method == 'POST' and deleteform.data:
+        todo = Todo.objects.get(event=event)
+        todo.delete()
+        event.delete()
+
+
+        modified_by = members.get(user=request.user)
+        project.cal_last_modified = datetime.now()
+        project.cal_last_modified_by = modified_by
+        project.last_modified = datetime.now()
+        project.last_modified_by = modified_by
+        project.save()
+
+        return redirect('/project/' + str(pk) + '/calendar/')
+    else:
+        deleteform = DeleteForm()
+
+    context = {'project':project, 'event':event, 'deleteform': deleteform, 'event_pk':event_id}
+    return render(request, 'cal/delete_event.html', context)

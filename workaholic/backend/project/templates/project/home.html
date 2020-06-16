@@ -39,12 +39,25 @@
                 {% if i in admin_members %}
                 <tr>
                     <td>{{i}} <span class="badge badge-secondary">Admin</span></td>    
-                    <td></td>
+
+                    {% if request.user in admin_users %}
+                        {% if i.user != request.user %}
+                            <td>
+                                <a class="btn btn-warning" href="{% url 'removeAdmin' project.pk i.pk %}">Remove Admin</a>
+                            </td>
+                        {% endif %}
+                    {% endif %}
                 </tr>
                 {% else %}
                 <tr>
                     <td>{{i}}</td> 
-                    <td><a href="{% url 'deleteMember' project.pk i.pk %}">Delete Member</a></td>
+                    <td>
+                        {% if request.user in admin_users %}
+                            <a class="btn btn-info" href="{% url 'setAdmin' project.pk i.pk %}">Set Admin</a>
+                            <a class="btn btn-danger" href="{% url 'deleteMember' project.pk i.pk %}">Delete Member</a>
+                        {% endif %}
+                    </td>
+
                 </tr>
                 {% endif %}
             {% endfor %}

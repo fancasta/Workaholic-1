@@ -6,6 +6,8 @@ urlpatterns = [
     path('<str:pk>/', views.projectPage, name="projectPage"),
     
     path('<str:pk>/delete_member/<str:member_pk>/', views.deleteMember, name="deleteMember"),
+    path('<str:pk>/set_admin/<str:member_pk>/', views.setAdmin, name="setAdmin"),
+    path('<str:pk>/remove_admin/<str:member_pk>/', views.removeAdmin, name="removeAdmin"),
     path('<str:pk>/chat/', include('chat.urls')),
 
     path('<str:pk>/todo/', include('todo.urls')),

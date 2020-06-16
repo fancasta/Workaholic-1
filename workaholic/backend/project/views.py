@@ -79,3 +79,39 @@ def deleteProject(request, pk):
 
     context = {'project':project, 'deleteform': deleteform}
     return render(request, 'project/delete_project.html', context)
+
+
+@login_required
+@user_is_project_member
+@user_is_project_admin
+def setAdmin(request, pk, member_pk):
+    project = Project.objects.get(id=pk)
+    member = project.project_members.get(id=member_pk)
+    user = User.objects.get(project_member=member)
+    setadminform = SetAdminForm(request.POST)
+    if request.method == 'POST' and setadminform.data:
+        project.project_admin.add(user)
+        return redirect('/project/' + str(pk) + '/')
+    else:
+        setadminform = SetAdminForm()
+
+    context = {'project':project, 'member':member, 'setadminform': setadminform, 'user':user}
+    return render(request, 'project/set_admin.html', context)
+
+
+@login_required
+@user_is_project_member
+@user_is_project_admin
+def removeAdmin(request, pk, member_pk):
+    project = Project.objects.get(id=pk)
+    member = project.project_members.get(id=member_pk)
+    user = User.objects.get(project_member=member)
+    deleteform = DeleteForm(request.POST)
+    if request.method == 'POST' and deleteform.data:
+        project.project_admin.remove(user)
+        return redirect('/project/' + str(pk) + '/')
+    else:
+        deleteform = DeleteForm()
+
+    context = {'project':project, 'member':member, 'deleteform': deleteform, 'user':user}
+    return render(request, 'project/remove_admin.html', context)
