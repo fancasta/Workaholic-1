@@ -16,9 +16,11 @@ class Calendar(HTMLCalendar):
         events_end_per_day = events.filter(end_time__day=day)
         d = ''
         for event in events_start_per_day:
-            d += f'<li> Start day: {event.get_html_url} </li>'
+            d += f'<li> Start day: {event.get_html_url} {event.delete_url}</li>'
+
         for event in events_end_per_day:
-            d += f'<li> End day: {event.get_html_url} </li>'
+            d += f'<li> End day: {event.get_html_url} {event.delete_url} </li>'
+    
         if day != 0:
             return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
         return f'<td></td>'

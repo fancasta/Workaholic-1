@@ -64,11 +64,15 @@ def deleteTodo(request, pk, todo_pk):
     remaining_todo_set = Todo.objects.filter(project=project)
     deleteform = DeleteForm(request.POST)
     if request.method == 'POST' and deleteform.data:
+
         for i in remaining_todo_set:
             if i.rank > todo.rank:
                 i.rank -=1
                 i.save()
+        event = Event.objects.get(todo=todo)
+        event.delete()
         todo.delete()
+        
 
         modified_by = members.get(user=request.user)
         project.cal_last_modified = datetime.now()

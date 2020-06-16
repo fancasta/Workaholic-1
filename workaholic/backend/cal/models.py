@@ -20,3 +20,8 @@ class Event(models.Model):
         url = 'event/' + str(self.id) + '/'
         return f'<a href="{url}"> {self.title} </a>'
 
+    @property
+    def delete_url(self):
+        url = 'event/' + str(self.id) + '/delete_event/'
+        return f'<a href="{url}"> Delete </a>'
+

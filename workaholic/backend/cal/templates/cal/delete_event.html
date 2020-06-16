@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Delete Event
+    </title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
+</head>
+<body>
+    <h3>{{project.name}}</h3>
+    <div>
+        {{ event.title }}
+        <div>
+            <form method="POST">
+                {% csrf_token %}
+
+                {{deleteform}}
+
+                <input type="submit" name="Delete">
+            </form>
+        </div>
+    </div>
+
+    <a href="/project/{{project.pk}}/calendar/">Back</a>
+</body>
+</html>
