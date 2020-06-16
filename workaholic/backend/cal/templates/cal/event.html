@@ -31,7 +31,7 @@
         </table>
     </form>
 
-    <p><a href='/project/{{project.pk}}/calendar/' class="btn btn-warning" role="button">Back</a></p>
+    <p><a href="{% url 'viewEvent' project.pk event_pk %}" class="btn btn-warning" role="button">Back</a></p>
 </body>
 
 </html>

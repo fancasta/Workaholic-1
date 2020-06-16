@@ -16,12 +16,17 @@ class Event(models.Model):
     todo = models.ForeignKey(Todo, on_delete=models.CASCADE, null=True)
     
     @property
-    def get_html_url(self):
+    def view_event_url(self):
         url = 'event/' + str(self.id) + '/'
         return f'<a href="{url}"> {self.title} </a>'
 
     @property
-    def delete_url(self):
+    def edit_event_url(self):
+        url = 'event/' + str(self.id) + '/' + 'edit_event/'
+        return f'<a href="{url}"> Edit </a>'
+
+    @property
+    def delete_event_url(self):
         url = 'event/' + str(self.id) + '/delete_event/'
         return f'<a href="{url}"> Delete </a>'
 

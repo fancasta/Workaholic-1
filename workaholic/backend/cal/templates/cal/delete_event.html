@@ -24,6 +24,6 @@
         </div>
     </div>
 
-    <a href="/project/{{project.pk}}/calendar/">Back</a>
+    <a href="{% url 'viewEvent' project.pk event_pk %}" class="btn btn-warning" role="button">Back</a>
 </body>
 </html>
