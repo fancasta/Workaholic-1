@@ -66,9 +66,10 @@ def next_month(d):
     month = str(next_month.year) + '-' + str(next_month.month)
     return month
 
+
 @login_required
 @user_is_project_member
-def event(request, pk, event_id=None):
+def editEvent(request, pk, event_id=None):
     project = Project.objects.get(id=pk)
     members = project.project_members.all()
     if event_id:
@@ -82,7 +83,15 @@ def event(request, pk, event_id=None):
         event.description = form.data['description']
         event.start_time = form.data['start_time']
         event.end_time = form.data['end_time']
-        event.save()
+
+        try:
+            todo = Todo.objects.get(event=event)
+            todo.deadline = event.end_time
+            todo.todo = event.title
+            todo.save()
+            event.save()
+        except:
+            event.save()
 
         modified_by = members.get(user=request.user)
         
@@ -96,8 +105,19 @@ def event(request, pk, event_id=None):
     else:
         form = EventForm(instance=event)
 
-    context = {'project':project,'form': form, 'event':event}
+    context = {'project':project,'form': form, 'event':event, 'event_pk':event_id}
     return render(request, 'cal/event.html', context)
+
+@login_required
+@user_is_project_member
+def viewEvent(request, pk, event_id):
+    project = Project.objects.get(id=pk)
+    members = project.project_members.all()
+    event = project.event_set.get(id=event_id)
+
+    context = {'project':project, 'event':event, 'event_pk':event_id}
+    return render(request, 'cal/view_event.html', context)
+
 
 @login_required
 @user_is_project_member
@@ -108,10 +128,12 @@ def deleteEvent(request, pk, event_id):
     deleteform = DeleteForm(request.POST)
 
     if request.method == 'POST' and deleteform.data:
-        todo = Todo.objects.get(event=event)
-        todo.delete()
-        event.delete()
-
+        try:
+            todo = Todo.objects.get(event=event)
+            todo.delete()
+            event.delete()
+        except:
+            event.delete()
 
         modified_by = members.get(user=request.user)
         project.cal_last_modified = datetime.now()
