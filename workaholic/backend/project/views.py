@@ -18,6 +18,7 @@ from .decorators import user_is_project_member, user_is_project_admin
 from .forms import *
 from todo.forms import *
 from todo.models import Todo
+from board.models import Board
 
 # Create your views here.
 
@@ -28,6 +29,11 @@ def projectPage(request,pk):
     members = project.project_members.all()
     admin_users = project.project_admin.all()
     admin_members = []
+    try:
+        board = Board.objects.get(project=project)
+    except:
+        board = Board(project=project)
+        
     for i in admin_users:
         admin_members.append(members.get(user=i))
 
@@ -46,7 +52,7 @@ def projectPage(request,pk):
     else:
         addMemberform = AddMemberForm()
 
-    context = {'project':project, 'members':members, 'admin_members':admin_members, 'addMemberform':addMemberform, 'admin_users':admin_users}
+    context = {'project':project, 'members':members, 'admin_members':admin_members, 'addMemberform':addMemberform, 'admin_users':admin_users, 'board':board}
     return render(request, 'project/home.html', context)
 
 @login_required

@@ -10,19 +10,29 @@
 
 </head>
 <body>
-    <h3>{{project.name}}</h3>
-    <div>
-        {{ todo.todo}}
-        <div>
-            <form method="POST">
-                {% csrf_token %}
+    {% include 'accounts/navbar.html' %} </br>
 
-                {{deleteform}}
-                <input type="submit" name="Delete">
-            </form>
-        </div>
+    <div class="container shadow my-5 py-5 form-group">
+        <h2>Confirm delete todo <strong>"{{todo.todo}}"</strong>?</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <table class="form">
+                <tr>
+                    <td>
+                        <label for="delete-todo">
+                            Warning: Action will be irreversible!
+                        </label>    
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="btn btn-warning"" href="/project/{{project.pk}}/todo/">Back</a>
+                        <input class="btn btn-danger" type="submit" name="Delete" value="Delete">            
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
-
-    <a href="/project/{{project.pk}}/todo/">Back</a>
 </body>
 </html>
