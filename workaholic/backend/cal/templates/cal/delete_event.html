@@ -10,20 +10,29 @@
 
 </head>
 <body>
-    <h3>{{project.name}}</h3>
-    <div>
-        {{ event.title }}
-        <div>
-            <form method="POST">
-                {% csrf_token %}
+    {% include 'accounts/navbar.html' %} </br>
 
-                {{deleteform}}
-
-                <input type="submit" name="Delete">
-            </form>
-        </div>
+    <div class="container shadow my-5 py-5 form-group">
+        <h2>Confirm delete event <strong>"{{event.title}}"</strong>?</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <table class="form">
+                <tr>
+                    <td>
+                        <label for="delete-event">
+                            Warning: Action will be irreversible!
+                        </label>    
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="btn btn-warning"" href="{% url 'viewEvent' project.pk event_pk %}">Back</a>
+                        <input class="btn btn-danger" type="submit" name="Delete" value="Delete">            
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
-
-    <a href="{% url 'viewEvent' project.pk event_pk %}" class="btn btn-warning" role="button">Back</a>
 </body>
 </html>

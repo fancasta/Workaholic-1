@@ -11,21 +11,28 @@
 <body>
     {% include 'accounts/navbar.html' %} </br>
 
-    <h3>{{project.name}}</h3>
-
-    <div>
-        Set {{user}} as admin?
-        <div>
-            <form method="POST">
-                {% csrf_token %}
-
-                {{setadminform}}
-                
-                <input type="submit" name="Confirm">
-            </form>
-        </div>
+    <div class="container shadow my-5 py-5 form-group">
+        <h2>Set <strong>"{{member}} "</strong> as project admin?</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <table class="form">
+                <tr>
+                    <td>
+                        <label for="set-admin">
+                            Warning: Action will be irreversible!
+                        </label>    
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="btn btn-warning"" href="/project/{{project.pk}}/">Back</a>
+                        <input class="btn btn-success" type="submit" name="set-admin" value="Set Admin">            
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
 
-    <a href="/project/{{project.pk}}/" class="btn btn-warning" role="button">Back</a>
 </body>
 </html>

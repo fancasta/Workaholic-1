@@ -14,11 +14,11 @@
     <body>
         {% include 'accounts/navbar.html' %} </br>
 
-        <div class="container-fluid">
+        <div class="container">
             <h2>Welcome back, @{{ request.user }}</h3>
         </div></br>
 
-        <div class="container-fluid">
+        <div class="container">
             <h3> My Projects
             <a class="btn btn-success" href="{% url 'createProject' %}" id="create-project" role="button">New Project</a>
             </h3>

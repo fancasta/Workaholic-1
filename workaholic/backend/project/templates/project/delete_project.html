@@ -2,28 +2,38 @@
 <html>
 <head>
     <title>
-        Delete Member
+        Delete Project
     </title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 </head>
-<body>
-    {% include 'accounts/navbar.html' %} </br>
 
-    <div>
-        Delete {{project.name}}?
-        <div>
+    <body>
+        {% include 'accounts/navbar.html' %} </br>
+    
+        <div class="container shadow my-5 py-5 form-group">
+            <h2>Confirm delete project <strong>"{{project.name}}"</strong>?</h2>
+            
             <form method="POST">
                 {% csrf_token %}
-
-                {{deleteform}}
-                
-                <input type="submit" name="Delete">
+                <table class="form">
+                    <tr>
+                        <td>
+                            <label for="delete-project">
+                                Warning: Action will be irreversible!
+                            </label>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a class="btn btn-warning"" href="{% url 'index' %}">Back</a>
+                            <input class="btn btn-danger" type="submit" name="Delete" value="Delete">            
+                        </td>
+                    </tr>
+                </table>
             </form>
         </div>
-    </div>
+    </body>
 
-    <a href="/" class="btn btn-warning" role="button">Back</a>
-</body>
 </html>

@@ -12,16 +12,16 @@
     {% include 'accounts/navbar.html' %} </br>
 
     <div class="container shadow my-5 py-5 form-group">
-        <h2>Create New Project</h2>
+        <h2>Create New Project</h2></br>
         
-        <form method="POST">
+        <form method="POST" action="/accounts/create_project/">
             {% csrf_token %}
-
-            <label for="project_name">Project Name</label>
-            <input type="text" id="project_name">
-            <input type="submit"  class="btn btn-primary" name="Submit">
+            {% for field in form %}
+                <p>{{field.label_tag}} {{field}}</p>
+            {% endfor %}
+            <a class="btn btn-warning"" href="{% url 'index' %}">Back</a>
+            <input type="submit"  class="btn btn-primary" name="Submit"> 
         </form>
-        <a class="btn btn-warning"" href="{% url 'index' %}">Back</a>
     </div>
 </body>
 </html>

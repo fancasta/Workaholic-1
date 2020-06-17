@@ -11,8 +11,6 @@ class Calendar(HTMLCalendar):
     
     def formatday(self, pk, day, events):
         events_start_per_day = events.filter(start_time__day=day)
-        events_start_per_day = events.filter(start_time__day=day)
-        events_end_per_day = events.filter(end_time__day=day)
         events_end_per_day = events.filter(end_time__day=day)
         d = ''
         for event in events_start_per_day:

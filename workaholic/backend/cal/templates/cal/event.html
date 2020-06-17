@@ -28,10 +28,15 @@
             {% csrf_token %}
             <table class="form">
             {{ form }}
+            <tr>
+                <td>
+                    <button type="submit" class="btn btn-info right"> Submit </button>   
+                </td>
+            </tr>
+
             </table>
         </form>
         <a href="/project/{{project.pk}}/calendar/" class="btn btn-warning">Back</a>
-        <button type="submit" class="btn btn-info right"> Submit </button>
         
     </div>
 </body>
