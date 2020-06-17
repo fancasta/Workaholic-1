@@ -9,16 +9,19 @@
 
 </head>
 <body>
-    Welcome back, {{ request.user }}
-    <div>
-        <form method="POST" action='' %}">
+    {% include 'accounts/navbar.html' %} </br>
+
+    <div class="container shadow my-5 py-5 form-group">
+        <h2>Create New Project</h2>
+        
+        <form method="POST">
             {% csrf_token %}
 
-            {{ form }}
-
-            <input type="submit" name="Submit">
+            <label for="project_name">Project Name</label>
+            <input type="text" id="project_name">
+            <input type="submit"  class="btn btn-primary" name="Submit">
         </form>
+        <a class="btn btn-warning"" href="{% url 'index' %}">Back</a>
     </div>
-    <a href="{% url 'index' %}">Back</a>
 </body>
 </html>

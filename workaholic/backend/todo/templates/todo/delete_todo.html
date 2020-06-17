@@ -12,15 +12,12 @@
 <body>
     <h3>{{project.name}}</h3>
     <div>
-        {{ todo.todo}}
-        <div>
-            <form method="POST">
-                {% csrf_token %}
+        <form method="POST">
+            {% csrf_token %}
 
-                {{deleteform}}
-                <input type="submit" name="Delete">
-            </form>
-        </div>
+            {{deleteform}}
+            <input type="submit" name="Delete">
+        </form>
     </div>
 
     <a href="/project/{{project.pk}}/todo/">Back</a>

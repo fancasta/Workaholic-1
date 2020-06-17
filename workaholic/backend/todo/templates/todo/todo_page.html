@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>
-        {{project.name}}
+        {{project.name}} - Todo
     </title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -71,7 +71,9 @@
                 <div class="modal-body">
                     <form method="POST">
                         {% csrf_token %}
-                        {{todoform}}
+                        <table class="form">
+                            {{ todoform }}
+                        </table>
                         <input type="submit" value="Submit">
                     </form>
                 </div>

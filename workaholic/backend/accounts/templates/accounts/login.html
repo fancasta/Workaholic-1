@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="container p-5">    
+    <div class="container shadow mt-5 p-5">    
         <h1>Login Page</h1>
         <form  method="POST" action="{% url 'login' %}">
             {% csrf_token %}
@@ -22,7 +22,7 @@
                 <label for="password">Password</label>
                 <input type="password" name="password" placeholder="Password..." class="form-control" >
             </p>
-            <div>
+            <div btn-group>
                 <input type="submit" value="Login" class="btn btn-primary"> <a href="{% url 'password_reset' %}">Forgot Password</a>
             </div></form></br>
 
