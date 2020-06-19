@@ -10,7 +10,7 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
-
+from datetime import datetime
 # Create your views here.
 from accounts.models import *
 
@@ -52,7 +52,15 @@ def projectPage(request,pk):
     else:
         addMemberform = AddMemberForm()
 
-    context = {'project':project, 'members':members, 'admin_members':admin_members, 'addMemberform':addMemberform, 'admin_users':admin_users, 'board':board}
+    context = {
+        'project':project, 
+        'members':members, 
+        'admin_members':admin_members, 
+        'addMemberform':addMemberform, 
+        'admin_users':admin_users, 
+        'board':board,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'project/home.html', context)
 
 @login_required
@@ -68,7 +76,12 @@ def deleteMember(request, pk, member_pk):
     else:
         deleteform = DeleteForm()
 
-    context = {'project':project, 'member':member, 'deleteform': deleteform}
+    context = {
+        'project':project, 
+        'member':member, 
+        'deleteform': deleteform,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'project/delete_member.html', context)
 
 @login_required
@@ -83,7 +96,11 @@ def deleteProject(request, pk):
     else:
         deleteform = DeleteForm()
 
-    context = {'project':project, 'deleteform': deleteform}
+    context = {
+        'project':project, 
+        'deleteform': deleteform,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'project/delete_project.html', context)
 
 
@@ -101,7 +118,13 @@ def setAdmin(request, pk, member_pk):
     else:
         setadminform = SetAdminForm()
 
-    context = {'project':project, 'member':member, 'setadminform': setadminform, 'user':user}
+    context = {
+        'project':project, 
+        'member':member, 
+        'setadminform': setadminform, 
+        'user':user,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'project/set_admin.html', context)
 
 
@@ -119,5 +142,11 @@ def removeAdmin(request, pk, member_pk):
     else:
         deleteform = DeleteForm()
 
-    context = {'project':project, 'member':member, 'deleteform': deleteform, 'user':user}
+    context = {
+        'project':project, 
+        'member':member, 
+        'deleteform': deleteform, 
+        'user':user,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'project/remove_admin.html', context)

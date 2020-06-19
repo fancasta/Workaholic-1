@@ -5,32 +5,35 @@
 
     </head>
     <body>
-        <div class="container shadow my-5 py-5">
-            <h2>Create an account</h2></br>
-            <form method="POST" action="{% url 'register' %}">
-                {% csrf_token %}
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-4 m-auto shadow p-3">
+                    <h2>Create an account</h2></br>
+                    <form method="POST" action="{% url 'register' %}">
+                        <div class="form-group">
+                            {% csrf_token %}
 
-                {% for field in form %}
-                    <p>
-                        <strong>{{field.label_tag}}</strong>
-                        {{field}}
+                            {% for field in form %}
+                                <label>{{field.label_tag}}</label>
+                                {{field}}
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{field.help_text}}</small>
+                                {% endif %}
 
-                        {% if field.help_text %}
-                            <p>{{field.help_text}}</p>
-                        {% endif %}
-
-                        {% for error in field.errors %}
-                            <p class= "alert alert-warning">{{error}}</p>
-                        {% endfor %}
-                    </p>
-                {% endfor %}
-                <div class="btn-group">
-                    <a class="btn btn-warning" role="button"href="{% url 'login' %}">Back</a>
+                                {% for error in field.errors %}
+                                    <p class= "alert alert-warning">{{error}}</p>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-6 m-auto">
+                                <a class="btn btn-warning" role="button"href="{% url 'login' %}">Back</a>
+                                <input type="submit" value="Register" class="btn btn-success ">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="btn-group">
-                    <input type="submit" value="Register" class="btn btn-success">
-                </div>
-            </form>
+            </div>
         </div>
     </body>
 

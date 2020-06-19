@@ -50,7 +50,13 @@ def todoPage(request,pk):
     else:
         todoform = TodoForm(pk)
 
-    context = {'project':project, 'members':members, 'todoform':todoform, 'todo':todo}
+    context = {
+        'project':project, 
+        'members':members, 
+        'todoform':todoform, 
+        'todo':todo,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'todo/todo_page.html', context)
 
 @login_required
@@ -85,7 +91,12 @@ def deleteTodo(request, pk, todo_pk):
     else:
         deleteform = DeleteForm()
 
-    context = {'project':project, 'todo':todo, 'deleteform': deleteform}
+    context = {
+        'project':project, 
+        'todo':todo, 
+        'deleteform': deleteform,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'todo/delete_todo.html', context)
 
 
@@ -103,7 +114,11 @@ def upTodoRank(request, pk, todo_pk):
         todo.rank -=1 
         todo.save()
         return redirect('/project/' + str(pk) + '/todo/')
-    context = {'project':project, 'todo':todo}
+    context = {
+        'project':project, 
+        'todo':todo,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'todo/todo_page.html', context)
 
 
@@ -121,7 +136,11 @@ def downTodoRank(request, pk, todo_pk):
         todo.rank +=1 
         todo.save()
         return redirect('/project/' + str(pk) + '/todo/')
-    context = {'project':project, 'todo':todo}
+    context = {
+        'project':project, 
+        'todo':todo,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'todo/todo_page.html', context)
 
 
@@ -154,5 +173,10 @@ def editTodo(request, pk, todo_pk):
     else:
         editForm = TodoForm(pk, instance=todo)
 
-    context = {'project':project, 'todo':todo, 'editform': editForm}
+    context = {
+        'project':project, 
+        'todo':todo, 
+        'editform': editForm,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'todo/edit_todo.html', context)

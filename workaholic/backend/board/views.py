@@ -39,5 +39,10 @@ def boardPage(request, pk):
     else:
         form = BoardForm(instance=board)
 
-    context = {'project':project, 'form':form, 'board':board}
+    context = {
+        'project':project, 
+        'form':form, 
+        'board':board,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'board/board_page.html', context)

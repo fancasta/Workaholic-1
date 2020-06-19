@@ -1,118 +1,90 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
-        {{project.name}}
-    </title>
+{% extends 'base.html' %}
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-</head>
-<body>
-    {% include 'accounts/navbar.html' %} </br>
+{% block title %} {{project.name}} {% endblock %}
 
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-          <h1 class="display-4">{{project.name}}</h1></br>
-          <p><strong>Last modified:</strong> {{project.last_modified}} <small>by</small> {{project.last_modified_by}}</p>
-          <a href="chat/" class="btn btn-info" role="button">Discussion Space</a>
-          <a href="{% url 'calendarPage' project.pk 'current_month' %}" class="btn btn-warning" role="button">Calendar</a>
-        </div>
-
+{% block content %}
+<div class="container">
+    <div class="jumbotron text-center">
+          <h1 class="display-4 text-uppercase mb-4"> {{project.name}}</h1>
+          <p><strong>Last modified:</strong> {{project.last_modified}} by <kbd>{{project.last_modified_by}} </kbd> </p>
     </div>
+</div>
+
+{% include 'partials/_project_navbar.html' %}
+
     
-    <div class="container-fluid">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Project Members</th>
-                    <th>
-                        {% if request.user in admin_users %}
-                            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#addMembers">Add Member</button>
-                        {% endif %}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+<div class="container mt-4">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Project Members</th>
+                <th>
+                    {% if request.user in admin_users %}
+                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addMembers">Add Member</button>
+                    {% endif %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
             {% for i in members %}
                 {% if i in admin_members %}
-                <tr>
-                    <td>{{i}} <span class="badge badge-secondary">Admin</span></td>    
-
-                    {% if request.user in admin_users %}
-                        {% if i.user != request.user %}
-                            <td>
-                                <a class="btn btn-warning" href="{% url 'removeAdmin' project.pk i.pk %}">Remove Admin</a>
-                            </td>
+                    <tr>
+                        <td>{{i}} <span class="badge badge-secondary">Admin</span> </td>    
+                        {% if request.user in admin_users %}
+                            {% if i.user != request.user %}
+                                <td>
+                                    <a class="btn btn-warning btn-sm" href="{% url 'removeAdmin' project.pk i.pk %}">Remove Admin</a>
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                </tr>
+                    </tr>
                 {% else %}
                 <tr>
                     <td>{{i}}</td> 
                     <td>
                         {% if request.user in admin_users %}
-                            <a class="btn btn-info" href="{% url 'setAdmin' project.pk i.pk %}">Set Admin</a>
-                            <a class="btn btn-danger" href="{% url 'deleteMember' project.pk i.pk %}">Delete Member</a>
+                            <a class="btn btn-info btn-sm" href="{% url 'setAdmin' project.pk i.pk %}">Set Admin</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'deleteMember' project.pk i.pk %}">Delete Member</a>
                         {% endif %}
                     </td>
 
                 </tr>
                 {% endif %}
             {% endfor %}
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
+</div>
 
-    <div class="card bg-light mb-5">
-        <div class="card-body">
-            <h4 class="card-title">Todo</h4>
-            <p>The important things to do!</p>
-            <a href='todo/'class="btn btn-info" role="button">Todo</a>
+<div class="modal" id="addMembers" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Add Member</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST">
+                {% csrf_token %}
+                Add Member:
+                <input type="text" name="project_member"> 
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="alert alert-warning" role="alert">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+                <input type="submit" value="Submit" class = "btn btn-info btn-sm">
+            </form>
+        </div>
         </div>
     </div>
-
-    <div class="card bg-light mb-5">
-        <div class="card-body">
-            <h4 class="card-title">Project Board</h4>
-            <p>Overview of the most important information!</p>
-            <a href='board/'class="btn btn-info" role="button">Board</a>
-        </div>
-    </div>
-
-    <a href='/' class="btn btn-warning" role="button">Back</a>
-
-
-    <div class="modal" id="addMembers" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Add Member</h5>
-            </div>
-            <div class="modal-body">
-                <form method="POST">
-                    {% csrf_token %}
-                    Add Member:
-                    <input type="text" name="project_member"> 
-                    {% if messages %}
-                        {% for message in messages %}
-                            <p class="alert alert-warning" role="alert">{{message}}</p>
-                        {% endfor %}
-                    {% endif %}
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+</div>
 
 
 </body>
 
 </html>
+{% endblock %}

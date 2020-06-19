@@ -56,7 +56,10 @@ def registerPage(request):
     else:        
         form = UserCreationForm_Edited()
 
-    context = {'form' : form}
+    context = {
+        'form' : form,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'accounts/register.html', context)
 
 def activate(request, uidb64, token):
@@ -96,7 +99,11 @@ def logoutPage(request):
 def index(request):
     member = Project_Member.objects.get(user= request.user)
     projects = Project.objects.filter(project_members= member).order_by('-last_modified')
-    context = {'projects':projects}
+    context = {
+        'projects':projects,
+        'Year': datetime.now().strftime("%Y")
+
+    }
     return render(request, 'accounts/index.html', context)
 
 @login_required(login_url='login')
@@ -112,7 +119,10 @@ def createProject(request):
         messages.success(request, 'Project was created successfully!')            
         return redirect('/')
 
-    context = {'form':form}
+    context = {
+        'form':form,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'accounts/create_project.html', context)
 
 

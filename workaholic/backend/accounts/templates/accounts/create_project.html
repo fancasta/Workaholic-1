@@ -1,27 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
-        Create Project
-    </title>
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+{% extends 'base.html' %}
 
-</head>
-<body>
-    {% include 'accounts/navbar.html' %} </br>
+{% block title %} Create Project {% endblock %}
 
-    <div class="container shadow my-5 py-5 form-group">
-        <h2>Create New Project</h2></br>
-        
-        <form method="POST" action="/accounts/create_project/">
-            {% csrf_token %}
-            {% for field in form %}
-                <p>{{field.label_tag}} {{field}}</p>
-            {% endfor %}
-            <a class="btn btn-warning"" href="{% url 'index' %}">Back</a>
-            <input type="submit"  class="btn btn-primary" name="Submit"> 
-        </form>
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-6 m-auto">
+            <h4 class="col-10 display-4">CREATE PROJECT</h4>
+            <form method="POST" action="/accounts/create_project/">
+                {% csrf_token %}
+                {% for field in form %}
+                    <h4 class="mt-4">{{field.label_tag}} {{field}}</h4>
+                {% endfor %}
+                <div class="row mt-4">
+                    <a class="btn btn-warning col-4" href="{% url 'index' %}">Back</a>
+                    <input type="submit"  class="btn btn-primary col-4 offset-2 " name="Submit">
+                </div> 
+            </form>
+        </div>
     </div>
-</body>
-</html>
+</div>
+    
+
+{% endblock %}

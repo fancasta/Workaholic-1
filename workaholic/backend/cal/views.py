@@ -44,7 +44,11 @@ def calendarPage(request,pk,action=None):
 
     cal = Calendar(d.year, d.month)
     html_cal = cal.formatmonth(pk, withyear=True)
-    context = {'project':project, 'calendar':html_cal}
+    context = {
+        'project':project, 
+        'calendar':html_cal,
+        'Year': datetime.now().strftime("%Y")
+        }
     return render(request,'cal/calendar.html',context)
 
 def get_date(req_month):
@@ -101,11 +105,17 @@ def editEvent(request, pk, event_id=None):
         project.last_modified_by = modified_by
         project.save()
         
-        return redirect('/project/' + str(pk) + '/calendar/')
+        return redirect('/project/' + str(pk) + '/calendar/event/' + str(event.id) +'/')
     else:
         form = EventForm(instance=event)
 
-    context = {'project':project,'form': form, 'event':event, 'event_pk':event_id}
+    context = {
+        'project':project,
+        'form': form,
+        'event':event,
+        'event_pk':event_id,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'cal/event.html', context)
 
 @login_required
@@ -115,7 +125,12 @@ def viewEvent(request, pk, event_id):
     members = project.project_members.all()
     event = project.event_set.get(id=event_id)
 
-    context = {'project':project, 'event':event, 'event_pk':event_id}
+    context = {
+        'project':project, 
+        'event':event, 
+        'event_pk':event_id,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'cal/view_event.html', context)
 
 
@@ -146,5 +161,11 @@ def deleteEvent(request, pk, event_id):
     else:
         deleteform = DeleteForm()
 
-    context = {'project':project, 'event':event, 'deleteform': deleteform, 'event_pk':event_id}
+    context = {
+        'project':project, 
+        'event':event, 
+        'deleteform': deleteform, 
+        'event_pk':event_id,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'cal/delete_event.html', context)
