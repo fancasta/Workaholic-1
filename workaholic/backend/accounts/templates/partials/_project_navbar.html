@@ -19,6 +19,8 @@
                                 href='/project/{{project.pk}}/todo/'
                             {% elif 'delete_todo/' in request.path %}
                                 href='/project/{{project.pk}}/todo/'
+                            {% elif 'delete_project' in request.path %}
+                                href='/'
                             {% else %}
                                 href='/project/{{project.pk}}'
                             {% endif %} 
