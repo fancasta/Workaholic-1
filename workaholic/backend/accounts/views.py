@@ -86,7 +86,7 @@ def loginPage(request):
             login(request, user)
             return redirect('index')
         except:
-            messages.info(request, 'Invalid user')
+            messages.info(request,  'Invalid user. For new users, please activate your account through the link emailed to you.')
 
     context = {}
     return render(request, 'accounts/login.html', context)
