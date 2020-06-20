@@ -81,10 +81,11 @@ def loginPage(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username,password=password)
-        if user is not None:
+        try:
+            user = authenticate(username=username,password=password)
             login(request, user)
             return redirect('index')
-        else:
+        except:
             messages.info(request, 'Invalid user')
 
     context = {}
@@ -116,7 +117,6 @@ def createProject(request):
         project.save()
         project.project_admin.add(request.user)
         project.project_members.add(member)
-        messages.success(request, 'Project was created successfully!')            
         return redirect('/')
 
     context = {

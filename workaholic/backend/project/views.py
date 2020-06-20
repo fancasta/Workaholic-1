@@ -45,7 +45,6 @@ def projectPage(request,pk):
             new_member_user = User.objects.get(username=new_member)
             member = Project_Member.objects.get(user=new_member_user)
             project.project_members.add(member)
-            messages.info(request, str(member) + " added successfully!")
         except:
             messages.info(request,'Invalid user') 
             addMemberform = AddMemberForm()
