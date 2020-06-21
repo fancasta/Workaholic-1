@@ -1,0 +1,59 @@
+<!-- FILL & JUSTIFY -->
+<div class="container my-5">
+    <div class="text-center">
+        <div class="btn-group ">
+            <a 
+            {% if 'add_event/' in request.path %}
+                href="{% url 'calendarPage' project.pk 'current_month' %}"
+            {% elif 'edit_event/' in request.path %}
+                href= '/project/{{project.pk}}/calendar/event/{{event.pk}}'
+            {% elif 'delete_event/' in request.path %}
+                href= '/project/{{project.pk}}/calendar/event/{{event.pk}}'
+            {% elif 'event/' in request.path %}
+                href="{% url 'calendarPage' project.pk 'current_month' %}"
+            {% elif 'edit_todo/' in request.path %}
+                href='/project/{{project.pk}}/todo/'
+            {% elif 'delete_todo/' in request.path %}
+                href='/project/{{project.pk}}/todo/'
+            {% elif 'delete_project' in request.path %}
+                href='/'
+            {% else %}
+                href='/project/{{project.pk}}'
+            {% endif %} 
+                class= "btn btn-warning -8" >Back </a>
+
+            <a href="/project/{{project.pk}}/chat/"
+            {% if 'chat/' in request.path %}
+                class=" btn btn-outline-info -8 active"
+            {% else %}
+                class=" btn btn-outline-info -8 "
+            {% endif %}
+            >Chat</a>
+
+            <a href="{% url 'calendarPage' project.pk 'current_month' %}"
+            {% if 'calendar/' in request.path %}
+                class=" btn btn-outline-info -8 active"
+            {% else %}
+                class=" btn btn-outline-info -8 "
+            {% endif %}
+            >Calendar</a>
+
+            <a href='/project/{{project.pk}}/todo/'
+            {% if 'todo/' in request.path %}
+                class=" btn btn-outline-info -8 active"
+            {% else %}
+                class=" btn btn-outline-info -8 "
+            {% endif %}
+            >To-do</a>
+
+            <a href='/project/{{project.pk}}/board/'
+            {% if 'board/' in request.path %}
+                class=" btn btn-outline-info -8 active"
+            {% else %}
+                class=" btn btn-outline-info -8 "
+            {% endif %} 
+            >Board</a>
+
+        </div>
+    </div>
+</div>

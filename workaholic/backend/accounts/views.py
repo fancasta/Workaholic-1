@@ -56,7 +56,10 @@ def registerPage(request):
     else:        
         form = UserCreationForm_Edited()
 
-    context = {'form' : form}
+    context = {
+        'form' : form,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'accounts/register.html', context)
 
 def activate(request, uidb64, token):
@@ -78,11 +81,12 @@ def loginPage(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username,password=password)
-        if user is not None:
+        try:
+            user = authenticate(username=username,password=password)
             login(request, user)
             return redirect('index')
-        else:
-            messages.info(request, 'Invalid user')
+        except:
+            messages.info(request,  'Invalid user. For new users, please activate your account through the link emailed to you.')
 
     context = {}
     return render(request, 'accounts/login.html', context)
@@ -96,7 +100,11 @@ def logoutPage(request):
 def index(request):
     member = Project_Member.objects.get(user= request.user)
     projects = Project.objects.filter(project_members= member).order_by('-last_modified')
-    context = {'projects':projects}
+    context = {
+        'projects':projects,
+        'Year': datetime.now().strftime("%Y")
+
+    }
     return render(request, 'accounts/index.html', context)
 
 @login_required(login_url='login')
@@ -109,10 +117,12 @@ def createProject(request):
         project.save()
         project.project_admin.add(request.user)
         project.project_members.add(member)
-        messages.success(request, 'Project was created successfully!')            
         return redirect('/')
 
-    context = {'form':form}
+    context = {
+        'form':form,
+        'Year': datetime.now().strftime("%Y")
+    }
     return render(request, 'accounts/create_project.html', context)
 
 

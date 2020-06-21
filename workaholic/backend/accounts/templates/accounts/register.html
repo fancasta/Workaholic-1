@@ -2,35 +2,51 @@
     <head>
         <title>Account Creation</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+            
     </head>
     <body>
-        <div class="container shadow my-5 py-5">
-            <h2>Create an account</h2></br>
-            <form method="POST" action="{% url 'register' %}">
-                {% csrf_token %}
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-4 m-auto shadow p-3">
+                    <h2>Create an account</h2></br>
+                    <form method="POST" action="{% url 'register' %}">
+                        <div class="form-group">
+                            {% csrf_token %}
 
-                {% for field in form %}
-                    <p>
-                        <strong>{{field.label_tag}}</strong>
-                        {{field}}
+                            {% for field in form %}
+                                <label>{{field.label_tag}}</label>
+                                {{field}}
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{field.help_text}}</small>
+                                {% endif %}
 
-                        {% if field.help_text %}
-                            <p>{{field.help_text}}</p>
+                                {% for error in field.errors %}
+                                    <p class= "alert alert-warning">{{error}}</p>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                        
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-warning alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                {{message}}
+                            </div>
+                            {% endfor %}
                         {% endif %}
 
-                        {% for error in field.errors %}
-                            <p class= "alert alert-warning">{{error}}</p>
-                        {% endfor %}
-                    </p>
-                {% endfor %}
-                <div class="btn-group">
-                    <a class="btn btn-warning" role="button"href="{% url 'login' %}">Back</a>
+                        <div class="row">
+                            <div class="col-6 m-auto">
+                                <a class="btn btn-warning" role="button"href="{% url 'login' %}">Back</a>
+                                <input type="submit" value="Register" class="btn btn-success ">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="btn-group">
-                    <input type="submit" value="Register" class="btn btn-success">
-                </div>
-            </form>
+            </div>
         </div>
     </body>
 

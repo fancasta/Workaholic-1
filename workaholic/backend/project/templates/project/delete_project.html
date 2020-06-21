@@ -1,39 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
-        Delete Project
-    </title>
+{% extends 'base.html' %}
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+{% block title %} {{project.name}} {% endblock %}
 
-</head>
+{% block content %}
 
-    <body>
-        {% include 'accounts/navbar.html' %} </br>
-    
-        <div class="container shadow my-5 py-5 form-group">
-            <h2>Confirm delete project <strong>"{{project.name}}"</strong>?</h2>
-            
-            <form method="POST">
-                {% csrf_token %}
-                <table class="form">
-                    <tr>
-                        <td>
-                            <label for="delete-project">
-                                Warning: Action will be irreversible!
-                            </label>    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a class="btn btn-warning"" href="{% url 'index' %}">Back</a>
-                            <input class="btn btn-danger" type="submit" name="Delete" value="Delete">            
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-    </body>
+<div class="container shadow my-5 p-5 w-50">
+    <h2 class="text-center mb-4">Confirm delete project <strong>"{{project.name}}"</strong></h2>
 
-</html>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-8 m-auto">
+                <div class="row">
+                    <a class="btn btn-warning col-5 " href='/' > Back </a>
+                    <input class="btn btn-danger col-5 offset-2" type="submit" name="Delete" value="Delete">  
+                </div>
+            </div>
+        </div>     
+    </form>
+</div>
+{% endblock %}

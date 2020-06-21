@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
-        Add Project Member
-    </title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+{% extends 'base.html' %}
 
-</head>
-<body>
-    <h3>{{project.name}}</h3>
+{% block title %} {{project.name}} {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="jumbotron text-center">
+          <h1 class="display-4 text-uppercase mb-4"> {{project.name}}</h1>
+    </div>
+</div>
+
+{% include 'partials/_project_navbar.html' %}
     <div>
         Add Project Members:    
         <div>
@@ -29,6 +31,5 @@
         </div>
     </div>
 
-    <a href="/project/{{project.pk}}/">Back</a>
-</body>
-</html>
+    
+{% endblock %}

@@ -1,38 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
-        Set Admin
-    </title>
+{% extends 'base.html' %}
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+{% block title %} {{project.name}} {% endblock %}
 
-</head>
-<body>
-    {% include 'accounts/navbar.html' %} </br>
+{% block content %}
 
-    <div class="container shadow my-5 py-5 form-group">
-        <h2>Set <strong>"{{member}} "</strong> as project admin?</h2>
-        
-        <form method="POST">
-            {% csrf_token %}
-            <table class="form">
-                <tr>
-                    <td>
-                        <label for="set-admin">
-                            Warning: Action will be irreversible!
-                        </label>    
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a class="btn btn-warning"" href="/project/{{project.pk}}/">Back</a>
-                        <input class="btn btn-success" type="submit" name="set-admin" value="Set Admin">            
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
+<div class="container shadow my-5 p-5 w-50">
+    <h2 class="text-center mb-4">Set <strong>"{{member}}"</strong> as project admin</strong>?</h2>
 
-</body>
-</html>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-8 m-auto">
+                <div class="row">
+                    <a class="btn btn-warning col-5 " href='/project/{{project.pk}}/' > Back </a>
+                    <input class="btn btn-success col-5 offset-2" type="submit" name="set-admin" value="Set Admin">  
+                </div>
+            </div>
+        </div>     
+    </form>
+</div>
+
+{% endblock %}
+
