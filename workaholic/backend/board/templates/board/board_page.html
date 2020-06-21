@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %} {{project.name}}|Chat {% endblock %}
+{% block title %} {{project.name}}| Board {% endblock %}
+
+{% load humanize %}
 
 {% block content %}
-
-{% include 'partials/_project_navbar.html' %}
 
 <div class="container">
     <div class="jumbotron text-center">
@@ -12,6 +12,8 @@
         <strong>Last modified:</strong> {{project.board_last_modified}} by <kbd>{{project.board_last_modified_by}}</kbd>
     </div>
 </div>
+
+{% include 'partials/_project_navbar.html' %}
 
 <div class="container bg-light p-4 px-5" style = "height: 500px;">
     <p class="display-4 text-center">{{board.body | safe}}</p>

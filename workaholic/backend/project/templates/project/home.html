@@ -2,81 +2,167 @@
 
 {% block title %} {{project.name}} {% endblock %}
 
+{% load humanize %}
+
 {% block content %}
 <div class="container">
     <div class="jumbotron text-center">
           <h1 class="display-4 text-uppercase mb-4"> {{project.name}}</h1>
-          <p><strong>Last modified:</strong> {{project.last_modified}} by <kbd>{{project.last_modified_by}} </kbd> </p>
+          <p><strong>Last modified:</strong> {{project.last_modified }} by <kbd>{{project.last_modified_by}} </kbd> </p>
     </div>
 </div>
 <!-- Special project_navbar because don't know how to make the back button go to index.html, will see later-->
-<div class="container mb-4">
+<div class="container my-5">
     <div class="row">
         <div class="-10 m-auto">
-            <ul class="nav nav-fill nav-pills">
-                <div class="row">
-                    <div class="">
-                        <li class="nav-item">
-                            <a href='/' class="nav-link btn btn-warning -8" >Back </a>
-                        </li>
-                    </div>
+            <div class="btn-group ">
+                <a href='/' class= "btn btn-warning -8" >Back </a>
 
-                    <div class="">
-                        <li class="nav-item">
-                            <a href="/project/{{project.pk}}/chat/"
-                            {% if 'chat/' in request.path %}
-                                class="nav-link btn btn-outline-info -8 active"
-                            {% else %}
-                                class="nav-link btn btn-outline-info -8 "
-                            {% endif %}
-                            >Chat</a>
-                        </li>
-                    </div>
-                    <div class="">
-                        <li class="nav-item">
-                            <a href="{% url 'calendarPage' project.pk 'current_month' %}"
-                            {% if 'calendar/' in request.path %}
-                                class="nav-link btn btn-outline-info -8 active"
-                            {% else %}
-                                class="nav-link btn btn-outline-info -8 "
-                            {% endif %}
-                            >Calendar</a>
-                        </li>
-                    </div>
-                    <div class="">
-                        <li class="nav-item">
-                            <a href='/project/{{project.pk}}/todo/'
-                            {% if 'todo/' in request.path %}
-                                class="nav-link btn btn-outline-info -8 active"
-                            {% else %}
-                                class="nav-link btn btn-outline-info -8 "
-                            {% endif %}
-                            >To-do</a>
-                        </li>
-                    </div>
-                    <div class="">
-                        <li class="nav-item">
-                            <a href='/project/{{project.pk}}/board/'
-                            {% if 'board/' in request.path %}
-                                class="nav-link btn btn-outline-info -8 active"
-                            {% else %}
-                                class="nav-link btn btn-outline-info -8 "
-                            {% endif %} 
-                            >Board</a>
-                        </li>
-                    </div>
-                    <!-- <div class="">
-                        <li class="nav-item">
-                            <a href='/' class="nav-link btn btn-danger -8" >Leave </a>
-                        </li>
-                    </div> -->
-                </div>
-            </ul>
+                <a href="/project/{{project.pk}}/chat/"
+                {% if 'chat/' in request.path %}
+                    class=" btn btn-outline-info -8 active"
+                {% else %}
+                    class=" btn btn-outline-info -8 "
+                {% endif %}
+                >Chat</a>
+
+                <a href="{% url 'calendarPage' project.pk 'current_month' %}"
+                {% if 'calendar/' in request.path %}
+                    class=" btn btn-outline-info -8 active"
+                {% else %}
+                    class=" btn btn-outline-info -8 "
+                {% endif %}
+                >Calendar</a>
+
+                <a href='/project/{{project.pk}}/todo/'
+                {% if 'todo/' in request.path %}
+                    class=" btn btn-outline-info -8 active"
+                {% else %}
+                    class=" btn btn-outline-info -8 "
+                {% endif %}
+                >To-do</a>
+
+                <a href='/project/{{project.pk}}/board/'
+                {% if 'board/' in request.path %}
+                    class=" btn btn-outline-info -8 active"
+                {% else %}
+                    class=" btn btn-outline-info -8 "
+                {% endif %} 
+                >Board</a>
+
+            </div>
         </div>
     </div>
 </div>
-    
-<div class="container mt-4">
+<div class="container shadow my-5 p-4">
+    <h2 class="display-4 text-center my-4">Notification</h2>
+    <div class="container bg-light p-4 px-5" style = "height: 250px;">
+        <p class="display-4 text-center">{{board.body | safe}}</p>
+    </div>
+</div>
+
+<!--Todo-->
+
+<div class="container shadow p-4">
+    <h2 class="display-4 text-center my-4">Todo</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Todo</th>
+                <th>Deadline</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in todo %}
+            <tr>
+                <td>{{i.rank}}</td>
+                <td>{{i.todo}}</td>
+                <td>{{i.deadline}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center">
+        <div class="btn-group">
+            {% if todo.has_other_pages %}
+                {% if todo.has_previous %}
+                    <a href="?page={{todo.previous_page_number}}" class="btn btn-warning">Back</a>
+                {% else %}
+                    <a href="" class="btn btn-warning disabled">Back</a>
+                {% endif %}
+        
+                {% for i in todo.paginator.page_range %}
+                    {% if todo.number == i %}
+                        <a href="?page={{i}}" class="btn btn-info active">{{i}}</a>
+                    {% else %}
+                        <a href="?page={{i}}" class="btn btn-info">{{i}}</a>
+                    {% endif %}
+                {% endfor %}
+        
+                {% if todo.has_next %}
+                    <a href="?page={{todo.next_page_number}}" class="btn btn-warning">Next</a>
+                {% else %}
+                    <a href="" class="btn btn-warning disabled">Next</a>
+                {% endif %}
+            {% endif %}   
+        </div>
+    </div>
+</div>
+
+<!--Event-->
+
+<div class="container p-4 shadow my-5">
+    <h2 class="display-4 text-center my-4">Event</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Start time</th>
+                <th>End time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in event %}
+            <tr>
+                <td>{{i.title}}</td>
+                <td>{{i.start_time}}</td>
+                <td>{{i.end_time}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center">
+        <div class="btn-group">
+            {% if event.has_other_pages %}
+                {% if event.has_previous %}
+                    <a href="?page={{event.previous_page_number}}" class="btn btn-warning">Back</a>
+                {% else %}
+                    <a href="" class="btn btn-warning disabled">Back</a>
+                {% endif %}
+        
+                {% for i in event.paginator.page_range %}
+                    {% if event.number == i %}
+                        <a href="?page={{i}}" class="btn btn-info active">{{i}}</a>
+                    {% else %}
+                        <a href="?page={{i}}" class="btn btn-info">{{i}}</a>
+                    {% endif %}
+                {% endfor %}
+        
+                {% if event.has_next %}
+                    <a href="?page={{event.next_page_number}}" class="btn btn-warning">Next</a>
+                {% else %}
+                    <a href="" class="btn btn-warning disabled">Next</a>
+                {% endif %}
+            {% endif %}   
+        </div>
+    </div>
+</div>
+
+<div class="container my-5 p-4 shadow">
+    <h2 class="display-4 text-center my-4">Member</h2>
+
     <table class="table table-hover">
         <thead>
             <tr>
@@ -151,9 +237,4 @@
         </div>
     </div>
 </div>
-
-
-</body>
-
-</html>
 {% endblock %}

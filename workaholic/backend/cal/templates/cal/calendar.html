@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %} {{project.name}}|Calendar {% endblock %}
+{% block title %} {{project.name}}| Calendar {% endblock %}
 
 {% block content %}
-
-{% include 'partials/_project_navbar.html' %}
 
     <link rel="stylesheet" type="text/css" href="/static/cal/style.css">
 
@@ -15,7 +13,9 @@
         </div>
     </div>
 
-    <div class="container">
+    {% include 'partials/_project_navbar.html' %}
+
+    <div class="container mt-5">
         {{calendar| safe}}
     </div>
 

@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django import forms
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
+from django.core.paginator import Paginator #import Paginator
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -19,6 +20,7 @@ from .forms import *
 from todo.forms import *
 from todo.models import Todo
 from board.models import Board
+from cal.models import Event
 
 # Create your views here.
 
@@ -50,6 +52,18 @@ def projectPage(request,pk):
             addMemberform = AddMemberForm()
     else:
         addMemberform = AddMemberForm()
+    #add board to the main project page
+    # Adding Todo to the main page
+    todo = Todo.objects.filter(project=project).order_by('rank')
+    paginator = Paginator(todo, 3)  #Creating multiples QuerySet object with defined number in each list
+    page = request.GET.get('page') #Get the page parameter of the request object
+    page_todo = paginator.get_page(page) #Chossing the correct list with correct 'page' parameter
+
+    #Add event object
+    event = Event.objects.filter(project=project).order_by('start_time').order_by('end_time')
+    paginator = Paginator(event,3)
+    page = request.GET.get('page')
+    page_event = paginator.get_page(page)
 
     context = {
         'project':project, 
@@ -58,6 +72,8 @@ def projectPage(request,pk):
         'addMemberform':addMemberform, 
         'admin_users':admin_users, 
         'board':board,
+        'todo': page_todo,
+        'event': page_event,
         'Year': datetime.now().strftime("%Y")
     }
     return render(request, 'project/home.html', context)
