@@ -63,7 +63,7 @@
 
 <!--Todo-->
 
-<div class="container shadow p-4">
+<div class="container shadow p-4" id="todo">
     <h2 class="display-4 text-center my-4">Todo</h2>
     <table class="table table-hover">
         <thead>
@@ -87,21 +87,21 @@
         <div class="btn-group">
             {% if todo.has_other_pages %}
                 {% if todo.has_previous %}
-                    <a href="?page={{todo.previous_page_number}}" class="btn btn-warning">Back</a>
+                    <a href="?page={{todo.previous_page_number}}#todo" class="btn btn-warning">Back</a>
                 {% else %}
                     <a href="" class="btn btn-warning disabled">Back</a>
                 {% endif %}
         
                 {% for i in todo.paginator.page_range %}
                     {% if todo.number == i %}
-                        <a href="?page={{i}}" class="btn btn-info active">{{i}}</a>
+                        <a href="?page={{i}}#todo" class="btn btn-info active">{{i}}</a>
                     {% else %}
-                        <a href="?page={{i}}" class="btn btn-info">{{i}}</a>
+                        <a href="?page={{i}}#todo" class="btn btn-info">{{i}}</a>
                     {% endif %}
                 {% endfor %}
         
                 {% if todo.has_next %}
-                    <a href="?page={{todo.next_page_number}}" class="btn btn-warning">Next</a>
+                    <a href="?page={{todo.next_page_number}}#todo" class="btn btn-warning">Next</a>
                 {% else %}
                     <a href="" class="btn btn-warning disabled">Next</a>
                 {% endif %}
@@ -112,7 +112,7 @@
 
 <!--Event-->
 
-<div class="container p-4 shadow my-5">
+<div class="container p-4 shadow my-5" id="event">
     <h2 class="display-4 text-center my-4">Event</h2>
 
     <table class="table table-hover">
@@ -137,21 +137,21 @@
         <div class="btn-group">
             {% if event.has_other_pages %}
                 {% if event.has_previous %}
-                    <a href="?page={{event.previous_page_number}}" class="btn btn-warning">Back</a>
+                    <a href="?page={{event.previous_page_number}}#event" class="btn btn-warning">Back</a>
                 {% else %}
                     <a href="" class="btn btn-warning disabled">Back</a>
                 {% endif %}
         
                 {% for i in event.paginator.page_range %}
                     {% if event.number == i %}
-                        <a href="?page={{i}}" class="btn btn-info active">{{i}}</a>
+                        <a href="?page={{i}}#event" class="btn btn-info active">{{i}}</a>
                     {% else %}
-                        <a href="?page={{i}}" class="btn btn-info">{{i}}</a>
+                        <a href="?page={{i}}#event" class="btn btn-info">{{i}}</a>
                     {% endif %}
                 {% endfor %}
         
                 {% if event.has_next %}
-                    <a href="?page={{event.next_page_number}}" class="btn btn-warning">Next</a>
+                    <a href="?page={{event.next_page_number}}#event" class="btn btn-warning">Next</a>
                 {% else %}
                     <a href="" class="btn btn-warning disabled">Next</a>
                 {% endif %}
