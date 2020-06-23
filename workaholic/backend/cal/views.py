@@ -79,23 +79,30 @@ def editEvent(request, pk, event_id=None):
     if event_id:
         event = Event.objects.filter(project=project).get(id=event_id)
     else:
-        event = Event(project=project, start_time=datetime.now(), end_time=(datetime.now() + timedelta(weeks=1)))
+        event = Event(project=project, end_time=(datetime.now() + timedelta(weeks=1)))
     
     if request.method == 'POST':
         form = EventForm(request.POST)
         event.title = form.data['title']
         event.description = form.data['description']
-        event.start_time = form.data['start_time']
         event.end_time = form.data['end_time']
+        event.save()
 
         try:
             todo = Todo.objects.get(event=event)
             todo.deadline = event.end_time
-            todo.todo = event.title
+            todo.title = event.title
+            todo.description = event.description
             todo.save()
-            event.save()
+    
         except:
-            event.save()
+            if form.data['start_time'] == '':
+                event.label = form.data['label']
+                event.save()
+            else:
+                event.start_time = form.data['start_time']
+                event.label = form.data['label']
+                event.save()
 
         modified_by = members.get(user=request.user)
         
@@ -145,6 +152,11 @@ def deleteEvent(request, pk, event_id):
     if request.method == 'POST' and deleteform.data:
         try:
             todo = Todo.objects.get(event=event)
+            remaining_todo_set = Todo.objects.filter(project=project)
+            for i in remaining_todo_set:
+                if i.rank > todo.rank:
+                    i.rank -=1
+                    i.save()
             todo.delete()
             event.delete()
         except:

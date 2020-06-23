@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} {{project.name}}| Calendar {% endblock %}
+{% block title %} {{project.name}} | Calendar {% endblock %}
 
 {% block content %}
 
@@ -18,7 +18,22 @@
     <form method="post">
         {% csrf_token %}
         <table class="form">
-            {{ form }}
+            {% for field in form %}
+                {% if field.label != 'Label' %}
+                    <tr><td><strong>{{field.label}}</strong>{{field}}</td></tr>
+                {% else %}
+                    {% if event.label != 'Todo' %}
+                        <tr><td><strong>{{field.label}}</strong>{{field}}</td></tr>
+                    {% else %}
+                        <tr><td>
+                            <strong>Label</strong>
+                            <select disabled>
+                                <option value='Todo' selected>Todo</option>
+                            </select>
+                        </td></tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
         </table>
         <div class="row">
             <div class="col-4 m-auto">

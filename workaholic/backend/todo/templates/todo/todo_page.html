@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} {{project.name}}| Todo {% endblock %}
+{% block title %} {{project.name}} | Todo {% endblock %}
 
 {% block content %}
 
@@ -12,44 +12,47 @@
 
 {% include 'partials/_project_navbar.html' %}
 
+
 <div class="container">
-    <table class="table table-hover" id="todo">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>#</th>
-                <th>Todo</th>
-                <th>Modified by</th>
-                <th>Last Modified</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in todo %}
-            <tr>
-                <td><a href="{% url 'upTodo' project.pk i.pk %}" class="move up btn btn-success">Up</a>
-                <a href="{% url 'downTodo' project.pk i.pk %}" class="move down btn btn-warning">Down</a></td>
-                <td>{{i.rank}}</td>
-                <td>{{i.todo}}</td>
-                <td>{{i.last_modified_by}}</td>
-                <td>{{i.last_modified}}</td>
-                {% if request.user in project.project_admin.all %}
+    
+    <p>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addTodo">
+            Add Todo
+        </button>
+    </p>
+
+    <div class="table-responsive-md">
+        <table class="table table-hover" id="todo">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>#</th>
+                    <th>Todo</th>
+                    <th>Assigned to</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
+                    <th>Last Modified</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in todo %}
+                <tr>
+                    <td><a href="{% url 'upTodo' project.pk i.pk %}" class="move up btn btn-success">Up</a>
+                    <a href="{% url 'downTodo' project.pk i.pk %}" class="move down btn btn-warning">Down</a></td>
+                    <td>{{i.rank}}</td>
+                    <td>{{i.title}}</td>
+                    <td><kbd>{{i.assigned_to}}</kbd></td>
+                    <td>{{i.deadline.date}}</td>
                     <td>
                         <a href="{% url 'editTodo' project.pk i.pk %}" class="btn btn-info" role="button">Edit</a>
                         <a href="{% url 'deleteTodo' project.pk i.pk %}" class="btn btn-warning" role="button">Delete</a>
                     </td>
-                {% else %}
-                    <td>
-                        <a href="{% url 'editTodo' project.pk i.pk %}">Edit</a>
-                    </td>
-                {% endif %}
-            {% endfor %}
-            </tr>
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTodo">
-        Add Todo
-    </button>
+                    <td>{{i.last_modified}} <small>by</small> <kbd>{{i.last_modified_by}}</kbd></td>
+                {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="modal" id="addTodo" tabindex="-1" role="dialog">
