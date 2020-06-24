@@ -12,14 +12,19 @@ class Calendar(HTMLCalendar):
     
     def formatday(self, pk, day, start_events, end_events):
         d = ''
-        if start_events:
-            events_start_per_day = start_events.filter(start_time__day=day)                
-            for event in events_start_per_day:
-                d += f'<li> Start day: {event.view_event_url} <kbd>{event.label}</kbd> </li>'
+        events_start_per_day = start_events.filter(start_time__day=day)                
+        for event in events_start_per_day:
+            if event.label:
+                d += f'<li> Start: {event.view_event_url} <kbd>{event.label}</kbd> </li>'
+            else:
+                d += f'<li> Start: {event.view_event_url}</li>'
         
         events_end_per_day = end_events.filter(end_time__day=day)
         for event in events_end_per_day:
-            d += f'<li> End day: {event.view_event_url} <kbd>{event.label}</kbd> </li>'
+            if event.label:
+                d += f'<li> End: {event.view_event_url} <kbd>{event.label}</kbd> </li>'
+            else:
+                d += f'<li> End: {event.view_event_url}</li>'
     
         if day != 0:
             return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"

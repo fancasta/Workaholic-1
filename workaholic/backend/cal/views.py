@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from datetime import datetime, timedelta, date
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 from django.urls import reverse
 
 # Create your views here.
@@ -79,14 +79,26 @@ def editEvent(request, pk, event_id=None):
     if event_id:
         event = Event.objects.filter(project=project).get(id=event_id)
     else:
-        event = Event(project=project, end_time=(datetime.now() + timedelta(weeks=1)))
+        event = Event(project=project)
     
     if request.method == 'POST':
         form = EventForm(request.POST)
         event.title = form.data['title']
         event.description = form.data['description']
-        event.end_time = form.data['end_time']
-        event.save()
+
+        if form.data['start_time'] == '' and form.data['end_time'] == '':
+            messages.info(request, 'Please enter a start time or an end time for your event!')
+            return redirect('/project/' + str(pk) + '/calendar/event/add_event/')
+        elif form.data['start_time'] == '':
+            event.end_time = form.data['end_time']
+            event.save()
+        elif form.data['end_time'] == '':
+            event.start_time = form.data['start_time']
+            event.save()
+        else:
+            event.start_time = form.data['start_time']
+            event.end_time = form.data['end_time']
+            event.save()
 
         try:
             todo = Todo.objects.get(event=event)
@@ -94,15 +106,10 @@ def editEvent(request, pk, event_id=None):
             todo.title = event.title
             todo.description = event.description
             todo.save()
-    
+            
         except:
-            if form.data['start_time'] == '':
-                event.label = form.data['label']
-                event.save()
-            else:
-                event.start_time = form.data['start_time']
-                event.label = form.data['label']
-                event.save()
+            event.label = form.data['label']
+            event.save()
 
         modified_by = members.get(user=request.user)
         
