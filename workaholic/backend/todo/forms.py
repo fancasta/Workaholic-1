@@ -13,7 +13,7 @@ class TodoForm(forms.ModelForm):
         widgets = {
             'deadline': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),            
         }
-        fields = ['todo','assigned_to', 'deadline']
+        fields = ['title', 'description','assigned_to', 'deadline']
 
     def __init__(self, pk,*args, **kwargs):
         super(TodoForm, self).__init__(*args, **kwargs)

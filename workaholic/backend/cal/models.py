@@ -1,7 +1,6 @@
 from django.db import models
 from accounts.models import Project
 from django.urls import reverse
-
 from todo.models import Todo
 
 # Create your models here.
@@ -10,9 +9,10 @@ class Event(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField()
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    start_time = models.DateTimeField(null=True, blank=True, default=None)
+    end_time = models.DateTimeField(null=True, blank=True, default=None)
 
+    label = models.CharField(max_length=20, null=True, blank=True)
     todo = models.ForeignKey(Todo, on_delete=models.CASCADE, null=True)
     
     @property
