@@ -60,7 +60,7 @@ def projectPage(request,pk):
     page_todo = paginator.get_page(page) #Chossing the correct list with correct 'page' parameter
 
     #Add event object
-    event = Event.objects.filter(project=project).order_by('start_time').order_by('end_time')
+    event = Event.objects.filter(project=project).order_by('start_time')
     paginator = Paginator(event,3)
     page = request.GET.get('page')
     page_event = paginator.get_page(page)

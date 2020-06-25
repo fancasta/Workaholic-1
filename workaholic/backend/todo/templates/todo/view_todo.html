@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} {{project.name}} | Calendar {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1 class="display-4 text-uppercase mb-4"> {{project.name}}:{{todo.todo}}</h1>
+    </div>
+</div>
+{% include 'partials/_project_navbar.html' %}
+
+
+<div class="container">
+    <div class="card m-auto">
+        <div class="card-header">
+            <div class="card-title">
+                <h3>{{todo.title}}</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                <p>{{todo.description}}</p>
+                <p><strong>Assigned to:</strong> {{todo.assigned_to}}</p>
+                <p><strong>Deadline:</strong>  {{todo.deadline}}</p>
+            </div>
+            <a href="{% url 'editTodo' project.pk todo.pk %}" class="btn btn-info" role="button">Edit</a>
+            <a href="{% url 'deleteTodo' project.pk todo.pk %}" class="btn btn-warning" role="button">Delete</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
