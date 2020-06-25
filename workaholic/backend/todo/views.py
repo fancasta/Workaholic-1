@@ -189,3 +189,17 @@ def editTodo(request, pk, todo_pk):
         'Year': datetime.now().strftime("%Y")
     }
     return render(request, 'todo/edit_todo.html', context)
+
+@login_required
+@user_is_project_member
+def viewTodo(request, pk, todo_pk):
+    project = Project.objects.get(id=pk)
+    todo = project.todo_set.get(id=todo_pk)
+    members = project.project_members.all()
+
+    context = {
+        'project':project, 
+        'todo': todo,
+        'Year': datetime.now().strftime("%Y")
+    }
+    return render(request, 'todo/view_todo.html', context)

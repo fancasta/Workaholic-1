@@ -7,5 +7,6 @@ urlpatterns = [
     path('delete_todo/<str:todo_pk>/', views.deleteTodo, name="deleteTodo"),
     path('edit_todo/<str:todo_pk>/', views.editTodo, name="editTodo"),
     path('up_todo/<str:todo_pk>/', views.upTodoRank, name="upTodo"),
-    path('down_todo/<str:todo_pk>/', views.downTodoRank, name="downTodo")
+    path('down_todo/<str:todo_pk>/', views.downTodoRank, name="downTodo"),
+    path('view_todo/<str:todo_pk>/',views.viewTodo, name="viewTodo")
 ]
