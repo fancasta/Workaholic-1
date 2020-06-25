@@ -55,10 +55,59 @@
     </div>
 </div>
 
+<!--Member-->
+<div class="container my-5 p-4 shadow">
+    <h2 class="display-4 text-center my-4">Member</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Project Members</th>
+                <th>
+                    {% if request.user in admin_users %}
+                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addMembers">Add Member</button>
+                    {% endif %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in members %}
+                {% if i in admin_members %}
+                    <tr>
+                        <td>{{i}} <span class="badge badge-secondary">Admin</span> </td>    
+                        {% if request.user in admin_users %}
+                            {% if i.user != request.user %}
+                                <td>
+                                    <a class="btn btn-warning btn-sm" href="{% url 'removeAdmin' project.pk i.pk %}">Remove Admin</a>
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                {% else %}
+                <tr>
+                    <td>{{i}}</td> 
+                    <td>
+                        {% if request.user in admin_users %}
+                            <a class="btn btn-info btn-sm" href="{% url 'setAdmin' project.pk i.pk %}">Set Admin</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'deleteMember' project.pk i.pk %}">Delete Member</a>
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!--Board-->
 <div class="container shadow my-5 p-4">
     <h2 class="display-4 text-center my-4">Board</h2>
-    <div class="container bg-light p-4 px-5" style = "height: 500px;">
+    <div class="container bg-light p-4 px-5">
         <p class="display-4 text-center">{{board.body | safe}}</p>
+        <div class="bg-light" style = "height: 250px;"></div>
     </div>
 </div>
 
@@ -162,52 +211,7 @@
     </div>
 </div>
 
-<div class="container my-5 p-4 shadow">
-    <h2 class="display-4 text-center my-4">Member</h2>
-
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Project Members</th>
-                <th>
-                    {% if request.user in admin_users %}
-                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addMembers">Add Member</button>
-                    {% endif %}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in members %}
-                {% if i in admin_members %}
-                    <tr>
-                        <td>{{i}} <span class="badge badge-secondary">Admin</span> </td>    
-                        {% if request.user in admin_users %}
-                            {% if i.user != request.user %}
-                                <td>
-                                    <a class="btn btn-warning btn-sm" href="{% url 'removeAdmin' project.pk i.pk %}">Remove Admin</a>
-                                </td>
-                            {% else %}
-                                <td></td>
-                            {% endif %}
-                        {% endif %}
-                    </tr>
-                {% else %}
-                <tr>
-                    <td>{{i}}</td> 
-                    <td>
-                        {% if request.user in admin_users %}
-                            <a class="btn btn-info btn-sm" href="{% url 'setAdmin' project.pk i.pk %}">Set Admin</a>
-                            <a class="btn btn-danger btn-sm" href="{% url 'deleteMember' project.pk i.pk %}">Delete Member</a>
-                        {% endif %}
-                    </td>
-
-                </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-
+<!--Modal-->
 <div class="modal" id="addMembers" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

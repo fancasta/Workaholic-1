@@ -107,14 +107,14 @@ def upTodoRank(request, pk, todo_pk):
     remaining_todo_set = Todo.objects.filter(project=project)
     if request.method=="GET":
         if todo.rank == 1:
-            return redirect('/project/' + str(pk) + '/todo/')
+            return redirect('/project/' + str(pk) + '/todo/' +'#todo')
         for i in remaining_todo_set:
             if todo.rank-i.rank == 1:
                 i.rank +=1
                 i.save()
         todo.rank -=1 
         todo.save()
-        return redirect('/project/' + str(pk) + '/todo/')
+        return redirect('/project/' + str(pk) + '/todo/' +'#todo')
     context = {
         'project':project, 
         'todo':todo,
@@ -132,14 +132,14 @@ def downTodoRank(request, pk, todo_pk):
     max_rank = remaining_todo_set.order_by('-rank')[0].rank
     if request.method=="GET":
         if todo.rank == max_rank:
-            return redirect('/project/' + str(pk) + '/todo/')
+            return redirect('/project/' + str(pk) + '/todo/' +'#todo')
         for i in remaining_todo_set:
             if i.rank-todo.rank == 1:
                 i.rank -=1
                 i.save()
         todo.rank +=1 
         todo.save()
-        return redirect('/project/' + str(pk) + '/todo/')
+        return redirect('/project/' + str(pk) + '/todo/' +'#todo')
     context = {
         'project':project, 
         'todo':todo,
@@ -169,7 +169,7 @@ def editTodo(request, pk, todo_pk):
 
         event = Event.objects.get(todo=todo)
         event.title = todo.title
-        event.desc = todo.description
+        event.description = todo.description
         event.end_time = todo.deadline
         event.save()
 

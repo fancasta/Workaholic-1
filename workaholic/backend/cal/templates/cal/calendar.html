@@ -5,9 +5,9 @@
 {% block content %}
 
     <link rel="stylesheet" type="text/css" href="/static/cal/style.css">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <div class="container">
-        <div class="jumbotron text-center">
+        <div class="jumbotron text-center" id="cal">
                 <h1 class="display-4 text-uppercase mb-4"> {{project.name}}:Calendar</h1>
                 <p><strong>Last modified:</strong> {{project.cal_last_modified}} by <kbd>{{project.cal_last_modified_by}} </kbd> </p>
         </div>
@@ -30,6 +30,5 @@
                 <a href="{% url 'calendarPage' project.pk 'next_month' %}" class="btn btn-info" role="button">Next Month</a>
             </div>
         </div>
-        
     </div>
 {% endblock %}

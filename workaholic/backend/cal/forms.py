@@ -17,6 +17,9 @@ class EventForm(ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control'
+            
         # input_formats to parse HTML5 datetime-local input to datetime field
         self.fields['start_time'].required = False
         self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)

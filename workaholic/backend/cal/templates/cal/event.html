@@ -4,8 +4,6 @@
 
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="/static/cal/style.css">
-
 <div class="container">
     <div class="jumbotron text-center">
         <h1 class="display-4 text-uppercase mb-4"> {{project.name}}</h1>
@@ -14,43 +12,38 @@
 
 {% include 'partials/_project_navbar.html' %}
 
-<div class="container my-5 py-3">
-    <form method="post">
-        {% csrf_token %}
-        <table class="form">
-            {% for field in form %}
-                {% if field.label != 'Label' %}
-                    <tr><td><strong>{{field.label}}</strong>{{field}}</td></tr>
-                {% else %}
-                    {% if event.label != 'Todo' %}
-                        <tr><td><strong>{{field.label}}</strong>{{field}}</td></tr>
-                    {% else %}
-                        <tr><td>
-                            <strong>Label</strong>
-                            <select disabled>
-                                <option value='Todo' selected>Todo</option>
-                            </select>
-                        </td></tr>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
+<div class="container">
+    <div class="row text-center">
+        <div class="col-4 m-auto">
+            <form method="post">
+                {% csrf_token %}
+                    {% for field in form %}
+                        {% if field.label != 'Label' %}
+                            <strong>{{field.label}}</strong>{{field}}
+                        {% else %}
+                            {% if event.label != 'Todo' %}
+                                <strong>{{field.label}}</strong>{{field}}
+                            {% else %}
+                                <strong>Label</strong>
+                                <input type="button" class="form-control" value ="Todo" disabled>
+                            {% endif %}
+                        {% endif %}
+                        <br>
+                    {% endfor %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-warning alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}   
 
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-warning alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        {{message}}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </table>
-
-        <div class="row">
-            <div class="col-4 m-auto">
-                <button type="submit" class="form-control btn btn-info mt-3"> Submit </button>   
-            </div>
+                    <button type="submit" class="form-control btn btn-info mt-4"> Submit </button>   
+                </div>
+            </form>
         </div>
-    </form>        
+    </div>        
 </div>
 
 <div style="margin-top:500px;"></div>

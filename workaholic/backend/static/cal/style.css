@@ -2,10 +2,13 @@
     width: 98%;
     font-size: 13px;
     margin: auto;
+    border: 6px solid #178394;
+    padding: 25px;
   }
   
 .calendar tr, .calendar td {
-    border: 1px solid black;
+    border: 3px solid #066979;
+    height: 30%;
   }
   
 .calendar th {
@@ -21,11 +24,16 @@
   }
   
 .month {
-    font-size: 25px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: Lato;
+    background-color:rgb(8, 61, 114);
+    color: rgb(14, 223, 153);
   }
   
 .date {
     font-size: 16px;
+    
   }
   
 ul {
@@ -44,4 +52,23 @@ ul {
     background: none;
     padding: 5px;
     width: 100%;
+  }
+
+  .mon, .tue, .wed, .thu, .fri {
+    background-color:rgb(23, 34, 44);
+    color: rgb(57, 212, 161);
+  }
+
+  .sat, .sun {
+    background-color:rgb(133, 45, 10);
+    color: rgb(183, 219, 22);
+  }
+
+  td:hover {
+    background-color: rgb(216, 212, 212);
+  }
+
+  li {
+    color: indigo;
+    font-size: 20px;
   }
