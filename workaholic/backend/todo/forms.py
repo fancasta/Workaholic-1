@@ -21,5 +21,13 @@ class TodoForm(forms.ModelForm):
         self.fields['deadline'].input_formats = ('%Y-%m-%dT%H:%M',)
         self.fields['assigned_to'].queryset = project.project_members.all()
 
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control'
+
 class DeleteForm(forms.Form):
     delete = forms.BooleanField()
+
+    def __init__(self, *args, **kwargs):
+        super(DeleteForm, self).__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control'

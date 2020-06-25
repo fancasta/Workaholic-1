@@ -3,18 +3,20 @@
 {% block title %} Create Project {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container m-auto p-4">
     <div class="row">
-        <div class="col-6 m-auto">
-            <h4 class="col-10 display-4">CREATE PROJECT</h4>
+        <div class="col-8 m-auto shadow p-4">
+            <h4 class="display-4 text-center">CREATE PROJECT</h4>
             <form method="POST" action="/accounts/create_project/">
                 {% csrf_token %}
                 {% for field in form %}
-                    <h4 class="mt-4">{{field.label_tag}} {{field}}</h4>
+                    <h4 class="mt-3">{{field.label_tag}} {{field}}</h4>
                 {% endfor %}
-                <div class="row mt-4">
-                    <a class="btn btn-warning col-4" href="{% url 'index' %}">Back</a>
-                    <input type="submit"  class="btn btn-primary col-4 offset-2 " name="Submit">
+                <div class="row mt-4 text-center">
+                    <div class="col-8 m-auto">
+                        <a class="btn btn-warning col-5" href="{% url 'index' %}">Back</a>
+                        <input type="submit"  class="btn btn-primary col-5" name="Submit">
+                    </div>
                 </div> 
             </form>
         </div>

@@ -29,17 +29,17 @@ def calendarPage(request,pk,action=None):
         d = get_date(request.GET.get('month', None))
         project.calendar_month = d
         project.save()
-        return redirect('/project/' + str(pk) + '/calendar/')
+        return redirect('/project/' + str(pk) + '/calendar/' +'#cal')
     elif action == 'prev_month':
         d = get_date(prev_month(d))
         project.calendar_month = d
         project.save()
-        return redirect('/project/' + str(pk) + '/calendar/')
+        return redirect('/project/' + str(pk) + '/calendar/' +'#cal')
     elif action == 'next_month':
         d = get_date(next_month(d))
         project.calendar_month = d
         project.save()
-        return redirect('/project/' + str(pk) + '/calendar/')
+        return redirect('/project/' + str(pk) + '/calendar/' +'#cal')
 
 
     cal = Calendar(d.year, d.month)
