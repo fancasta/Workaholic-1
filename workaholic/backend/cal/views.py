@@ -119,7 +119,7 @@ def editEvent(request, pk, event_id=None):
         project.last_modified_by = modified_by
         project.save()
         
-        return redirect('/project/' + str(pk) + '/calendar/event/' + str(event.id) +'/')
+        return redirect('/project/' + str(pk) + '/calendar/')
     else:
         form = EventForm(instance=event)
 

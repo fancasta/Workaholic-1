@@ -27,8 +27,8 @@
     font-size: 30px;
     font-weight: bold;
     font-family: Lato;
-    background-color:rgb(8, 61, 114);
-    color: rgb(14, 223, 153);
+    background-color:darkslategrey;
+    color: white;
   }
   
 .date {
@@ -47,7 +47,7 @@ ul {
   
 .form input, .form select, .form textarea {
     border-radius: 5px;
-    border: 1px solid #17a2b8;
+    border: 3px solid #17a2b8;
     outline: none;
     background: none;
     padding: 5px;
@@ -56,11 +56,11 @@ ul {
 
   .mon, .tue, .wed, .thu, .fri {
     background-color:rgb(23, 34, 44);
-    color: rgb(57, 212, 161);
+    color: white;
   }
 
   .sat, .sun {
-    background-color:rgb(133, 45, 10);
+    background-color:rgb(122, 39, 6);
     color: rgb(183, 219, 22);
   }
 
@@ -68,7 +68,7 @@ ul {
     background-color: rgb(216, 212, 212);
   }
 
-  li {
+  .calendar li {
     color: indigo;
-    font-size: 20px;
+    font-size: 15px;
   }
