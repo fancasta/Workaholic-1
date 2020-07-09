@@ -9,6 +9,7 @@
     <div class="jumbotron text-center">
           <h1 class="display-4 text-uppercase mb-4"> {{project.name}}</h1>
           <p><span class="badge badge-info">{{project.last_modified_item}}</span> <strong>Last modified:</strong> {{project.last_modified }} by <kbd>{{project.last_modified_by}} </kbd> </p>
+          <a href="{% url 'leaveProject' project.pk %}" class="btn btn-outline-danger">Leave Project</a>
     </div>
 </div>
 <!-- Special project_navbar because don't know how to make the back button go to index.html, will see later-->

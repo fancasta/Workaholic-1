@@ -131,6 +131,28 @@ def deleteProject(request, pk):
 
 @login_required
 @user_is_project_member
+def leaveProject(request, pk):
+    project = Project.objects.get(id=pk)
+    members = project.project_members.all()
+    user_member = members.get(user=request.user)
+    deleteform = DeleteForm(request.POST)
+    if request.method == 'POST' and deleteform.data:
+        project.project_members.remove(user_member)
+        return redirect('/')
+    else:
+        deleteform = DeleteForm()
+
+    context = {
+        'project':project,
+        'user_member':user_member,
+        'deleteform': deleteform,
+        'Year': datetime.now().strftime("%Y")
+    }
+    return render(request, 'project/leave_project.html', context)
+
+
+@login_required
+@user_is_project_member
 @user_is_project_admin
 def setAdmin(request, pk, member_pk):
     project = Project.objects.get(id=pk)

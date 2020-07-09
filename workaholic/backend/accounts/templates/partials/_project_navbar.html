@@ -31,6 +31,8 @@
             <a href="/project/{{project.pk}}/chat/"
             {% if 'chat/' in request.path %}
                 class=" btn btn-outline-info -8 active"
+            {% elif 'board/' in request.path %}
+            class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard this changes?');" 
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}
@@ -39,6 +41,8 @@
             <a href="{% url 'calendarPage' project.pk 'current_month' %}"
             {% if 'calendar/' in request.path %}
                 class=" btn btn-outline-info -8 active"
+            {% elif 'board/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard this changes?');" 
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}
@@ -47,6 +51,8 @@
             <a href='/project/{{project.pk}}/todo/'
             {% if 'todo/' in request.path %}
                 class=" btn btn-outline-info -8 active"
+            {% elif 'board/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard this changes?');" 
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}
@@ -63,6 +69,8 @@
             <a href="/project/{{project.pk}}/forum/"
             {% if 'forum/' in request.path %}
                 class=" btn btn-outline-info -8 active"
+            {% elif 'board/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard this changes?');" 
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}

@@ -19,6 +19,27 @@
     <h4 class="text-center">
         {{thread.title}}
     </h4>
+
+    <div class="card m-3 p-3" style="background:wheat">               
+        <h6>{{first_post.posted_by}}</h6>
+        <p class="card-text">{{first_post.content}}</p>    
+        <div class="row">
+            <div class="col-md-6 m-6">
+                <small>{{first_post.timestamp}}</small> 
+                {% if first_post.edited %}
+                    <small> [Edited]</small>
+                {% endif %}
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="{% url 'quote_post' project.pk thread.pk first_post.pk %}" class="card-link">Quote</a>
+                {% if first_post.posted_by == user_member %}
+                    <a href="{% url 'edit_post' project.pk thread.pk first_post.pk %}" class="card-link">Edit</a>
+                    <a href="{% url 'delete_post' project.pk thread.pk first_post.pk %}" class="card-link">Delete</a>    
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
     <div class="container bg-light m-3 p-3" id="thread" style="height: 500px; overflow-y: auto; display: flex; flex-direction: column-reverse;">
         {% for i in posts %}
                 <div class="card m-3 p-3">
@@ -46,8 +67,12 @@
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="{% url 'quote_post' project.pk thread.pk i.pk %}" class="card-link">Quote</a>
-                            <a href="{% url 'edit_post' project.pk thread.pk i.pk %}" class="card-link">Edit</a>
-                            <a href="{% url 'delete_post' project.pk thread.pk i.pk %}" class="card-link">Delete</a>    
+                            {% if i.posted_by == user_member %}
+                                <a href="{% url 'edit_post' project.pk thread.pk i.pk %}" class="card-link">Edit</a>
+                                <a href="{% url 'delete_post' project.pk thread.pk i.pk %}" class="card-link">Delete</a>
+                            {% elif request.user in project_admin %}
+                                <a href="{% url 'delete_post' project.pk thread.pk i.pk %}" class="card-link">Delete</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
