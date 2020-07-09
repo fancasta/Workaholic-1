@@ -17,6 +17,9 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from datetime import datetime
 
+from todo.models import Todo
+from cal.models import Event
+
 # Create your views here.
 
 def registerPage(request):
@@ -100,10 +103,40 @@ def logoutPage(request):
 def index(request):
     member = Project_Member.objects.get(user= request.user)
     projects = Project.objects.filter(project_members= member).order_by('-last_modified')
+
+    project_notification = []
+    number_of_notification = 0
+    for project in projects:        
+        todo = Todo.objects.filter(project=project)
+        todo_list = []
+        for i in todo:
+            deadline = i.deadline.date()
+            if deadline == datetime.today().date():
+                todo_list.append(i)
+                number_of_notification += 1
+
+        events_start = Event.objects.filter(project=project)
+        events_end = Event.objects.filter(project=project)
+
+        events_start_list = []
+        for i in events_start:
+            if i.start_time and i.start_time.date() == datetime.today().date():
+                events_start_list.append(i)
+                number_of_notification += 1
+
+        events_end_list = []
+        for i in events_end:
+            if i.end_time and i.end_time.date() == datetime.today().date():
+                events_end_list.append(i)
+                number_of_notification += 1
+
+        project_notification.append([project, todo_list, events_start_list, events_end_list])
+
     context = {
         'projects':projects,
+        'project_notification': project_notification,
+        'number_of_notification': number_of_notification,
         'Year': datetime.now().strftime("%Y")
-
     }
     return render(request, 'accounts/index.html', context)
 

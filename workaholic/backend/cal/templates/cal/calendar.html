@@ -25,9 +25,9 @@
                 <a href="{% url 'addEvent' project.pk %}" class="btn btn-info" role="button">Add Event</a>
             </div>
             <div class="col-5 offset-5">
-                <a href="{% url 'calendarPage' project.pk 'current_month' %}" class="btn btn-info" role="button">Current Month</a>
-                <a href="{% url 'calendarPage' project.pk 'prev_month' %}" class="btn btn-info" role="button">Previous Month</a>
-                <a href="{% url 'calendarPage' project.pk 'next_month' %}" class="btn btn-info" role="button">Next Month</a>
+                <a href="{% url 'calendarPage' project.pk 'current_month' %}" class="btn btn-info mb-2" role="button">Current Month</a>
+                <a href="{% url 'calendarPage' project.pk 'prev_month' %}" class="btn btn-info mb-2" role="button">Previous Month</a>
+                <a href="{% url 'calendarPage' project.pk 'next_month' %}" class="btn btn-info mb-2" role="button">Next Month</a>
             </div>
         </div>
     </div>

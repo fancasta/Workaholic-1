@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'board',
     'cal',
+    'forum',
 ]
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
@@ -64,7 +65,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'workaholic.register@gmail.com'
-EMAIL_HOST_PASSWORD = 'orbital2106'
+EMAIL_HOST_PASSWORD = 'ykcvgcibhwdmwjoe'
 EMAIL_PORT = 587
 
 MIDDLEWARE = [
@@ -145,7 +146,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+#TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

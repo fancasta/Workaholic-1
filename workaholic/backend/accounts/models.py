@@ -21,8 +21,13 @@ class Project(models.Model):
     board_last_modified_by =  models.ForeignKey(Project_Member, on_delete=models.CASCADE, related_name='board_last_modified',null=True)
     board_last_modified = models.DateTimeField(null=True)
 
+    forum_last_modified_by =  models.ForeignKey(Project_Member, on_delete=models.CASCADE, related_name='forum_last_modified',null=True)
+    forum_last_modified = models.DateTimeField(null=True)
+
     last_modified_by = models.ForeignKey(Project_Member, on_delete=models.CASCADE, related_name='project_last_modified', null=True)
     last_modified = models.DateTimeField(null=True)
+    last_modified_item = models.CharField(null=True, max_length=20)
 
     def __str__(self):
         return self.name
+

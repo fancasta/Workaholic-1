@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} {{project.name}} | Forum {% endblock %}
+
+{% block content %}
+
+
+<div class="container m-auto shadow py-3 w-50">
+    <div class="row">
+        <div class="col-10 m-auto">
+            <div class="row mt-4">
+                <div class="col-10 m-auto">
+                    <h3 class="text-center">Edit Thread Title</h3>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                            <div class="col-2"></div>
+                            <div class="col-8 m-3">
+                                <table class="form">
+                                    {{ threadform }}
+                                </table>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                        <div class="row">
+                            <a class="btn btn-warning col-5 " href="/project/{{project.pk}}/forum/">Back</a>
+                            <input class="btn btn-danger col-5 offset-2 " type="submit" name="Submit" value="Submit">  
+                        </div>     
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

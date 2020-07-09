@@ -21,6 +21,7 @@ from todo.forms import *
 from todo.models import Todo
 from board.models import Board
 from cal.models import Event
+from forum.models import Thread
 
 # Create your views here.
 
@@ -31,6 +32,7 @@ def projectPage(request,pk):
     members = project.project_members.all()
     admin_users = project.project_admin.all()
     admin_members = []
+
     try:
         board = Board.objects.get(project=project)
     except:
@@ -52,6 +54,7 @@ def projectPage(request,pk):
             addMemberform = AddMemberForm()
     else:
         addMemberform = AddMemberForm()
+
     #add board to the main project page
     # Adding Todo to the main page
     todo = Todo.objects.filter(project=project).order_by('rank')
@@ -65,6 +68,12 @@ def projectPage(request,pk):
     page = request.GET.get('page')
     page_event = paginator.get_page(page)
 
+    #Add thread object
+    thread = Thread.objects.filter(project=project).order_by('-last_posted')
+    paginator = Paginator(thread,3)
+    page = request.GET.get('page')
+    page_thread = paginator.get_page(page)
+
     context = {
         'project':project, 
         'members':members, 
@@ -74,6 +83,7 @@ def projectPage(request,pk):
         'board':board,
         'todo': page_todo,
         'event': page_event,
+        'thread': page_thread,
         'Year': datetime.now().strftime("%Y")
     }
     return render(request, 'project/home.html', context)

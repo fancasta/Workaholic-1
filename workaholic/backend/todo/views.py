@@ -45,6 +45,7 @@ def todoPage(request,pk):
         project.cal_last_modified_by = modified_by
         project.last_modified = datetime.now()
         project.last_modified_by = modified_by
+        project.last_modified_item = "Forum"
         project.save()
 
         return redirect('/project/' + str(pk) + '/todo')
@@ -84,6 +85,7 @@ def deleteTodo(request, pk, todo_pk):
         project.cal_last_modified_by = modified_by
         project.last_modified = datetime.now()
         project.last_modified_by = modified_by
+        project.last_modified_item = "Forum"
         project.save()
 
         return redirect('/project/' + str(pk) + '/todo/')
@@ -177,6 +179,7 @@ def editTodo(request, pk, todo_pk):
         project.cal_last_modified_by = modified_by
         project.last_modified = datetime.now()
         project.last_modified_by = modified_by
+        project.last_modified_item = "Todo"
         project.save()
         return redirect('/project/' + str(pk) + '/todo/')
     else:

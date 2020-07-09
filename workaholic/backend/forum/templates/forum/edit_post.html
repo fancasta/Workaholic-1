@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} {{project.name}} | Forum {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h3 class="text-center">Edit Post</h3>
+    <p class="text-left m-3"><a href="{% url 'thread' project.pk thread.pk %}" class="btn btn-warning m-3" onclick="return confirm('Are you sure you want to discard edits made?');">Back</a></p>
+    {% if post.quote_content %}
+        <div class="card m-3 p-1" style="background:honeydew;"> 
+            <h6 class="mx-2">{{post.quote_sender}}</h6>
+                <div class="row">
+                    <div class="col mx-2">
+                        <p>{{post.quote_content}}</p>
+                    </div>                     
+                    <div class="col mx-2 text-right">
+                        <p><small>{{post.quote_timestamp}}</small></p>    
+                    </div>       
+                </div>                     
+        </div>
+    {% endif %}  
+    <form method="POST">
+        {% csrf_token %}
+            {% for field in postform %}
+                <div class="card m-3 p-3">
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <input type="submit" value="Submit" class="form-control btn btn-info mt-3">
+    </form>
+</div>
+
+{% endblock %}

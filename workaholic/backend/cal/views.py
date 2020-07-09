@@ -71,6 +71,7 @@ def next_month(d):
     return month
 
 
+
 @login_required
 @user_is_project_member
 def editEvent(request, pk, event_id=None):
@@ -117,6 +118,7 @@ def editEvent(request, pk, event_id=None):
         project.cal_last_modified_by = modified_by
         project.last_modified = datetime.now()
         project.last_modified_by = modified_by
+        project.last_modified_item = "Calendar"
         project.save()
         
         return redirect('/project/' + str(pk) + '/calendar/')
@@ -174,6 +176,7 @@ def deleteEvent(request, pk, event_id):
         project.cal_last_modified_by = modified_by
         project.last_modified = datetime.now()
         project.last_modified_by = modified_by
+        project.last_modified_item = "Calendar"
         project.save()
 
         return redirect('/project/' + str(pk) + '/calendar/')
