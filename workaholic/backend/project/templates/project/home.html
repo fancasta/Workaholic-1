@@ -233,7 +233,7 @@
             {% for i in thread %}
             <tr>
                 <td>{{i.title}}</td>
-                <td>{{i.last_posted}} <small>by</small> {{i.last_posted_by}}</td>
+                <td>{{i.last_posted}} <small>by</small> <kbd>{{i.last_posted_by}}</kbd></td>
             </tr>
             {% endfor %}
         </tbody>

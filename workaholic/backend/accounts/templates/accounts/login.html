@@ -16,8 +16,8 @@
 </head>
 
 <body>
-    <div class="container shadow mt-5 p-5">    
-        <h1 class="mb-4">Login Page</h1>
+    <p class="text-center mt-5"><img src="{% static 'photo/logo20.png' %}" alt="Workaholic"style="height: 125px;"></p>
+    <div class="container shadow mt-3 p-5">
         <form  method="POST" action="{% url 'login' %}">
             {% csrf_token %}
             <p>
