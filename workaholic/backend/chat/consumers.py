@@ -1,10 +1,13 @@
 # chat/consumers.py
 import json
+from django.contrib.auth import get_user_model
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from channels.layers import get_channel_layer
 from project.decorators import user_is_project_member
-from .views import index
+from .views import index, get_user
+from .models import Message
+
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):

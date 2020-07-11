@@ -29,8 +29,8 @@
                 <p><strong>Start Date:</strong> {{event.start_time}}</p>
                 <p><strong>End Date:</strong>  {{event.end_time}}</p>
             </div>
-            <a href="{% url 'editEvent' project.pk event_pk %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'deleteEvent' project.pk event_pk %}" class="btn btn-info">Delete</a>
+            <a href="{% url 'editEvent' project.pk event_pk %}" class="btn btn-info">Edit</a>
+            <a href="{% url 'deleteEvent' project.pk event_pk %}" class="btn btn-warning">Delete</a>
         </div>
     </div>
 </div>

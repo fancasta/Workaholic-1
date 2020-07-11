@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm, DateInput, Select, widgets
 from .models import Event
 
-LABEL_TYPES = (('Meeting','Meeting'), ('Submission','Submission'), ('Others','Others'), (None, None))
+LABEL_TYPES = (('Meeting','Meeting'), ('Submission','Submission'), ('Others','Others'))
 
 class EventForm(ModelForm):
     class Meta:

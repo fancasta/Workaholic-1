@@ -4,10 +4,51 @@
 
 {% block content %}
 
-<div class="container">
+
+<div class="container-fluid">
     <div class="m-3 row">
         <h3 class="m-auto display-4"> MY PROJECTS </h3>
     </div>
+    
+    <div class="row">
+        <div class="col-8 m-auto">
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h6 class="mb-0 text-center">
+                            <a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Reminders <span class="badge badge-primary">{{number_of_notification}}</span>
+                            </a>
+                        </h6>
+                    </div>
+                </div>
+                
+                {% for notification in project_notification %}
+                <div class="collapse" id="collapseExample" data-parent="#accordionExample">
+                    {% for todo in notification.1 %}
+                        <p class="alert alert-info m-1">
+                            <strong>{{notification.0}}</strong>: Deadline for <strong>Todo: {{todo.title}}</strong> is today!
+                            <a class="btn btn-info m-1" href="{% url 'viewTodo' notification.0.pk todo.pk %}">View Todo</a>
+                        </p>
+                    {% endfor %}
+                    {% for event in notification.2 %}
+                        <p class="alert alert-warning m-1">
+                            <strong>{{notification.0}}</strong>: Start date of <strong>Event: {{event.title}}</strong> <kbd>{{event.label}}</kbd> is today!
+                            <a class="btn btn-warning m-1" href="{% url 'viewEvent' notification.0.pk event.pk %}">View Event</a>
+                        </p>
+                    {% endfor %}
+                    {% for event in notification.3 %}
+                        <p class="alert alert-warning m-1">
+                            <strong>{{notification.0}}</strong>: End date of <strong>Event: {{event.title}}</strong> <kbd>{{event.label}}</kbd> is today!
+                            <a class="btn btn-warning m-1" href="{% url 'viewEvent' notification.0.pk event.pk %}">View Event</a>
+                        </p>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>    
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col-8 m-auto">
             <table class="table table-hover my-4">
@@ -28,15 +69,15 @@
                     </td>
                     
                     <td>
-                        {{i.last_modified}} <small>by</small> {{i.last_modified_by}}
+                        <span class="badge badge-info">{{i.last_modified_item}}</span>     {{i.last_modified}} <small>by</small> <kbd>{{i.last_modified_by}}</kbd>
                     </td>
 
                     <td>
-                        <a type="button" class="btn btn-warning btn-sm" href='project/{{i.pk}}/'>
+                        <a type="button" class="btn btn-warning btn-sm mb-2" href='project/{{i.pk}}/'>
                         View Project</a>
                         {% if request.user in i.project_admin.all %}
 
-                            <a type="button" class="btn btn-danger btn-sm" href="project/{{i.pk}}/delete_project/">Delete Project</a>
+                            <a type="button" class="btn btn-danger btn-sm mb-2" href="project/{{i.pk}}/delete_project/">Delete Project</a>
 
                         {% endif %}
                     </td>
@@ -51,6 +92,7 @@
         <a class="btn btn-success col-6 m-auto" href="{% url 'createProject' %}" id="create-project" role="button">New Project</a>
     </div>
 
+    
 </div>
 
 {% endblock %}

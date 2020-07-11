@@ -4,14 +4,18 @@
         <div class="btn-group ">
             <a 
             {% if 'add_event/' in request.path %}
+                href="{% url 'calendarPage' project.pk 'current_month' %}" onclick="return confirm('Are you sure you want to discard this changes?');"
+            {% elif 'search_event' in request.path %}
                 href="{% url 'calendarPage' project.pk 'current_month' %}"
             {% elif 'edit_event/' in request.path %}
-                href= '/project/{{project.pk}}/calendar/event/{{event.pk}}'
+                href= '/project/{{project.pk}}/calendar/event/{{event.pk}}' onclick="return confirm('Are you sure you want to discard this changes?');"
             {% elif 'delete_event/' in request.path %}
                 href= '/project/{{project.pk}}/calendar/event/{{event.pk}}'
             {% elif 'event/' in request.path %}
                 href="{% url 'calendarPage' project.pk 'current_month' %}"
             {% elif 'edit_todo/' in request.path %}
+                href='/project/{{project.pk}}/todo/' onclick="return confirm('Are you sure you want to discard this changes?');"
+            {% elif 'search_todo' in request.path %}
                 href='/project/{{project.pk}}/todo/'
             {% elif 'delete_todo/' in request.path %}
                 href='/project/{{project.pk}}/todo/'
@@ -19,6 +23,10 @@
                 href='/project/{{project.pk}}/todo/'
             {% elif 'delete_project' in request.path %}
                 href='/'
+            {% elif 'board/' in request.path %}
+                href='/project/{{project.pk}}' onclick="return confirm('Are you sure you want to discard this changes?');" 
+            {% elif 'view_thread/' in request.path %}
+                href='/project/{{project.pk}}/forum/'
             {% else %}
                 href='/project/{{project.pk}}'
             {% endif %} 
@@ -35,6 +43,8 @@
             <a href="{% url 'calendarPage' project.pk 'current_month' %}"
             {% if 'calendar/' in request.path %}
                 class=" btn btn-outline-info -8 active"
+            {% elif 'board/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard this changes?');" 
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}
@@ -43,6 +53,8 @@
             <a href='/project/{{project.pk}}/todo/'
             {% if 'todo/' in request.path %}
                 class=" btn btn-outline-info -8 active"
+            {% elif 'board/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard this changes?');" 
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}
@@ -53,8 +65,18 @@
                 class=" btn btn-outline-info -8 active"
             {% else %}
                 class=" btn btn-outline-info -8 "
-            {% endif %} 
+            {% endif %}
             >Board</a>
+
+            <a href="/project/{{project.pk}}/forum/"
+            {% if 'forum/' in request.path %}
+                class=" btn btn-outline-info -8 active"
+            {% elif 'board/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard this changes?');" 
+            {% else %}
+                class=" btn btn-outline-info -8 "
+            {% endif %}
+            >Forum</a>
 
         </div>
     </div>
