@@ -93,9 +93,9 @@ def editEvent(request, pk, event_id=None):
         if form.data['start_time'] == '' and form.data['end_time'] == '':
             messages.info(request, 'Please enter a start time or an end time for your event!')
             return redirect('/project/' + str(pk) + '/calendar/event/add_event/')
-        # elif form.data['start_time'] == '':
-        #     event.end_time = form.data['end_time']
-        #     event.save()
+        elif form.data['start_time'] == '':
+            event.end_time = form.data['end_time']
+            event.save()
         elif form.data['end_time'] == '':
             event.start_time = form.data['start_time']
             start_date = datetime.strptime(form.data['start_time'], '%Y-%m-%dT%H:%M')

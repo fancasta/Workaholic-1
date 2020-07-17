@@ -27,19 +27,19 @@
                 <div class="collapse" id="collapseExample" data-parent="#accordionExample">
                     {% for todo in notification.1 %}
                         <p class="alert alert-info m-1">
-                            <strong>{{notification.0}}</strong>: Deadline for <strong>Todo: {{todo.title}}</strong> is today!
+                            <strong>{{notification.0}}</strong>: Deadline for <strong>{{todo.title}}</strong> is today!
                             <a class="btn btn-info m-1" href="{% url 'viewTodo' notification.0.pk todo.pk %}">View Todo</a>
                         </p>
                     {% endfor %}
                     {% for event in notification.2 %}
                         <p class="alert alert-warning m-1">
-                            <strong>{{notification.0}}</strong>: Start date of <strong>Event: {{event.title}}</strong> <kbd>{{event.label}}</kbd> is today!
+                            <strong>{{notification.0}}</strong>: Start date of <strong>{{event.title}}</strong> <small><kbd>{{event.label}}</kbd></small> is today!
                             <a class="btn btn-warning m-1" href="{% url 'viewEvent' notification.0.pk event.pk %}">View Event</a>
                         </p>
                     {% endfor %}
                     {% for event in notification.3 %}
                         <p class="alert alert-warning m-1">
-                            <strong>{{notification.0}}</strong>: End date of <strong>Event: {{event.title}}</strong> <kbd>{{event.label}}</kbd> is today!
+                            <strong>{{notification.0}}</strong>: End date of <strong>{{event.title}}</strong> <small><kbd>{{event.label}}</kbd></small> is today!
                             <a class="btn btn-warning m-1" href="{% url 'viewEvent' notification.0.pk event.pk %}">View Event</a>
                         </p>
                     {% endfor %}
@@ -89,10 +89,21 @@
     </div>   
 
     <div class="mt-3 row">
-        <a class="btn btn-success col-6 m-auto" href="{% url 'createProject' %}" id="create-project" role="button">New Project</a>
+        {% if number_of_projects == 0 %}
+            <a class="btn btn-success col-6 m-auto" href="{% url 'createProject' %}" id="create-project" role="button" data-toggle="popover" title="No projects yet?" data-content="Click here to create a project!"
+            >New Project</a>
+        {% else %}
+            <a class="btn btn-success col-6 m-auto" href="{% url 'createProject' %}" id="create-project" role="button">New Project</a>
+        {% endif %}
     </div>
 
     
 </div>
+
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="popover"]').popover("show");   
+    });
+</script>
 
 {% endblock %}

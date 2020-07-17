@@ -144,11 +144,24 @@ def deleteProject(request, pk):
 def leaveProject(request, pk):
     project = Project.objects.get(id=pk)
     members = project.project_members.all()
+    admin = project.project_admin.all()
+    #Count number of admin
+    no_of_admins = len(admin)
+
     user_member = members.get(user=request.user)
     deleteform = DeleteForm(request.POST)
     if request.method == 'POST' and deleteform.data:
-        project.project_members.remove(user_member)
-        return redirect('/')
+        if no_of_admins == 1 and request.user in admin:
+            print(no_of_admins)
+            messages.info(request,  'Error: Project must have at least 1 project admin!')
+        else:
+            if request.user in admin:
+                project.project_admin.remove(request.user)
+                project.project_members.remove(user_member)
+                return redirect('/')
+            else:
+                project.project_members.remove(user_member)
+                return redirect('/')
     else:
         deleteform = DeleteForm()
 

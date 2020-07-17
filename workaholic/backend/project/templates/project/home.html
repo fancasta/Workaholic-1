@@ -17,15 +17,7 @@
     <div class="row">
         <div class="-10 m-auto">
             <div class="btn-group ">
-                <a href='/' class= "btn btn-warning -8" >Back </a>
-
-                <a href="/project/{{project.pk}}/chat/"
-                {% if 'chat/' in request.path %}
-                    class=" btn btn-outline-info -8 active"
-                {% else %}
-                    class=" btn btn-outline-info -8 "
-                {% endif %}
-                >Chat</a>
+                <a href='/' class= "btn btn-warning -8" data-toggle="tooltip" title="My Projects">Back </a>
 
                 <a href="{% url 'calendarPage' project.pk 'current_month' %}"
                 {% if 'calendar/' in request.path %}
@@ -82,7 +74,9 @@
             {% for i in members %}
                 {% if i in admin_members %}
                     <tr>
-                        <td>{{i}} <span class="badge badge-secondary">Admin</span> </td>    
+                        <td>{{i}}
+                            <span class="badge badge-secondary" data-trigger="hover" data-toggle="popover" title="Project Admin" data-content="An admin is able to add or delete a project member from the project, and set or remove another member as admin">Admin</span>
+                        </td>    
                         {% if request.user in admin_users %}
                             {% if i.user != request.user %}
                                 <td>
@@ -112,9 +106,13 @@
 
 <!--Board-->
 <div class="container shadow my-5 p-4">
-    <h2 class="display-4 text-center my-4">Board</h2>
+    <a href="/project/{{project.pk}}/board/" style="color: black; text-decoration: none;">
+        <h2 class="display-4 text-center my-4" data-toggle="tooltip" title="Project Board">Board</h2>
+    </a>
     <div class="container bg-light p-4 px-5">
-        <p class="display-4 text-center">{{board.body | safe}}</p>
+        {% if board.body %}
+            <p class="display-4 text-center">{{board.body | safe}}</p>
+        {% endif %}
         <div class="bg-light" style = "height: 250px;"></div>
     </div>
 </div>
@@ -123,7 +121,9 @@
 <!--Todo-->
 
 <div class="container shadow p-4" id="todo">
-    <h2 class="display-4 text-center my-4">Todo</h2>
+    <a href="/project/{{project.pk}}/todo/" style="color: black; text-decoration: none;">
+        <h2 class="display-4 text-center my-4" data-toggle="tooltip" title="Project Todo">Todo</h2>
+    </a>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -136,7 +136,7 @@
             {% for i in todo %}
             <tr>
                 <td>{{i.rank}}</td>
-                <td>{{i.title}}</td>
+                <td><a href="{% url 'viewTodo' project.pk i.pk %}">{{i.title}}</a></td>
                 <td>{{i.deadline}}</td>
             </tr>
             {% endfor %}
@@ -172,8 +172,9 @@
 <!--Event-->
 
 <div class="container p-4 shadow my-5" id="event">
-    <h2 class="display-4 text-center my-4">Event</h2>
-
+    <a href="/project/{{project.pk}}/calendar/" style="color: black; text-decoration: none;">
+        <h2 class="display-4 text-center my-4" data-toggle="tooltip" title="Project Calendar">Event</h2>
+    </a>
     <form action="{% url 'projectPage' project.pk %}#event">
         <div class="container row text-right p-3 col-4 rounded my-2" >
             <div class="col-4 offset-md-1 p-0">
@@ -206,7 +207,7 @@
         <tbody>
             {% for i in event %}
             <tr>
-                <td><kbd>{{i.label}}</kbd></small> {{i.title}} <small></td>
+                <td><a href="{% url 'viewEvent' project.pk i.pk %}">{{i.title}} </a> <small><kbd>{{i.label}}</kbd></small></td>
                 <td>{{i.start_time}}</td>
                 <td>{{i.end_time}}</td>
             </tr>
@@ -241,7 +242,9 @@
 </div>
 
 <div class="container p-4 shadow my-5" id="thread">
-    <h2 class="display-4 text-center my-4">Forum</h2>
+    <a href="/project/{{project.pk}}/forum/" style="color: black; text-decoration: none;">
+        <h2 class="display-4 text-center my-4" data-toggle="tooltip" title="Project Forum">Forum</h2>
+    </a>
 
     <table class="table table-hover">
         <thead>
@@ -253,7 +256,7 @@
         <tbody>
             {% for i in thread %}
             <tr>
-                <td>{{i.title}}</td>
+                <td><a href="{% url 'thread' project.pk i.pk %}">{{i.title}} </a></td>
                 <td>{{i.last_posted}} <small>by</small> <kbd>{{i.last_posted_by}}</kbd></td>
             </tr>
             {% endfor %}
@@ -319,5 +322,11 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip({placement:"bottom"});   
+        $('[data-toggle="popover"]').popover({placement:"right"});   
+    });
+</script>
 
 {% endblock %}

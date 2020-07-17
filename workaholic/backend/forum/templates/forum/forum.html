@@ -27,21 +27,8 @@
             </div>
         </div>
         <div class="col-2 p-0">
-            <select name="date" class="select form-control">
-                <option value='None'>Date</option>
-                <option value='new' 
-                {% if 'new' == previous_options.date %}
-                    selected
-                {% endif %}
-                > Newest thread</option>
-                <option value='old'
-                {% if 'old' == previous_options.date %}
-                    selected
-                {% endif %}
-                > Oldest thread</option>
-            </select>
+            <button class="btn btn-info btn-block mx-auto" type="submit" >Find Thread</button>
         </div>
-        <button class="btn btn-info btn-block mt-3 mx-auto col-6" type="submit" >Submit</button>
     </div>
 </form>
 <div class="container" id="forum">
@@ -52,12 +39,12 @@
     </p>
 
     <div class="table-responsive-md">
-        <table class="table table-hover">
+        <table class="table table-hover" data-toggle="table">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Created By</th>
-                    <th>Last Posted</th>
+                    <th data-sortable="true">Title</th>
+                    <th data-sortable="true">Created By</th>
+                    <th data-sortable="true">Last Posted</th>
                     <th>Actions</th>
                 </tr>
             </thead>

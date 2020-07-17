@@ -1,8 +1,8 @@
 rank_options = {
     'Rank': 0,
-    '5': 5,
-    '10':10,
-    '20':20
+    'Top 5': 5,
+    'Top 10':10,
+    'Top 20':20
 }
 
 month_options = {

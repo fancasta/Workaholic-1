@@ -20,8 +20,8 @@
 <div class="container" id="forum">
     <h4 class="text-center display-4">
         {{thread.title}}
-    </h4>
-    <div class="card m-3 p-3" style="background:wheat">               
+    </h4><br>
+    <div class="card m-3 p-3" style="background:cornsilk">               
         <h6>{{first_post.posted_by}}</h6>
         <p class="card-text">{{first_post.content | safe }}</p>    
         <div class="row">
@@ -35,7 +35,6 @@
                 <a href="{% url 'quote_post' project.pk thread.pk first_post.pk %}" class="card-link">Reply</a>
                 {% if first_post.posted_by == user_member %}
                     <a href="{% url 'edit_post' project.pk thread.pk first_post.pk %}" class="card-link">Edit</a>
-                    <a href="{% url 'delete_post' project.pk thread.pk first_post.pk %}" class="card-link">Delete</a>    
                 {% endif %}
             </div>
         </div>

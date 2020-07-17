@@ -20,7 +20,7 @@ class Event(models.Model):
     end_year = models.IntegerField(null=True)
 
     label = models.CharField(max_length=20, null=True, blank=True)
-    todo = models.ForeignKey(Todo, on_delete=models.CASCADE, null=True)
+    todo = models.ForeignKey(Todo, on_delete=models.CASCADE, null=True, blank=True)
     
     @property
     def view_event_url(self):

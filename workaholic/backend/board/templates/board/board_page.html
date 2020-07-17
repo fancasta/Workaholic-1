@@ -8,7 +8,7 @@
 
 <div class="container">
     <div class="jumbotron text-center">
-        <h1 class="display-4 text-uppercase mb-4"> {{project.name}}:Board</h1>
+        <h1 class="display-4 text-uppercase mb-4"> {{project.name}}: Board</h1>
         <strong>Last modified:</strong> {{project.board_last_modified}} by <kbd>{{project.board_last_modified_by}}</kbd>
     </div>
 </div>
@@ -16,7 +16,9 @@
 {% include 'partials/_project_navbar.html' %}
 
 <div class="container bg-light p-4 px-5 shadow">
-    <p class="display-4 text-center">{{board.body | safe}}</p>
+    {% if board.body %}
+        <p class="display-4 text-center">{{board.body | safe}}</p>
+    {% endif %}
     <div class="bg-light" style = "height: 250px;"></div>
 </div>
 

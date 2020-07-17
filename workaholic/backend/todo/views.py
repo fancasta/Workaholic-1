@@ -34,7 +34,7 @@ def todoPage(request,pk):
         new_todo_title = todoform.data['title']
         new_todo_desc = todoform.data['description']
 
-        deadline = todoform.data['deadline']
+        deadline = todoform.data['deadline'].date()
         end_date = datetime.strptime(deadline, '%Y-%m-%dT%H:%M')
         deadline_month = end_date.strftime("%m")
         deadline_year = end_date.strftime("%Y")
@@ -52,6 +52,7 @@ def todoPage(request,pk):
         project.cal_last_modified_by = modified_by
         project.last_modified = datetime.now()
         project.last_modified_by = modified_by
+        project.last_modified_item = "Todo"
         project.save()
 
         return redirect('/project/' + str(pk) + '/todo')
@@ -93,6 +94,7 @@ def deleteTodo(request, pk, todo_pk):
         project.cal_last_modified_by = modified_by
         project.last_modified = datetime.now()
         project.last_modified_by = modified_by
+        project.last_modified_item = "Todo"
         project.save()
 
         return redirect('/project/' + str(pk) + '/todo/')
@@ -197,6 +199,7 @@ def editTodo(request, pk, todo_pk):
         project.cal_last_modified_by = modified_by
         project.last_modified = datetime.now()
         project.last_modified_by = modified_by
+        project.last_modified_item = "Todo"
         project.save()
         return redirect('/project/' + str(pk) + '/todo/')
     else:
