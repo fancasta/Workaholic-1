@@ -33,12 +33,12 @@
                 class= "btn btn-warning -8" >Back </a>
 
             <a href="{% url 'calendarPage' project.pk 'current_month' %}"
-            {% if 'calendar/' in request.path %}
-                class=" btn btn-outline-info -8 active"
-            {% elif 'add_event/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% if 'add_event/' in request.path %}
+                class=" btn btn-outline-info -8 active" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
             {% elif 'edit_event/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+                class=" btn btn-outline-info -8 active" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'calendar/' in request.path %}
+                class=" btn btn-outline-info -8 active"
             {% elif 'edit_todo/' in request.path %}
                 class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
             {% elif 'board/' in request.path %}

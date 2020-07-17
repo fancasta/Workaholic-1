@@ -71,14 +71,14 @@
     <div class="col-4 mb-3 px-2">
         <div class="card">
             <div class="card-header">
-                Rank {{i.rank}}
+                <strong>Rank:</strong> {{i.rank}}
             </div>
             <div class="card-body">
                 <a href="{% url 'viewTodo' project.pk i.pk %}" class="card-title lead">{{i.title}}</a>            
-                <p class="card-text">{{i.description}}</p>
             </div>
             <div class="card-footer text-muted">
-            {{i.deadline}}
+                <strong>Deadline: </strong>{{i.deadline}}
+                <p>Assigned to: <small><kbd>{{i.assigned_to}}</kbd></small></p>
             </div>
         </div>
     </div>

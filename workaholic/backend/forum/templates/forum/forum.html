@@ -72,7 +72,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">Create Thread</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="return confirm('Are you sure you want to discard this thread?');">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip" title="Warning: Thread will not be saved">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -99,5 +99,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip({placement:"bottom"});
+    });
+</script>
 
 {% endblock %}

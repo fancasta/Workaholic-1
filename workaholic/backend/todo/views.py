@@ -34,7 +34,7 @@ def todoPage(request,pk):
         new_todo_title = todoform.data['title']
         new_todo_desc = todoform.data['description']
 
-        deadline = todoform.data['deadline'].date()
+        deadline = todoform.data['deadline']
         end_date = datetime.strptime(deadline, '%Y-%m-%dT%H:%M')
         deadline_month = end_date.strftime("%m")
         deadline_year = end_date.strftime("%Y")

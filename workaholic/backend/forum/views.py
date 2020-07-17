@@ -259,7 +259,6 @@ def editPost(request, pk, thread_pk, post_pk):
         postform = PostForm(request.POST, instance=post)
         post_content = postform.data['content']
         post.content = post_content
-        post.timestamp = datetime.now()
         post.edited = True
         post.save()
 

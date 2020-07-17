@@ -15,31 +15,35 @@
 
 {% include 'partials/_project_navbar.html' %}
 
-<div class="container bg-light p-4 px-5 shadow">
+<div class="container-lg bg-light p-4 shadow" style="overflow-x: scroll; min-height: 250px;">
     {% if board.body %}
-        <p class="display-4 text-center">{{board.body | safe}}</p>
+        <div class="card bg-light border-light">
+            <p class="card-body display-4 text-center">{{board.body | safe}}</p>
+        </div>
     {% endif %}
-    <div class="bg-light" style = "height: 250px;"></div>
 </div>
 
 
 
 <div class="container mt-5">
     <h2 class="text-center mb-4">Edit Board</h2>
-    <div class="container col-8 m-auto">
+    <div class="container">
         <div class="container text-right p-0">
             <a href="{% url 'boardPage' project.pk %}" class="btn btn-danger mb-3 mr-2" onclick="return confirm('Are you sure you want to discard this changes?');">Discard Edits</a>
         </div>
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.media }}
-            {% for field in form %}
-                {{ field }}
-            {% endfor %}
-            <div class="row mt-4">
+        <div class="container p-0 text-center" id='form'>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.media }}
+                {% for field in form %}
+                    <div class="card m-3">
+                        {{ field }}
+                    </div>
+                {% endfor %}
                 <input type="submit" value="Submit" class = "btn btn-info btn-lg col-5 m-auto">
-            </div>
-        </form>
+            </form>
+        </div>
+
     </div>
 </div>
 {% endblock %}

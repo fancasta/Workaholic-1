@@ -11,7 +11,7 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
-from datetime import datetime
+from datetime import datetime, timedelta
 # Create your views here.
 from accounts.models import *
 
@@ -63,7 +63,7 @@ def projectPage(request,pk):
     page_todo = paginator.get_page(page) #Chossing the correct list with correct 'page' parameter
 
     #Add event object
-    event = Event.objects.filter(project=project).filter(start_time__gte = datetime.now()).order_by('start_time')
+    event = Event.objects.filter(project=project).filter(start_time__gte = datetime.today()-timedelta(days=1)).order_by('start_time') | Event.objects.filter(project=project).filter(end_time__gte = datetime.today()-timedelta(days=1))
     if 'order' in request.GET:        
         order = request.GET['order']
         if order != 'None':

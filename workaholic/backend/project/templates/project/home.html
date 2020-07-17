@@ -109,11 +109,11 @@
     <a href="/project/{{project.pk}}/board/" style="color: black; text-decoration: none;">
         <h2 class="display-4 text-center my-4" data-toggle="tooltip" title="Project Board">Board</h2>
     </a>
-    <div class="container bg-light p-4 px-5">
+    <div class="card bg-light p-4 px-5">
         {% if board.body %}
-            <p class="display-4 text-center">{{board.body | safe}}</p>
+            <p class="card-text display-4 text-center">{{board.body | safe}}</p>
         {% endif %}
-        <div class="bg-light" style = "height: 250px;"></div>
+        <div class="bg-light" style = "min-height: 100px;"></div>
     </div>
 </div>
 
