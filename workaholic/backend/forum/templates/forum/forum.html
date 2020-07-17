@@ -14,7 +14,23 @@
 </div>
 
 {% include 'partials/_project_navbar.html' %}
-
+<div class="container m-4">
+</div>
+<form action="{% url 'forum' project.pk %}">
+    <div class="container row p-3 mx-auto col-6 bg-light rounded mb-4" >
+        <div class="col-10 pl-0">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+                <input type="text" name="keywords" class="form-control" placeholder="Type your keywords" value="{{ previous_options.keywords }}">
+            </div>
+        </div>
+        <div class="col-2 p-0">
+            <button class="btn btn-info btn-block mx-auto" type="submit" >Find Thread</button>
+        </div>
+    </div>
+</form>
 <div class="container" id="forum">
     <p>
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addMessage" data-backdrop="static" data-keyboard="false">
@@ -23,12 +39,12 @@
     </p>
 
     <div class="table-responsive-md">
-        <table class="table table-hover">
+        <table class="table table-hover" data-toggle="table">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Created By</th>
-                    <th>Last Posted</th>
+                    <th data-sortable="true">Title</th>
+                    <th data-sortable="true">Created By</th>
+                    <th data-sortable="true">Last Posted</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -56,7 +72,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">Create Thread</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="return confirm('Are you sure you want to discard this thread?');">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip" title="Warning: Thread will not be saved">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -83,5 +99,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip({placement:"bottom"});
+    });
+</script>
 
 {% endblock %}

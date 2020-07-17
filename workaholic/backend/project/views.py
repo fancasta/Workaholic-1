@@ -11,7 +11,7 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
-from datetime import datetime
+from datetime import datetime, timedelta
 # Create your views here.
 from accounts.models import *
 
@@ -63,7 +63,15 @@ def projectPage(request,pk):
     page_todo = paginator.get_page(page) #Chossing the correct list with correct 'page' parameter
 
     #Add event object
-    event = Event.objects.filter(project=project).order_by('start_time')
+    event = Event.objects.filter(project=project).filter(start_time__gte = datetime.today()-timedelta(days=1)).order_by('start_time') | Event.objects.filter(project=project).filter(end_time__gte = datetime.today()-timedelta(days=1))
+    if 'order' in request.GET:        
+        order = request.GET['order']
+        if order != 'None':
+            if order == 'start':
+                event = event.order_by('start_time')
+            else:
+                event = event.order_by('end_time')
+
     paginator = Paginator(event,3)
     page = request.GET.get('page')
     page_event = paginator.get_page(page)
@@ -84,8 +92,10 @@ def projectPage(request,pk):
         'todo': page_todo,
         'event': page_event,
         'thread': page_thread,
+        'previous_options': request.GET,
         'Year': datetime.now().strftime("%Y")
     }
+    
     return render(request, 'project/home.html', context)
 
 @login_required
@@ -134,11 +144,24 @@ def deleteProject(request, pk):
 def leaveProject(request, pk):
     project = Project.objects.get(id=pk)
     members = project.project_members.all()
+    admin = project.project_admin.all()
+    #Count number of admin
+    no_of_admins = len(admin)
+
     user_member = members.get(user=request.user)
     deleteform = DeleteForm(request.POST)
     if request.method == 'POST' and deleteform.data:
-        project.project_members.remove(user_member)
-        return redirect('/')
+        if no_of_admins == 1 and request.user in admin:
+            print(no_of_admins)
+            messages.info(request,  'Error: Project must have at least 1 project admin!')
+        else:
+            if request.user in admin:
+                project.project_admin.remove(request.user)
+                project.project_members.remove(user_member)
+                return redirect('/')
+            else:
+                project.project_members.remove(user_member)
+                return redirect('/')
     else:
         deleteform = DeleteForm()
 

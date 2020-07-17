@@ -74,15 +74,14 @@
     <div class="col-4 mb-3 px-2">
         <div class="card">
             <div class="card-header">
-                {{i.label}}
+                <h6>{{i.label}}</h6>
             </div>
             <div class="card-body">
                 <a href="{% url 'viewEvent' project.pk i.pk %}" class="card-title lead">{{i.title}}</a>            
-                <p class="card-text">{{i.description}}</p>
             </div>
             <div class="card-footer text-muted">
-            {{i.start_time}}<br>
-            {{i.end_time}}
+            <strong>Start: </strong>{{i.start_time}}<br>
+            <strong>End: </strong>{{i.end_time}}
             </div>
         </div>
     </div>

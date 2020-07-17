@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
     'six',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'accounts',
     'project',
-    'chat',
     'todo',
     'ckeditor',
     'ckeditor_uploader',
@@ -68,13 +66,17 @@ CKEDITOR_CONFIGS = {
             '/',
             ['Styles', 'Format', 'Font', 'FontSize'],
             ['TextColor', 'BGColor'],
-            ['Maximize', 'ShowBlocks','Chart','countdowntimer'],
+            ['Maximize', 'ShowBlocks','Chart','countdowntimer','VideoDetector','pbckcode','BootstrapVisibility'],
         ],
         'extraPlugins': ','.join([
             'chart',
             'powrcountdowntimer',
+            'videodetector',
+            'pbckcode',
+            'bootstrapVisibility'
         ]),
-        'height': 210,
+        'height': 250,
+        'width': '100%',
         'tabSpaces': 8,
     }
 }
@@ -116,16 +118,6 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'backend.routing.application'
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
-}
 
 
 WSGI_APPLICATION = 'backend.wsgi.application'
@@ -166,13 +158,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-#TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Singapore'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

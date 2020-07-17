@@ -2,6 +2,7 @@ label_options = {
     'Label':'None',
     'Meeting' : 'Meeting',
     'Submission' : 'Submission',
+    'Todo': 'Todo',
     'Others' : 'Others'
 }
 

@@ -93,9 +93,9 @@ def editEvent(request, pk, event_id=None):
         if form.data['start_time'] == '' and form.data['end_time'] == '':
             messages.info(request, 'Please enter a start time or an end time for your event!')
             return redirect('/project/' + str(pk) + '/calendar/event/add_event/')
-        # elif form.data['start_time'] == '':
-        #     event.end_time = form.data['end_time']
-        #     event.save()
+        elif form.data['start_time'] == '':
+            event.end_time = form.data['end_time']
+            event.save()
         elif form.data['end_time'] == '':
             event.start_time = form.data['start_time']
             start_date = datetime.strptime(form.data['start_time'], '%Y-%m-%dT%H:%M')
@@ -220,7 +220,8 @@ def searchEvent(request, pk):
     if 'keywords' in request.GET:
         keywords = request.GET['keywords']
         if keywords:
-            searched_events = searched_events.filter(description__icontains=keywords)|searched_events.filter(title__icontains=keywords)
+            searched_events = searched_events.filter(title__icontains=keywords)
+            
     if 'label' in request.GET:        
         label = request.GET['label']
         if label != 'None':

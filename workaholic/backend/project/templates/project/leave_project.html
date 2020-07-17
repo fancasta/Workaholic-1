@@ -9,6 +9,14 @@
 
     <form method="POST">
         {% csrf_token %}
+        {% if messages %}
+            {% for i in messages %}
+                <p class="alert alert-warning">{{i}}</p>
+            {% endfor %}
+        {% endif %}
+        <div class="alert alert-danger">
+            <strong>Warning:</strong> Action is irreversible
+        </div>
         <div class="row">
             <div class="col-8 m-auto">
                 <div class="row">
