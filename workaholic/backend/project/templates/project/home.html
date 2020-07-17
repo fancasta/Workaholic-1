@@ -8,7 +8,8 @@
 <div class="container">
     <div class="jumbotron text-center">
           <h1 class="display-4 text-uppercase mb-4"> {{project.name}}</h1>
-          <p><strong>Last modified:</strong> {{project.last_modified }} by <kbd>{{project.last_modified_by}} </kbd> </p>
+          <p><span class="badge badge-info">{{project.last_modified_item}}</span> <strong>Last modified:</strong> {{project.last_modified }} by <kbd>{{project.last_modified_by}} </kbd> </p>
+          <a href="{% url 'leaveProject' project.pk %}" class="btn btn-outline-danger">Leave Project</a>
     </div>
 </div>
 <!-- Special project_navbar because don't know how to make the back button go to index.html, will see later-->
@@ -16,15 +17,7 @@
     <div class="row">
         <div class="-10 m-auto">
             <div class="btn-group ">
-                <a href='/' class= "btn btn-warning -8" >Back </a>
-
-                <a href="/project/{{project.pk}}/chat/"
-                {% if 'chat/' in request.path %}
-                    class=" btn btn-outline-info -8 active"
-                {% else %}
-                    class=" btn btn-outline-info -8 "
-                {% endif %}
-                >Chat</a>
+                <a href='/' class= "btn btn-warning -8" data-toggle="tooltip" title="My Projects">Back </a>
 
                 <a href="{% url 'calendarPage' project.pk 'current_month' %}"
                 {% if 'calendar/' in request.path %}
@@ -50,6 +43,13 @@
                 {% endif %} 
                 >Board</a>
 
+                <a href="/project/{{project.pk}}/forum/"
+                {% if 'forum/' in request.path %}
+                    class=" btn btn-outline-info -8 active"
+                {% else %}
+                    class=" btn btn-outline-info -8 "
+                {% endif %}
+                >Forum</a>
             </div>
         </div>
     </div>
@@ -74,7 +74,9 @@
             {% for i in members %}
                 {% if i in admin_members %}
                     <tr>
-                        <td>{{i}} <span class="badge badge-secondary">Admin</span> </td>    
+                        <td>{{i}}
+                            <span class="badge badge-secondary" data-trigger="hover" data-toggle="popover" title="Project Admin" data-content="An admin is able to add or delete a project member from the project, and set or remove another member as admin">Admin</span>
+                        </td>    
                         {% if request.user in admin_users %}
                             {% if i.user != request.user %}
                                 <td>
@@ -104,10 +106,14 @@
 
 <!--Board-->
 <div class="container shadow my-5 p-4">
-    <h2 class="display-4 text-center my-4">Board</h2>
-    <div class="container bg-light p-4 px-5">
-        <p class="display-4 text-center">{{board.body | safe}}</p>
-        <div class="bg-light" style = "height: 250px;"></div>
+    <a href="/project/{{project.pk}}/board/" style="color: black; text-decoration: none;">
+        <h2 class="display-4 text-center my-4" data-toggle="tooltip" title="Project Board">Board</h2>
+    </a>
+    <div class="card bg-light p-4 px-5">
+        {% if board.body %}
+            <p class="card-text display-4 text-center">{{board.body | safe}}</p>
+        {% endif %}
+        <div class="bg-light" style = "min-height: 100px;"></div>
     </div>
 </div>
 
@@ -115,7 +121,9 @@
 <!--Todo-->
 
 <div class="container shadow p-4" id="todo">
-    <h2 class="display-4 text-center my-4">Todo</h2>
+    <a href="/project/{{project.pk}}/todo/" style="color: black; text-decoration: none;">
+        <h2 class="display-4 text-center my-4" data-toggle="tooltip" title="Project Todo">Todo</h2>
+    </a>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -128,7 +136,7 @@
             {% for i in todo %}
             <tr>
                 <td>{{i.rank}}</td>
-                <td>{{i.title}}</td>
+                <td><a href="{% url 'viewTodo' project.pk i.pk %}">{{i.title}}</a></td>
                 <td>{{i.deadline}}</td>
             </tr>
             {% endfor %}
@@ -164,7 +172,29 @@
 <!--Event-->
 
 <div class="container p-4 shadow my-5" id="event">
-    <h2 class="display-4 text-center my-4">Event</h2>
+    <a href="/project/{{project.pk}}/calendar/" style="color: black; text-decoration: none;">
+        <h2 class="display-4 text-center my-4" data-toggle="tooltip" title="Project Calendar">Event</h2>
+    </a>
+    <form action="{% url 'projectPage' project.pk %}#event">
+        <div class="container row text-right p-3 col-4 rounded my-2" >
+            <div class="col-4 offset-md-1 p-0">
+                <select name="order" class="select form-control">
+                    <option value='None'>Order by</option>
+                    <option value='start'
+                    {% if 'start' == previous_options.order %}
+                        selected
+                    {% endif %}
+                    > Start time</option>
+                    <option value='end'
+                    {% if 'end' == previous_options.order %}
+                        selected
+                    {% endif %}
+                    > End time</option>
+                </select>
+            </div>
+            <button class="btn btn-info btn-block mx-3 col-4" type="submit" >Submit</button>
+        </div>
+    </form>
 
     <table class="table table-hover">
         <thead>
@@ -177,7 +207,7 @@
         <tbody>
             {% for i in event %}
             <tr>
-                <td>{{i.title}}</td>
+                <td><a href="{% url 'viewEvent' project.pk i.pk %}">{{i.title}} </a> <small><kbd>{{i.label}}</kbd></small></td>
                 <td>{{i.start_time}}</td>
                 <td>{{i.end_time}}</td>
             </tr>
@@ -203,6 +233,54 @@
         
                 {% if event.has_next %}
                     <a href="?page={{event.next_page_number}}#event" class="btn btn-warning">Next</a>
+                {% else %}
+                    <a href="" class="btn btn-warning disabled">Next</a>
+                {% endif %}
+            {% endif %}   
+        </div>
+    </div>
+</div>
+
+<div class="container p-4 shadow my-5" id="thread">
+    <a href="/project/{{project.pk}}/forum/" style="color: black; text-decoration: none;">
+        <h2 class="display-4 text-center my-4" data-toggle="tooltip" title="Project Forum">Forum</h2>
+    </a>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Last Posted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in thread %}
+            <tr>
+                <td><a href="{% url 'thread' project.pk i.pk %}">{{i.title}} </a></td>
+                <td>{{i.last_posted}} <small>by</small> <kbd>{{i.last_posted_by}}</kbd></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center">
+        <div class="btn-group">
+            {% if thread.has_other_pages %}
+                {% if thread.has_previous %}
+                    <a href="?page={{thread.previous_page_number}}#thread" class="btn btn-warning">Back</a>
+                {% else %}
+                    <a href="" class="btn btn-warning disabled">Back</a>
+                {% endif %}
+        
+                {% for i in thread.paginator.page_range %}
+                    {% if thread.number == i %}
+                        <a href="?page={{i}}#thread" class="btn btn-info active">{{i}}</a>
+                    {% else %}
+                        <a href="?page={{i}}#thread" class="btn btn-info">{{i}}</a>
+                    {% endif %}
+                {% endfor %}
+        
+                {% if thread.has_next %}
+                    <a href="?page={{thread.next_page_number}}#thread" class="btn btn-warning">Next</a>
                 {% else %}
                     <a href="" class="btn btn-warning disabled">Next</a>
                 {% endif %}
@@ -244,5 +322,11 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip({placement:"bottom"});   
+        $('[data-toggle="popover"]').popover({placement:"right"});   
+    });
+</script>
 
 {% endblock %}

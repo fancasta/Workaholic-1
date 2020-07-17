@@ -33,6 +33,7 @@ def boardPage(request, pk):
         project.board_last_modified_by = modified_by
         project.last_modified = datetime.now()
         project.last_modified_by = modified_by
+        project.last_modified_item = "Board"
         project.save()
 
         return redirect('/project/' + str(pk) + '/board/')

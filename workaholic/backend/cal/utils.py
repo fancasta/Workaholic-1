@@ -26,8 +26,11 @@ class Calendar(HTMLCalendar):
             else:
                 d += f'<li> End: {event.view_event_url}</li>'
     
-        if day != 0:
+        if day != 0 and datetime(self.year,self.month,day).date() == datetime.now().date():
+            return f"<td style='background-color:papayawhip;' data-trigger='hover' data-toggle='popover' title='Today' data-content='{datetime(self.year,self.month,day).strftime('%d %B %Y ')}'><span class='date'>{day}</span><ul> {d} </ul></td>"
+        elif day != 0:
             return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
+
         return f'<td></td>'
 
     def formatweek(self, pk, theweek, start_events, end_events):

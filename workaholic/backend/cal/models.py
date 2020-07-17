@@ -10,11 +10,17 @@ class Event(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
+    
     start_time = models.DateTimeField(null=True, blank=True, default= datetime.now)
+    start_month = models.IntegerField(null=True)
+    start_year = models.IntegerField(null=True)
+
     end_time = models.DateTimeField(null=True, blank=True, default=None)
+    end_month = models.IntegerField(null=True)
+    end_year = models.IntegerField(null=True)
 
     label = models.CharField(max_length=20, null=True, blank=True)
-    todo = models.ForeignKey(Todo, on_delete=models.CASCADE, null=True)
+    todo = models.ForeignKey(Todo, on_delete=models.CASCADE, null=True, blank=True)
     
     @property
     def view_event_url(self):
@@ -30,4 +36,3 @@ class Event(models.Model):
     def delete_event_url(self):
         url = 'event/' + str(self.id) + '/delete_event/'
         return f'<a href="{url}"> Delete </a>'
-

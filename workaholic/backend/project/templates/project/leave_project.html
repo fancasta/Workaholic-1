@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %} {{project.name}} {% endblock %}
+
+{% block content %}
+
+<div class="container shadow my-5 p-5 w-50">
+    <h2 class="text-center mb-4">Confirm leave project <strong>"{{project.name}}"</strong></h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {% if messages %}
+            {% for i in messages %}
+                <p class="alert alert-warning">{{i}}</p>
+            {% endfor %}
+        {% endif %}
+        <div class="alert alert-danger">
+            <strong>Warning:</strong> Action is irreversible
+        </div>
+        <div class="row">
+            <div class="col-8 m-auto">
+                <div class="row">
+                    <a class="btn btn-warning col-5 " href="{% url 'projectPage' project.pk %}" > Back </a>
+                    <input class="btn btn-danger col-5 offset-2" type="submit" name="Leave Project" value="Leave Project">  
+                </div>
+            </div>
+        </div>     
+    </form>
+</div>
+{% endblock %}

@@ -4,37 +4,45 @@
         <div class="btn-group ">
             <a 
             {% if 'add_event/' in request.path %}
-                href="{% url 'calendarPage' project.pk 'current_month' %}"
+                href="{% url 'calendarPage' project.pk 'current_month' %}" onclick="return confirm('Are you sure you want to discard (if any) your changes?');" data-toggle="tooltip" title="Project Calendar"
+            {% elif 'search_event' in request.path %}
+                href="{% url 'calendarPage' project.pk 'current_month' %}" data-toggle="tooltip" title="Project Calendar"
             {% elif 'edit_event/' in request.path %}
-                href= '/project/{{project.pk}}/calendar/event/{{event.pk}}'
+                href= '/project/{{project.pk}}/calendar/event/{{event.pk}}' onclick="return confirm('Are you sure you want to discard (if any) your changes?');" data-toggle="tooltip" title="Project Calendar"
             {% elif 'delete_event/' in request.path %}
-                href= '/project/{{project.pk}}/calendar/event/{{event.pk}}'
+                href= '/project/{{project.pk}}/calendar/event/{{event.pk}}' data-toggle="tooltip" title="Project Calendar"
             {% elif 'event/' in request.path %}
-                href="{% url 'calendarPage' project.pk 'current_month' %}"
+                href="{% url 'calendarPage' project.pk 'current_month' %}" data-toggle="tooltip" title="Project Calendar"
             {% elif 'edit_todo/' in request.path %}
-                href='/project/{{project.pk}}/todo/'
+                href='/project/{{project.pk}}/todo/' onclick="return confirm('Are you sure you want to discard (if any) your changes?');" data-toggle="tooltip" title="Project Todo"
+            {% elif 'search_todo' in request.path %}
+                href='/project/{{project.pk}}/todo/' data-toggle="tooltip" title="Project Todo"
             {% elif 'delete_todo/' in request.path %}
-                href='/project/{{project.pk}}/todo/'
+                href='/project/{{project.pk}}/todo/' data-toggle="tooltip" title="Project Todo"
             {% elif 'view_todo/' in request.path %}
-                href='/project/{{project.pk}}/todo/'
-            {% elif 'delete_project' in request.path %}
-                href='/'
+                href='/project/{{project.pk}}/todo/' data-toggle="tooltip" title="Project Todo"
+            {% elif 'delete_project' in request.path %}  
+                href='/' data-toggle="tooltip" title="Project Home"
+            {% elif 'board/' in request.path %}
+                href='/project/{{project.pk}}' onclick="return confirm('Are you sure you want to discard (if any) your changes?');" data-toggle="tooltip" title="Project Home"
+            {% elif 'view_thread/' in request.path %} 
+                href='/project/{{project.pk}}/forum/' onclick="return confirm('Are you sure you want to discard (if any) your changes?');"  data-toggle="tooltip" title="Project Forum"
             {% else %}
-                href='/project/{{project.pk}}'
+                href='/project/{{project.pk}}' data-toggle="tooltip" title="Project Home"
             {% endif %} 
                 class= "btn btn-warning -8" >Back </a>
 
-            <a href="/project/{{project.pk}}/chat/"
-            {% if 'chat/' in request.path %}
-                class=" btn btn-outline-info -8 active"
-            {% else %}
-                class=" btn btn-outline-info -8 "
-            {% endif %}
-            >Chat</a>
-
             <a href="{% url 'calendarPage' project.pk 'current_month' %}"
-            {% if 'calendar/' in request.path %}
+            {% if 'add_event/' in request.path %}
+                class=" btn btn-outline-info -8 active" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'edit_event/' in request.path %}
+                class=" btn btn-outline-info -8 active" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'calendar/' in request.path %}
                 class=" btn btn-outline-info -8 active"
+            {% elif 'edit_todo/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'board/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}
@@ -43,6 +51,16 @@
             <a href='/project/{{project.pk}}/todo/'
             {% if 'todo/' in request.path %}
                 class=" btn btn-outline-info -8 active"
+            {% elif 'add_event/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'edit_event/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'edit_todo/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'board/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
+            {% elif 'view_thread/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}
@@ -51,11 +69,42 @@
             <a href='/project/{{project.pk}}/board/'
             {% if 'board/' in request.path %}
                 class=" btn btn-outline-info -8 active"
+            {% elif 'add_event/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'edit_event/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'edit_todo/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'view_thread/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
             {% else %}
                 class=" btn btn-outline-info -8 "
-            {% endif %} 
+            {% endif %}
             >Board</a>
 
+            <a href="/project/{{project.pk}}/forum/"
+            {% if 'forum/' in request.path %}
+                class=" btn btn-outline-info -8 active"
+            {% elif 'add_event/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'edit_event/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'edit_todo/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+            {% elif 'board/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
+            {% elif 'view_thread/' in request.path %}
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
+            {% else %}
+                class=" btn btn-outline-info -8 "
+            {% endif %}
+            >Forum</a>
+            <script>
+                $(document).ready(function(){
+                  $('[data-toggle="tooltip"]').tooltip({placement:"bottom"});
+                  $('[data-toggle="popover"]').popover();   
+                });
+            </script>
         </div>
     </div>
 </div>

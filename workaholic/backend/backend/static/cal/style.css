@@ -2,10 +2,13 @@
     width: 98%;
     font-size: 13px;
     margin: auto;
+    border: 6px solid #178394;
+    padding: 25px;
   }
   
 .calendar tr, .calendar td {
-    border: 1px solid black;
+    border: 3px solid #066979;
+    height: 30%;
   }
   
 .calendar th {
@@ -21,11 +24,16 @@
   }
   
 .month {
-    font-size: 25px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: Lato;
+    background-color:darkslategrey;
+    color: white;
   }
   
 .date {
     font-size: 16px;
+    
   }
   
 ul {
@@ -39,9 +47,28 @@ ul {
   
 .form input, .form select, .form textarea {
     border-radius: 5px;
-    border: 1px solid #17a2b8;
+    border: 3px solid #17a2b8;
     outline: none;
     background: none;
     padding: 5px;
     width: 100%;
+  }
+
+  .mon, .tue, .wed, .thu, .fri {
+    background-color:rgb(23, 34, 44);
+    color: white;
+  }
+
+  .sat, .sun {
+    background-color:rgb(122, 39, 6);
+    color: rgb(183, 219, 22);
+  }
+
+  td:hover {
+    background-color: rgb(216, 212, 212);
+  }
+
+  .calendar li {
+    color: indigo;
+    font-size: 15px;
   }
