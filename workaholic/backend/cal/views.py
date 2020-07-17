@@ -220,7 +220,8 @@ def searchEvent(request, pk):
     if 'keywords' in request.GET:
         keywords = request.GET['keywords']
         if keywords:
-            searched_events = searched_events.filter(description__icontains=keywords)|searched_events.filter(title__icontains=keywords)
+            searched_events = searched_events.filter(title__icontains=keywords)
+            
     if 'label' in request.GET:        
         label = request.GET['label']
         if label != 'None':

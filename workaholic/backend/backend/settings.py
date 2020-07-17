@@ -68,13 +68,17 @@ CKEDITOR_CONFIGS = {
             '/',
             ['Styles', 'Format', 'Font', 'FontSize'],
             ['TextColor', 'BGColor'],
-            ['Maximize', 'ShowBlocks','Chart','countdowntimer'],
+            ['Maximize', 'ShowBlocks','Chart','countdowntimer','VideoDetector','pbckcode','BootstrapVisibility'],
         ],
         'extraPlugins': ','.join([
             'chart',
             'powrcountdowntimer',
+            'videodetector',
+            'pbckcode',
+            'bootstrapVisibility'
         ]),
-        'height': 210,
+        'height': 250,
+        'width': '100%',
         'tabSpaces': 8,
     }
 }

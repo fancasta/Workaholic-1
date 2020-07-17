@@ -12,7 +12,7 @@
             <h6 class="mx-2">{{post.quote_sender}}</h6>
                 <div class="row">
                     <div class="col mx-2">
-                        <p>{{post.quote_content}}</p>
+                        <p>{{post.quote_content | safe}}</p>
                     </div>                     
                     <div class="col mx-2 text-right">
                         <p><small>{{post.quote_timestamp}}</small></p>    
@@ -22,12 +22,15 @@
     {% endif %}  
     <form method="POST">
         {% csrf_token %}
-            {% for field in postform %}
-                <div class="card m-3 p-3">
-                    {{ field }}
-                </div>
-            {% endfor %}
-            <input type="submit" value="Submit" class="form-control btn btn-info mt-3">
+        {{ postform.media }}
+        {% for field in postform %}
+            <div class="card m-3 p-3">
+                {{ field }}
+            </div>
+        {% endfor %}
+        <div class="container text-center">
+            <input type="submit" value="Submit" class="form-control btn btn-info col-6">
+        </div>
     </form>
 </div>
 

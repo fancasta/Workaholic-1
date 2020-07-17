@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 from accounts.models import *
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 
@@ -13,15 +14,19 @@ class Thread(models.Model):
     last_posted_by = models.ForeignKey(Project_Member, related_name="last_posted_by",on_delete=models.CASCADE, null=True)
 
 class Post(models.Model):
-    content = models.TextField()
+    content = RichTextUploadingField(blank=True, null=True)
     timestamp = models.DateTimeField()
     project = models.ForeignKey(Project, related_name="project_post",on_delete=models.CASCADE)
     thread = models.ForeignKey(Thread, related_name="thread_post",on_delete=models.CASCADE)
     posted_by = models.ForeignKey(Project_Member, on_delete=models.CASCADE, related_name="post_sender", null=True, default=None)
 
-    quote_content = models.TextField(null=True, default=None)
+    quote_content = RichTextUploadingField(blank=True, null=True, default=None)
     quote_sender = models.ForeignKey(Project_Member, on_delete=models.CASCADE, related_name="quote_sender", null=True, default=None)
     quote_timestamp = models.DateTimeField(null=True, default=None)
+
+    like = models.ManyToManyField(Project_Member, related_name='forum_post')
+    like_counter = models.IntegerField(default=0)
+    liked = models.BooleanField(default=False)
 
     edited = models.BooleanField(default=False)
 

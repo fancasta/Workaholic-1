@@ -1,0 +1,19 @@
+#like {
+    color: lightslategray;
+    font-size: 140%;
+    font-weight: 100;
+}
+
+#like:hover {
+    color: mediumaquamarine;
+}
+
+#dislike {
+    font-size: 140%;
+    
+}
+
+#dislike:hover {
+    font-weight: 100;
+    color: mediumaquamarine;
+}

@@ -23,22 +23,21 @@
 
 
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-10 m-auto">
-            <h2 class="text-center mb-4">Edit Board</h2>
-            <p class="text-right m-3"><a href="{% url 'boardPage' project.pk %}" class="btn btn-danger m-3" onclick="return confirm('Are you sure you want to discard this changes?');">Discard Edits</a></p>
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.media }}
-                {% for field in form %}
-                    {{ field }}
-                {% endfor %}
-                <div class="row mt-4">
-                    <input type="submit" value="Submit" class = "btn btn-info btn-lg col-5 m-auto">
-                </div>
-            </form>
+    <h2 class="text-center mb-4">Edit Board</h2>
+    <div class="container col-8 m-auto">
+        <div class="container text-right p-0">
+            <a href="{% url 'boardPage' project.pk %}" class="btn btn-danger mb-3 mr-2" onclick="return confirm('Are you sure you want to discard this changes?');">Discard Edits</a>
         </div>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.media }}
+            {% for field in form %}
+                {{ field }}
+            {% endfor %}
+            <div class="row mt-4">
+                <input type="submit" value="Submit" class = "btn btn-info btn-lg col-5 m-auto">
+            </div>
+        </form>
     </div>
 </div>
-
 {% endblock %}

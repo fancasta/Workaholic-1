@@ -174,6 +174,27 @@
 <div class="container p-4 shadow my-5" id="event">
     <h2 class="display-4 text-center my-4">Event</h2>
 
+    <form action="{% url 'projectPage' project.pk %}#event">
+        <div class="container row text-right p-3 col-4 rounded my-2" >
+            <div class="col-4 offset-md-1 p-0">
+                <select name="order" class="select form-control">
+                    <option value='None'>Order by</option>
+                    <option value='start'
+                    {% if 'start' == previous_options.order %}
+                        selected
+                    {% endif %}
+                    > Start time</option>
+                    <option value='end'
+                    {% if 'end' == previous_options.order %}
+                        selected
+                    {% endif %}
+                    > End time</option>
+                </select>
+            </div>
+            <button class="btn btn-info btn-block mx-3 col-4" type="submit" >Submit</button>
+        </div>
+    </form>
+
     <table class="table table-hover">
         <thead>
             <tr>
