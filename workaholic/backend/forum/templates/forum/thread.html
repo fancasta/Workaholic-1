@@ -147,7 +147,8 @@
     <div class="m-auto p-auto">
         <p class="text-right my-3"><a href="{% url 'thread' project.pk thread.pk %}" class="btn btn-danger m-3" onclick="return confirm('Are you sure you want to discard this post?');">Discard Edits</a></p>
         {% if quoted_post %}
-            <div class="card m-3 p-1" style="background:honeydew;" id="reply"> 
+            <div class="container" style="height: 10px;" id="reply"></div>
+            <div class="card m-3 p-1" style="background:honeydew;"> 
                 <h6 class="mx-2">
                     {{quoted_post.posted_by}}
                 </h6>
