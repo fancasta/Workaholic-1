@@ -76,22 +76,18 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body mx-3">
             <form method="POST">
                 {% csrf_token %}
-                <table class="form">
                     {% for field in threadform %}
-                         <p>Thread Title: {{ field }}</p>
+                         <p>Title: {{ field }}</p>
                     {% endfor %}
+
+                    {{ postform.media }}
                     {% for field in postform %}
-                        <div class="row">
-                            <div class="col-2">Post:</div>
-                            <div class="col-10">
-                                {{ field }}        
-                            </div> 
-                        </div>
+                        <p>Description: {{ field }}</p>
                     {% endfor %}
-                </table>
+
                 <input type="submit" value="Submit" class="form-control btn btn-info mt-3">
             </form>
         </div>

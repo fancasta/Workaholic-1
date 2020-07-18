@@ -218,21 +218,21 @@
         <div class="btn-group">
             {% if event.has_other_pages %}
                 {% if event.has_previous %}
-                    <a href="?page={{event.previous_page_number}}#event" class="btn btn-warning">Back</a>
+                    <a href="?page={{event.previous_page_number}}&order={{previous_options.order}}#event" class="btn btn-warning">Back</a>
                 {% else %}
                     <a href="" class="btn btn-warning disabled">Back</a>
                 {% endif %}
         
                 {% for i in event.paginator.page_range %}
                     {% if event.number == i %}
-                        <a href="?page={{i}}#event" class="btn btn-info active">{{i}}</a>
+                        <a href="?page={{i}}&order={{previous_options.order}}#event" class="btn btn-info active">{{i}}</a>
                     {% else %}
-                        <a href="?page={{i}}#event" class="btn btn-info">{{i}}</a>
+                        <a href="?page={{i}}&order={{previous_options.order}}#event" class="btn btn-info">{{i}}</a>
                     {% endif %}
                 {% endfor %}
         
                 {% if event.has_next %}
-                    <a href="?page={{event.next_page_number}}#event" class="btn btn-warning">Next</a>
+                    <a href="?page={{event.next_page_number}}&order={{previous_options.order}}#event" class="btn btn-warning">Next</a>
                 {% else %}
                     <a href="" class="btn btn-warning disabled">Next</a>
                 {% endif %}
