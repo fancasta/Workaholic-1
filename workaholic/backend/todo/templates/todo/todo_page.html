@@ -71,8 +71,8 @@
                     <th data-sortable="true">#</th>
                     <th data-sortable="true">Todo</th>
                     <th data-sortable="true">Assigned to</th>
-                    <th data-sortable="true">Deadline</th>
-                    <th data-sortable="true">Last Modified</th>
+                    <th data-sortable="true" data-sorter="dateSorter">Deadline</th>
+                    <th data-sortable="true" data-sorter="lastModSorter">Last Modified</th>
                 </tr>
             </thead>
             <tbody>
@@ -127,5 +127,54 @@
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip({placement:"bottom"});
     });
+
+    function dateSorter(a, b){
+        if (Date.parse(a) < Date.parse(b)){
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+    function lastModSorter(a, b){
+        var date_a = a.substring(0, 13);
+        var time_a = a.substring(14, 20);
+        var hour_a = parseInt(time_a.split(":")[0], 10);
+        var min_a = parseInt(time_a.split(":")[1], 10);
+        var am_pm_a = a[20] !== " " ? a.substring(20, 23) : a.substring(21,24)
+
+
+        var date_b = b.substring(0, 13);
+        var time_b = b.substring(14, 20);
+        var hour_b = parseInt(time_b.split(":")[0], 10);
+        var min_b = parseInt(time_b.split(":")[1], 10);
+        var am_pm_b = b[20] !== " " ? b.substring(20, 23) : b.substring(21,24)
+
+        if (Date.parse(date_a) < Date.parse(date_b)) {
+            return 1;
+        } else if (Date.parse(date_a) === Date.parse(date_b)) {
+            if (am_pm_a < am_pm_b) {
+                return 1;
+            } else if (am_pm_a === am_pm_b) {
+                if (hour_a === 12) {
+                    return 1;
+                } else if (hour_a < hour_b) {
+                    return 1;
+                } else if (hour_a === hour_b) {
+                    if (min_a < min_b) {
+                        return 1;
+                    }
+                }
+                else {
+                    return -1;
+                }
+            } else {
+                return -1;
+            }
+        } else {
+            return -1;
+        }
+    }
+
 </script>
 {% endblock %}

@@ -8,7 +8,7 @@ from datetime import datetime
 
 class Event(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     
     start_time = models.DateTimeField(null=True, blank=True, default= datetime.now)
@@ -25,7 +25,12 @@ class Event(models.Model):
     @property
     def view_event_url(self):
         url = 'event/' + str(self.id) + '/'
+        for i in self.title.split():
+            if len(i) > 10:
+                return f'<a href="{url}"> {self.title[:8] + "..."} </a>'
+
         return f'<a href="{url}"> {self.title} </a>'
+        
 
     @property
     def edit_event_url(self):

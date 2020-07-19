@@ -7,7 +7,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.
 
 class Thread(models.Model):
-    title = models.CharField(max_length=60, null=True)
+    title = models.CharField(max_length=40, null=True)
     created_by = models.ForeignKey(Project_Member, related_name="thread_creater",on_delete=models.CASCADE, null=True)
     project = models.ForeignKey(Project, related_name="project_thread",on_delete=models.CASCADE)
     last_posted = models.DateTimeField(null=True)

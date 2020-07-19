@@ -71,18 +71,16 @@
             <div class="col-11 p-3">
                 {% for i in posts %}
                     <div class="container" id={{i.id}} style="height: 10px;"></div>
-                    <div class="card my-2 p-3">
+                    <div class="card m-2 p-3">
                         {% if i.quote_content %}
                             <div class="card m-3 p-1" style="background:honeydew;"> 
-                                <h6 class="mx-2">{{i.quote_sender}}</h6>
-                                <div class="row">
-                                    <div class="col mx-2">
-                                        <p>{{i.quote_content | safe}}</p>
-                                    </div>                     
-                                    <div class="col mx-2 text-right">
-                                        <p><small>{{i.quote_timestamp}}</small></p>    
-                                    </div>       
-                                </div>                     
+                                <div class="m-2">
+                                    <h6>
+                                        {{i.quote_sender}}
+                                    </h6>
+                                    <p>{{i.quote_content | safe}}</p>
+                                    <p><small>{{i.quote_timestamp}}</small></p>           
+                                </div>
                             </div>
                         {% endif %}                 
                         <h6>{{i.posted_by}}</h6>
@@ -149,17 +147,13 @@
         {% if quoted_post %}
             <div class="container" style="height: 10px;" id="reply"></div>
             <div class="card m-3 p-1" style="background:honeydew;"> 
-                <h6 class="mx-2">
-                    {{quoted_post.posted_by}}
-                </h6>
-                <div class="row">
-                    <div class="col mx-2">
-                        <p>{{quoted_post.content | safe}}</p>
-                    </div>                     
-                    <div class="col mx-2 text-right">
-                        <p><small>{{quoted_post.timestamp}}</small></p>    
-                    </div>       
-                </div>                  
+                <div class="m-2">
+                    <h6>
+                        {{quoted_post.posted_by}}
+                    </h6>
+                    <p>{{quoted_post.content | safe}}</p>
+                    <p><small>{{quoted_post.timestamp}}</small></p>           
+                </div>
             </div>
         {% endif %}
         <div class="container p-0 text-center" id='form'>
