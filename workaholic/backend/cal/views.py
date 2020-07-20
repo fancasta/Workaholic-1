@@ -43,14 +43,21 @@ def calendarPage(request,pk,action=None):
         project.save()
         return redirect('/project/' + str(pk) + '/calendar/' +'#cal')
 
-
     cal = Calendar(d.year, d.month)
     html_cal = cal.formatmonth(pk, withyear=True)
+
+    current_month_tag = datetime.now().date().strftime('%B %Y ')
+    prev_month_tag = datetime(get_date(prev_month(d)).year, get_date(prev_month(d)).month, 1).strftime('%B %Y ')
+    next_month_tag = datetime(get_date(next_month(d)).year, get_date(next_month(d)).month, 1).strftime('%B %Y ')
+
     context = {
         'project':project, 
         'calendar':html_cal,
         'label_options':label_options,
         'month_options':month_options,
+        'current_month_tag': current_month_tag,
+        'prev_month_tag': prev_month_tag,
+        'next_month_tag': next_month_tag,
         'Year': datetime.now().strftime("%Y")
     }
     return render(request,'cal/calendar.html',context)

@@ -45,7 +45,8 @@
                     <th data-sortable="true">Title</th>
                     <th data-sortable="true">Created By</th>
                     <th data-sortable="true" data-sorter="lastModSorter">Last Posted</th>
-                    <th>Actions</th>
+                    <th><span data-toggle="popover" data-trigger="hover" title="Thread Actions" data-content="Thread can only be edited or deleted by a project admin, or the user who created the thread."
+                        >Actions</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -85,7 +86,7 @@
 
                     {{ postform.media }}
                     {% for field in postform %}
-                        <p>Description: {{ field }}</p>
+                        <p>Post: {{ field }}</p>
                     {% endfor %}
 
                 <input type="submit" value="Submit" class="form-control btn btn-info mt-3">
@@ -98,7 +99,8 @@
 
 <script>
     $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip({placement:"bottom"});
+        $('[data-toggle="popover"]').popover();
+        $('[data-toggle="tooltip"]').tooltip({placement:"bottom"});
     });
 
     function lastModSorter(a, b){
