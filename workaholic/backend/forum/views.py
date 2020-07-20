@@ -359,7 +359,7 @@ def likePost(request, pk, thread_pk, post_pk):
 
     page = request.GET.get('page')
 
-    return redirect('/project/' + pk + '/forum/' + thread_pk + '/view_thread/' +'?page=' + str(page) + '#thread')
+    return redirect('/project/' + pk + '/forum/' + thread_pk + '/view_thread/' +'?page=' + str(page) + '#' + str(post.id))
 
 @login_required
 @user_is_project_member
@@ -378,4 +378,4 @@ def dislikePost(request, pk, thread_pk, post_pk):
 
     page = request.GET.get('page')
 
-    return redirect('/project/' + pk + '/forum/' + thread_pk + '/view_thread/' + '?page=' + str(page) + '#thread')
+    return redirect('/project/' + pk + '/forum/' + thread_pk + '/view_thread/' + '?page=' + str(page) + '#' + str(post.id))

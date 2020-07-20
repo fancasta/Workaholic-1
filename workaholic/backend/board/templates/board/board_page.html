@@ -20,6 +20,10 @@
         <div class="card bg-light border-light">
             <p class="card-body display-4 text-center">{{board.body | safe}}</p>
         </div>
+    {% else %}
+    <div class="card bg-light border-light">
+        <span data-toggle="popover" data-placement="bottom" title="Project Board has no contents yet!" data-content="Note down your important project information and updates in the Project Board!"></span>
+    </div>
     {% endif %}
 </div>
 
@@ -46,4 +50,11 @@
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="popover"]').popover("show");     
+    });
+</script>
+
 {% endblock %}

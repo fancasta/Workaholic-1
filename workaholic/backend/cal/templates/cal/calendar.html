@@ -24,9 +24,9 @@
                 </a>
             </div>
             <div class="col-5 offset-5">
-                <a href="{% url 'calendarPage' project.pk 'current_month' %}" class="btn btn-info mb-2" role="button">Current Month</a>
-                <a href="{% url 'calendarPage' project.pk 'prev_month' %}" class="btn btn-info mb-2" role="button">Previous Month</a>
-                <a href="{% url 'calendarPage' project.pk 'next_month' %}" class="btn btn-info mb-2" role="button">Next Month</a>
+                <a href="{% url 'calendarPage' project.pk 'current_month' %}" class="btn btn-info mb-2 role="button" data-trigger='hover' data-toggle='tooltip' title='{{current_month_tag}}'>Current Month</a>
+                <a href="{% url 'calendarPage' project.pk 'prev_month' %}" class="btn btn-info mb-2" role="button" data-trigger='hover' data-toggle='tooltip' title='{{prev_month_tag}}'>Previous Month</a>
+                <a href="{% url 'calendarPage' project.pk 'next_month' %}" class="btn btn-info mb-2" role="button" data-trigger='hover' data-toggle='tooltip' title='{{next_month_tag}}'>Next Month</a>
             </div>
         </div>
         <div class="collapse" id="EventCollapse">

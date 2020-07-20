@@ -44,8 +44,9 @@
                 <tr>
                     <th data-sortable="true">Title</th>
                     <th data-sortable="true">Created By</th>
-                    <th data-sortable="true">Last Posted</th>
-                    <th>Actions</th>
+                    <th data-sortable="true" data-sorter="lastModSorter">Last Posted</th>
+                    <th><span data-toggle="popover" data-trigger="hover" title="Thread Actions" data-content="Thread can only be edited or deleted by a project admin, or the user who created the thread."
+                        >Actions</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -76,22 +77,18 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body mx-3">
             <form method="POST">
                 {% csrf_token %}
-                <table class="form">
                     {% for field in threadform %}
-                         <p>Thread Title: {{ field }}</p>
+                         <p>Title: {{ field }}</p>
                     {% endfor %}
+
+                    {{ postform.media }}
                     {% for field in postform %}
-                        <div class="row">
-                            <div class="col-2">Post:</div>
-                            <div class="col-10">
-                                {{ field }}        
-                            </div> 
-                        </div>
+                        <p>Post: {{ field }}</p>
                     {% endfor %}
-                </table>
+
                 <input type="submit" value="Submit" class="form-control btn btn-info mt-3">
             </form>
         </div>
@@ -102,8 +99,48 @@
 
 <script>
     $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip({placement:"bottom"});
+        $('[data-toggle="popover"]').popover();
+        $('[data-toggle="tooltip"]').tooltip({placement:"bottom"});
     });
+
+    function lastModSorter(a, b){
+        var date_a = a.substring(0, 13);
+        var time_a = a.substring(14, 20);
+        var hour_a = parseInt(time_a.split(":")[0], 10);
+        var min_a = parseInt(time_a.split(":")[1], 10);
+        var am_pm_a = a[20] !== " " ? a.substring(20, 23) : a.substring(21,24)
+
+
+        var date_b = b.substring(0, 13);
+        var time_b = b.substring(14, 20);
+        var hour_b = parseInt(time_b.split(":")[0], 10);
+        var min_b = parseInt(time_b.split(":")[1], 10);
+        var am_pm_b = b[20] !== " " ? b.substring(20, 23) : b.substring(21,24)
+
+        if (Date.parse(date_a) < Date.parse(date_b)) {
+            return 1;
+        } else if (Date.parse(date_a) === Date.parse(date_b)) {
+            if (am_pm_a < am_pm_b) {
+                return 1;
+            } else if (am_pm_a === am_pm_b) {
+                if (hour_a < hour_b) {
+                    return 1;
+                } else if (hour_a === hour_b) {
+                    if (min_a < min_b) {
+                        return 1;
+                    }
+                }
+                else {
+                    return -1;
+                }
+            } else {
+                return -1;
+            }
+        } else {
+            return -1;
+        }
+    }
+
 </script>
 
 {% endblock %}
