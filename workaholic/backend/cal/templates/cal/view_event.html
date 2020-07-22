@@ -26,6 +26,9 @@
         <div class="card-body">
             <div class="card-text">
                 <p>{{event.description}}</p>
+                {% if event.label == "Todo" %}
+                    <p><strong>Assigned To:</strong> <small><kbd>{{event.todo.assigned_to}}</kbd></small></p>
+                {% endif %}
                 <p><strong>Start Date:</strong> {{event.start_time}}</p>
                 <p><strong>End Date:</strong>  {{event.end_time}}</p>
             </div>

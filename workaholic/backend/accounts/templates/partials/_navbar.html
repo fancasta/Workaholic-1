@@ -2,7 +2,19 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark mb-5 " style="background-color:darkslategray;">
   <div class="container">
-    <a class="navbar-brand" href="{% url 'index' %}">
+    <a class="navbar-brand" href="{% url 'index' %}"
+    {% if 'add_event/' in request.path %}
+      class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+    {% elif 'edit_event/' in request.path %}
+      class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+    {% elif 'edit_todo/' in request.path %}
+      class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+    {% elif 'board/' in request.path %}
+      class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+    {% elif 'view_thread/' in request.path %} 
+      class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"          
+    {% endif %}    
+    >
       <img src="{% static 'photo/logo14.png' %}" alt="Our website logo" class="logo mx-auto" style="height: 40px;">
     </a>
       <!-- Toggler/collapsibe Button -->
@@ -17,18 +29,53 @@
           <a href= "/"
           {% if '/' == request.path %}
             class="nav-link active"
+          {% elif 'add_event/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'edit_event/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'edit_todo/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'board/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'view_thread/' in request.path %} 
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
           {% else %}
             class="nav-link"
           {% endif %}
-          
-          >My Projects</a>
+          >My Projects
+        <span class="badge badge-info">{{request.user}}</span>
+        </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'password_change' %}">Change Password</a>
+          <a class="nav-link" href="{% url 'password_change' %}"
+          {% if 'add_event/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'edit_event/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'edit_todo/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'board/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'view_thread/' in request.path %} 
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"          
+          {% endif %}          
+          >Change Password</a>
         </li>
         <li>
-          <a type="button" class="btn btn-outline-warning" href="{% url 'logout' %}">Logout</a>
+          <a type="button" class="btn btn-outline-warning" href="{% url 'logout' %}"
+          {% if 'add_event/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'edit_event/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'edit_todo/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'board/' in request.path %}
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+          {% elif 'view_thread/' in request.path %} 
+            class="nav-link" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"          
+          {% endif %}
+          >Logout</a>
         </li>
       </ul>
     </div>

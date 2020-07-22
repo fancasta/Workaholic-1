@@ -109,7 +109,7 @@
     <a href="/project/{{project.pk}}/board/" style="color: black; text-decoration: none;">
         <h2 class="display-4 text-center my-4" data-toggle="tooltip" title="Project Board">Board</h2>
     </a>
-    <div class="card bg-light p-4 px-5">
+    <div class="card bg-light p-4 px-5" style="overflow-x: auto;">
         {% if board.body %}
             <p class="card-text display-4 text-center">{{board.body | safe}}</p>
         {% endif %}
@@ -176,7 +176,7 @@
         <h2 class="display-4 text-center my-4" data-toggle="tooltip" title="Project Calendar">Event</h2>
     </a>
     <form action="{% url 'projectPage' project.pk %}#event">
-        <div class="container row text-right p-3 col-4 rounded my-2" >
+        <div class="container row text-right p-3 col-4 rounded my-2" style="min-width:max-content">
             <div class="col-4 offset-md-1 p-0">
                 <select name="order" class="select form-control">
                     <option value='None'>Order by</option>
@@ -192,7 +192,7 @@
                     > End time</option>
                 </select>
             </div>
-            <button class="btn btn-info btn-block mx-3 col-4" type="submit" >Submit</button>
+            <button class="btn btn-info mx-3 col-4" type="submit" >Submit</button>
         </div>
     </form>
 
@@ -308,14 +308,12 @@
                         </div>
                         <input type="text" name="project_member">
                         <div class="input-group-append">
-                            <input type="submit" value="Submit" class = "btn btn-info btn-sm" id="add_member">
+                            <input type="submit" value="Submit" class = "btn btn-info btn-sm" id="add_member"
+                            data-toggle="tooltip"
+                            title="Note: Only valid Workaholic user can be added to the project."
+                            >
                         </div>
                     </div>
-                    {% if messages %}
-                        {% for message in messages %}
-                            <p class="alert alert-warning" role="alert">{{message}}</p>
-                        {% endfor %}
-                    {% endif %}
                 </form>
             </div>
         </div>

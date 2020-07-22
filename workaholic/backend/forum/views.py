@@ -11,6 +11,7 @@ from django.core.paginator import Paginator #import Paginator
 
 from accounts.models import *
 from project.decorators import *
+from .decorators import user_is_post_creater_or_project_admin, user_is_thread_creater_or_project_admin, user_is_post_creater
 
 from .forms import *
 from .models import *
@@ -105,7 +106,7 @@ def threadPage(request, pk, thread_pk):
             else:
                 posts = posts.order_by('timestamp')
 
-    if len(posts) > 1:
+    if len(posts) == 1:
         thread.last_posted = posts[0].timestamp
         thread.last_posted_by = posts[0].posted_by
         thread.save()
@@ -166,6 +167,7 @@ def threadPage(request, pk, thread_pk):
 #Change to Post
 @login_required
 @user_is_project_member
+@user_is_thread_creater_or_project_admin
 def deleteThread(request, pk, thread_pk):
     project = Project.objects.get(id=pk)
     members = project.project_members.all()
@@ -192,6 +194,7 @@ def deleteThread(request, pk, thread_pk):
 #Change to Post
 @login_required
 @user_is_project_member
+@user_is_thread_creater_or_project_admin
 def editThread(request, pk, thread_pk):
     project = Project.objects.get(id=pk)
     members = project.project_members.all()
@@ -219,6 +222,7 @@ def editThread(request, pk, thread_pk):
 #Change to Post
 @login_required
 @user_is_project_member
+@user_is_post_creater_or_project_admin
 def deletePost(request, pk, thread_pk, post_pk):
     project = Project.objects.get(id=pk)
     members = project.project_members.all()
@@ -248,6 +252,7 @@ def deletePost(request, pk, thread_pk, post_pk):
 #Change to Post
 @login_required
 @user_is_project_member
+@user_is_post_creater
 def editPost(request, pk, thread_pk, post_pk):
     project = Project.objects.get(id=pk)
     members = project.project_members.all()
@@ -295,9 +300,10 @@ def quotePost(request, pk, thread_pk, post_pk):
     id_1st = first_post.id
     posts = posts.exclude(id=id_1st)
 
-    thread.last_posted = posts[0].timestamp
-    thread.last_posted_by = posts[0].posted_by
-    thread.save()
+    if len(posts) == 1:
+        thread.last_posted = posts[0].timestamp
+        thread.last_posted_by = posts[0].posted_by
+        thread.save()
 
     if request.method == "POST":
         postform = PostForm(request.POST)
@@ -316,6 +322,7 @@ def quotePost(request, pk, thread_pk, post_pk):
         project.save()
 
         return redirect('/project/' + pk + '/forum/' + thread_pk + '/view_thread/' +'#form')
+
     else:
         postform = PostForm()
 

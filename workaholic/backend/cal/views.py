@@ -87,6 +87,8 @@ def next_month(d):
 def editEvent(request, pk, event_id=None):
     project = Project.objects.get(id=pk)
     members = project.project_members.all()
+    modified_by = members.get(user=request.user)
+
     if event_id:
         event = Event.objects.filter(project=project).get(id=event_id)
     else:
@@ -131,18 +133,19 @@ def editEvent(request, pk, event_id=None):
             todo.deadline = event.end_time
             todo.title = event.title
             todo.description = event.description
+            todo.last_modified = datetime.now()
+            todo.last_modified_by = modified_by
             todo.save()
             
         except:
             event.label = form.data['label']
             event.save()
-
-        modified_by = members.get(user=request.user)
         
         project.cal_last_modified = datetime.now()
         project.cal_last_modified_by = modified_by
         project.last_modified = datetime.now()
         project.last_modified_by = modified_by
+        project.last_modified_item = "Todo"
         project.save()
         
         return redirect('/project/' + str(pk) + '/calendar/')
@@ -164,7 +167,7 @@ def viewEvent(request, pk, event_id):
     project = Project.objects.get(id=pk)
     members = project.project_members.all()
     event = project.event_set.get(id=event_id)
-
+    
     context = {
         'project':project, 
         'event':event, 
