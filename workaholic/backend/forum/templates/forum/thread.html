@@ -143,6 +143,12 @@
         </div>
     </div>
     <div class="m-auto p-auto">
+        <div class="row">
+            <div class="col-6" style="background-color: mediumturquoise;">
+
+            </div>
+
+        </div>
         <p class="text-right my-3"><a href="{% url 'thread' project.pk thread.pk %}" class="btn btn-danger m-3" onclick="return confirm('Are you sure you want to discard this post?');">Discard Post</a></p>
         {% if quoted_post %}
             <div class="container" style="height: 10px;" id="reply"></div>
@@ -165,7 +171,8 @@
                         {{ field }}
                     </div>
                 {% endfor %}
-                <input type="submit" value="Submit" id="submit-post" class="form-control btn btn-info m-3 col-6">
+                <p class="text-center"><em>Note: Your draft will not be saved when you leave this page.</em></p>
+                <input type="submit" value="Send" id="submit-post" class="form-control btn btn-info m-3 col-6">
             </form>
         </div>
     </div>

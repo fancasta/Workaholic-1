@@ -4,17 +4,17 @@
         <div class="btn-group ">
             <a 
             {% if 'add_event/' in request.path %}
-                href="{% url 'calendarPage' project.pk 'current_month' %}" onclick="return confirm('Are you sure you want to discard (if any) your changes?');" data-toggle="tooltip" title="Project Calendar"
+                href="{% url 'calendarPage' project.pk 'current_month' %}" onclick="return confirm('Are you sure you want to discard your changes? (if any)');" data-toggle="tooltip" title="Project Calendar"
             {% elif 'search_event' in request.path %}
                 href="{% url 'calendarPage' project.pk 'current_month' %}" data-toggle="tooltip" title="Project Calendar"
             {% elif 'edit_event/' in request.path %}
-                href= '/project/{{project.pk}}/calendar/event/{{event.pk}}' onclick="return confirm('Are you sure you want to discard (if any) your changes?');" data-toggle="tooltip" title="Project Calendar"
+                href= '/project/{{project.pk}}/calendar/event/{{event.pk}}' onclick="return confirm('Are you sure you want to discard your changes? (if any)');" data-toggle="tooltip" title="Project Calendar"
             {% elif 'delete_event/' in request.path %}
                 href= '/project/{{project.pk}}/calendar/event/{{event.pk}}' data-toggle="tooltip" title="Project Calendar"
             {% elif 'event/' in request.path %}
                 href="{% url 'calendarPage' project.pk 'current_month' %}" data-toggle="tooltip" title="Project Calendar"
             {% elif 'edit_todo/' in request.path %}
-                href='/project/{{project.pk}}/todo/' onclick="return confirm('Are you sure you want to discard (if any) your changes?');" data-toggle="tooltip" title="Project Todo"
+                href='/project/{{project.pk}}/todo/' onclick="return confirm('Are you sure you want to discard your changes? (if any)');" data-toggle="tooltip" title="Project Todo"
             {% elif 'search_todo' in request.path %}
                 href='/project/{{project.pk}}/todo/' data-toggle="tooltip" title="Project Todo"
             {% elif 'delete_todo/' in request.path %}
@@ -24,9 +24,9 @@
             {% elif 'delete_project' in request.path %}  
                 href='/' data-toggle="tooltip" title="Project Home"
             {% elif 'board/' in request.path %}
-                href='/project/{{project.pk}}' onclick="return confirm('Are you sure you want to discard (if any) your changes?');" data-toggle="tooltip" title="Project Home"
+                href='/project/{{project.pk}}' data-toggle="tooltip" title="Project Home"
             {% elif 'view_thread/' in request.path %} 
-                href='/project/{{project.pk}}/forum/' onclick="return confirm('Are you sure you want to discard (if any) your changes?');"  data-toggle="tooltip" title="Project Forum"
+                href='/project/{{project.pk}}/forum/' data-toggle="tooltip" title="Project Forum"
             {% else %}
                 href='/project/{{project.pk}}' data-toggle="tooltip" title="Project Home"
             {% endif %} 
@@ -34,15 +34,15 @@
 
             <a href="{% url 'calendarPage' project.pk 'current_month' %}"
             {% if 'add_event/' in request.path %}
-                class=" btn btn-outline-info -8 active" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+                class=" btn btn-outline-info -8 active" onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% elif 'edit_event/' in request.path %}
-                class=" btn btn-outline-info -8 active" onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+                class=" btn btn-outline-info -8 active" onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% elif 'calendar/' in request.path %}
                 class=" btn btn-outline-info -8 active"
             {% elif 'edit_todo/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% elif 'board/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
+                class=" btn btn-outline-info -8 " 
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}
@@ -52,15 +52,11 @@
             {% if 'todo/' in request.path %}
                 class=" btn btn-outline-info -8 active"
             {% elif 'add_event/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% elif 'edit_event/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% elif 'edit_todo/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
-            {% elif 'board/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
-            {% elif 'view_thread/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}
@@ -70,13 +66,11 @@
             {% if 'board/' in request.path %}
                 class=" btn btn-outline-info -8 active"
             {% elif 'add_event/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% elif 'edit_event/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% elif 'edit_todo/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
-            {% elif 'view_thread/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}
@@ -86,15 +80,11 @@
             {% if 'forum/' in request.path %}
                 class=" btn btn-outline-info -8 active"
             {% elif 'add_event/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% elif 'edit_event/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% elif 'edit_todo/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');"
-            {% elif 'board/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
-            {% elif 'view_thread/' in request.path %}
-                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard (if any) your changes?');" 
+                class=" btn btn-outline-info -8 " onclick="return confirm('Are you sure you want to discard your changes? (if any)');"
             {% else %}
                 class=" btn btn-outline-info -8 "
             {% endif %}
