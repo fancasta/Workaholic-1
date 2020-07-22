@@ -17,7 +17,7 @@
 <div class="container m-4">
 </div>
 <form action="{% url 'forum' project.pk %}">
-    <div class="container row p-3 mx-auto col-6 bg-light rounded mb-4" >
+    <div class="container row p-3 mx-auto col-6 bg-light rounded mb-4" style="min-width:max-content">
         <div class="col-10 pl-0">
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="col-2 p-0">
-            <button class="btn btn-info btn-block mx-auto" type="submit" >Find Thread</button>
+            <button class="btn btn-info mx-auto" type="submit" >Find Thread</button>
         </div>
     </div>
 </form>
@@ -42,7 +42,7 @@
         <table class="table table-hover" data-toggle="table">
             <thead>
                 <tr>
-                    <th data-sortable="true">Title</th>
+                    <th data-sortable="alpha">Title</th>
                     <th data-sortable="true">Created By</th>
                     <th data-sortable="true" data-sorter="lastModSorter">Last Posted</th>
                     <th><span data-toggle="popover" data-trigger="hover" title="Thread Actions" data-content="Thread can only be edited or deleted by a project admin, or the user who created the thread."
@@ -128,6 +128,8 @@
                 } else if (hour_a === hour_b) {
                     if (min_a < min_b) {
                         return 1;
+                    } else {
+                        return -1;
                     }
                 }
                 else {

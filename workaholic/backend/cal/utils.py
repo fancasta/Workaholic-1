@@ -21,7 +21,7 @@ class Calendar(HTMLCalendar):
             d += f"<li data-trigger='hover' data-toggle='tooltip' title='{event.title}'> End: {event.view_event_url} <kbd>{event.label}</kbd> </li>"
     
         if day != 0 and datetime(self.year,self.month,day).date() == datetime.now().date():
-            return f"<td style='background-color:papayawhip; height:150px; min-width:120px; max-width:120px; vertical-align:top' data-trigger='hover' data-toggle='popover' title='Today' data-content='{datetime(self.year,self.month,day).strftime('%d %B %Y ')}'><span class='date'>{day}</span><ul> {d} </ul></td>"
+            return f"<td style='background-color:papayawhip; height:150px; min-width:120px; max-width:120px; vertical-align:top'><span class='date'>{day}</span><ul> {d} </ul></td>"
         elif day != 0:
             return f"<td style='height:150px; min-width:120px; max-width:120px; vertical-align:top'><span class='date'>{day}</span><ul> {d} </ul></td>"
 

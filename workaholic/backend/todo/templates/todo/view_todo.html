@@ -22,8 +22,18 @@
         <div class="card-body">
             <div class="card-text">
                 <p>{{todo.description}}</p>
-                <p><strong>Assigned to:</strong> {{todo.assigned_to}}</p>
-                <p><strong>Deadline:</strong>  {{todo.deadline}}</p>
+                <div class="row mb-2">
+                    <div class="col-2 card mx-3 my-3 p-2" style="background-color:azure; width: max-content;">
+                        <p class="card-text">
+                            <strong>Assigned to:</strong> <small><kbd>{{todo.assigned_to}}</kbd></small> 
+                        </p>                    
+                    </div>
+                    <div class="col-3 card mx-3 my-3 p-2" style="background-color:mistyrose; width: max-content;">
+                        <p class="card-text">
+                            <strong>Deadline:</strong>  {{todo.deadline}} 
+                        </p>                    
+                    </div>
+                </div>
             </div>
             <a href="{% url 'editTodo' project.pk todo.pk %}" class="btn btn-info" role="button">Edit</a>
             <a href="{% url 'deleteTodo' project.pk todo.pk %}" class="btn btn-warning" role="button">Delete</a>

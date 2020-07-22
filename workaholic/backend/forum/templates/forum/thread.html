@@ -21,7 +21,7 @@
     <h4 class="text-center display-4">
         {{thread.title}}
     </h4><br>
-    <div class="card m-3 p-3" style="background:cornsilk">               
+    <div class="card m-3 p-3" style="background:cornsilk; overflow-x: auto;">               
         <h6>{{first_post.posted_by}}</h6>
         <p class="card-text">{{first_post.content | safe }}</p>    
         <div class="row">
@@ -42,7 +42,7 @@
 
     <div class="container bg-light p-3" id="thread">
         <form action="{% url 'thread' project.pk thread.pk %}#forum">
-            <div class="container row text-right p-3 col-6 rounded my-2 mx-5" >
+            <div class="container row text-right p-3 col-6 rounded my-2 mx-5" style="min-width:max-content">
                 <div class="col-4 offset-md-1 p-0">
                     <select name="order" class="select form-control">
                         <option value='None'>Order by</option>
@@ -63,7 +63,7 @@
                         > Oldest post</option>
                     </select>
                 </div>
-                <button class="btn btn-info btn-block mx-3 col-4" type="submit" >Submit</button>
+                <button class="btn btn-info mx-3 col-4" type="submit" >Submit</button>
             </div>
         </form>
         <div class="row">
@@ -71,9 +71,9 @@
             <div class="col-11 p-3">
                 {% for i in posts %}
                     <div class="container" id={{i.id}} style="height: 10px;"></div>
-                    <div class="card m-2 p-3">
+                    <div class="card m-2 p-3" style="overflow-x: auto; overflow-y: auto; max-height: 800px;">
                         {% if i.quote_content %}
-                            <div class="card m-3 p-1" style="background:honeydew;"> 
+                            <div class="card m-3 p-1" style="background:honeydew; overflow-x: auto; overflow-y: auto; max-height: 400px;"> 
                                 <div class="m-2">
                                     <h6>
                                         {{i.quote_sender}}
@@ -143,10 +143,16 @@
         </div>
     </div>
     <div class="m-auto p-auto">
-        <p class="text-right my-3"><a href="{% url 'thread' project.pk thread.pk %}" class="btn btn-danger m-3" onclick="return confirm('Are you sure you want to discard this post?');">Discard Edits</a></p>
+        <div class="row">
+            <div class="col-6" style="background-color: mediumturquoise;">
+
+            </div>
+
+        </div>
+        <p class="text-right my-3"><a href="{% url 'thread' project.pk thread.pk %}" class="btn btn-danger m-3" onclick="return confirm('Are you sure you want to discard this post?');">Discard Post</a></p>
         {% if quoted_post %}
             <div class="container" style="height: 10px;" id="reply"></div>
-            <div class="card m-3 p-1" style="background:honeydew;"> 
+            <div class="card m-3 p-1" style="background:honeydew; overflow-x: auto;"> 
                 <div class="m-2">
                     <h6>
                         {{quoted_post.posted_by}}
@@ -165,19 +171,12 @@
                         {{ field }}
                     </div>
                 {% endfor %}
-                <input type="submit" value="Submit" id="submit-post" class="form-control btn btn-info m-3 col-6">
+                <p class="text-center"><em>Note: Your draft will not be saved when you leave this page.</em></p>
+                <input type="submit" value="Send" id="submit-post" class="form-control btn btn-info m-3 col-6">
             </form>
         </div>
     </div>
 </div>
 
-<script>
-
-document.querySelector('#add-post').onkeyup = function(e) {
-    if (e.keyCode === 13) {  // enter, return
-        document.querySelector('#submit-post').click();
-    }
-};
-</script>
 
 {% endblock %}

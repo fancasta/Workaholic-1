@@ -26,8 +26,25 @@
         <div class="card-body">
             <div class="card-text">
                 <p>{{event.description}}</p>
-                <p><strong>Start Date:</strong> {{event.start_time}}</p>
-                <p><strong>End Date:</strong>  {{event.end_time}}</p>
+                <div class="row mb-2">
+                    {% if event.label == "Todo" %}
+                    <div class="col-2 card mx-3 my-3 p-2" style="background-color:azure; width: max-content;">
+                        <p class="card-text">
+                            <strong>Assigned To:</strong> <small><kbd>{{event.todo.assigned_to}}</kbd></small>
+                        </p>
+                    </div>
+                    {% endif %}
+                    <div class="col-3 card mx-3 my-3 p-2" style="background-color:honeydew; width: max-content;">
+                        <p class="card-text">
+                            <strong>Start Date:</strong> {{event.start_time}}
+                        </p>                    
+                    </div>
+                    <div class="col-3 card mx-3 my-3 p-2" style="background-color:mistyrose; width: max-content;">
+                        <p class="card-text">
+                            <strong>End Date:</strong>  {{event.end_time}}
+                        </p>                    
+                    </div>
+                </div>
             </div>
             <a href="{% url 'editEvent' project.pk event_pk %}" class="btn btn-info">Edit</a>
             <a href="{% url 'deleteEvent' project.pk event_pk %}" class="btn btn-warning">Delete</a>

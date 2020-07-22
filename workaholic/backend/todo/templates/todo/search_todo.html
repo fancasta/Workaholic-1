@@ -9,7 +9,7 @@
 {% include 'partials/_project_navbar.html' %}
 <div class="container col-8 mx-auto" id="todo">
     <form action="{% url 'searchTodo' project.pk %}">
-        <div class="container row p-3 mx-auto col-8 bg-light rounded mb-4" >
+        <div class="container row p-3 mx-auto col-8 bg-light rounded mb-4" style="min-width:max-content">
             <div class="col-10 pl-0">
                 <div class="input-group my-3">
                     <div class="input-group-prepend">
@@ -62,7 +62,7 @@
                     {% endfor %}
                 </select>
             </div>
-            <button class="btn btn-info btn-block mt-3 mx-auto col-6" type="submit" >Submit</button>
+            <button class="btn btn-info mt-3 mx-auto col-6" type="submit" >Submit</button>
         </div>
     </form>
 </div>
