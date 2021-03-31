@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4!3e@hvg7w2hqg=2p!mpf0_eln$whp_$0%v*^^68^(5+yi-q7w'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -82,13 +82,8 @@ CKEDITOR_CONFIGS = {
 }
 
 
-#Removed for Github Security Purpose
-EMAIL_BACKEND = ''
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_PORT = 0
+#EMAIL details Removed for Github Security Purpose
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
